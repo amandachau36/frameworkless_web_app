@@ -1,25 +1,65 @@
 ﻿using System;
 using System.Net;
+using System.Transactions;
 
 namespace FrameworklessWebApp2
 {
     class Program
     {
-        static void Main(string[] args)
+        private const int Port = 8080;
+        static void Main(string[] prefixes)     //Uniform resource Identifer (URI) prefixes
         {
-            var server = new HttpListener();
-            server.Prefixes.Add("http://localhost:8080/");
-            server.Start();
-            Console.WriteLine("Start listening");
-            while (true)
-            {
-                var context = server.GetContext();  // Gets the request 
-                Console.WriteLine($"{context.Request.HttpMethod} {context.Request.Url}");
-                var buffer = System.Text.Encoding.UTF8.GetBytes("Hello");
-                context.Response.ContentLength64 = buffer.Length;
-                context.Response.OutputStream.Write(buffer, 0, buffer.Length);  // forces send of response
-            }
-            server.Stop();  // never reached...
+            Server.StartServer();
+            // if (!HttpListener.IsSupported)
+            // {
+            //     Console.WriteLine("HttpListener is not supported");
+            // }
+            //
+            //
+            // if (prefixes == null || prefixes.Length == 0)
+            //     throw new AggregateException("prefixes missing");
+            //     
+            // var server = new HttpListener();
+            //
+            // foreach (var prefix in prefixes)
+            // {
+            //     server.Prefixes.Add(prefix);
+            // }
+            //
+            // server.Start();                         //Allows this instance to receive incoming requests
+            //
+            // Console.WriteLine("Listening");
+            //
+            //                                         //The getContext method BLOCKS while waiting for a request
+            // var context = server.GetContext(); 
+            //
+            // var request = context.Request;          // an object that represents a client request 
+            //
+            //                                         // obtain a response object
+            // var response = context.Response;        //Object used to send a response back to the client
+            //
+            //
+            // var responseString = "<HTML><BODY> Hello world!</BODY></HTML>";
+            //
+            // var buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
+            //
+            // response.ContentLength64 = buffer.Length;     //Gets or sets the number of bytes in the body data included in the reponse
+            //                                              //TODO: why is this necessary? it must be set explicitly before writing the the Return Stream Object 
+            //
+            // var output = response.OutputStream;    //Gets a stream object to which a response can be written  
+            //
+            // output.Write(buffer, 0, buffer.Length);
+            //
+            // output.Close();                            //You must close the output stream 
+            //
+            // server.Stop();
+
+            
+            // //TODO: Asynchronous - multiple requests
         }
+
+    
+        
+        
     }
 }
