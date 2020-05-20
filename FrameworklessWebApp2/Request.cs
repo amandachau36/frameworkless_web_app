@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Text.Json.Serialization;
 
 namespace FrameworklessWebApp2
 {
@@ -27,9 +28,10 @@ namespace FrameworklessWebApp2
                             var reader = new StreamReader(body, context.Request.ContentEncoding);
 
                             var responseBody = reader.ReadToEnd();
-                            // HttpUtility.UrlEncode / HttpUtility.UrlDecode 
-
-                            Console.WriteLine("============" + responseBody);
+                            //JsonConvert<Model>.Deserialize
+                            context.Response.StatusCode = 201;
+                            Console.WriteLine("============\n" + responseBody);
+                            Response.Send(responseBody, context);  // TODO: why does this have to happen? 
                             break;
                     }
                     break;

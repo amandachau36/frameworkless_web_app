@@ -6,10 +6,15 @@ namespace FrameworklessWebApp2
 {
     class Program
     {
-        private const int Port = 8080;
         static void Main(string[] prefixes)     //Uniform resource Identifer (URI) prefixes
         {
+         
             Server.StartServer();
+        }
+    }
+} 
+
+
             // if (!HttpListener.IsSupported)
             // {
             //     Console.WriteLine("HttpListener is not supported");
@@ -56,10 +61,3 @@ namespace FrameworklessWebApp2
 
             
             // //TODO: Asynchronous - multiple requests
-        }
-
-    
-        
-        
-    }
-}
