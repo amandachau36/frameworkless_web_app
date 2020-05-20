@@ -1,17 +1,18 @@
 using System;
+using System.IO;
 using System.Net;
 
 namespace FrameworklessWebApp2
 {
     public static class Server
     {
-        private const int Port = 8080;
-        
         private static readonly HttpListener _server = new HttpListener();
 
         public static void StartServer()
         {
-            _server.Prefixes.Add($"http://localhost:{Port}/"); //URI prefixes 
+            var port = GetPortConfig();
+            
+            _server.Prefixes.Add($"http://localhost:{port.PortNumber}/"); //URI prefixes 
             _server.Start();
             Console.WriteLine("Start listening");
             while (true)
@@ -22,6 +23,12 @@ namespace FrameworklessWebApp2
 
             }
             _server.Stop();  // never reached...
+        }
+
+        private static PortConfig GetPortConfig()
+        {
+            return PortConfigurationLoader.LoadPortConfig(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                "PortConfiguration.json"));  //TODO: is this correct so that program.cs doesn't know about the data access Layer? 
         }
     }
 }

@@ -49,7 +49,7 @@ namespace FrameworklessWebApp2
             // var buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
             //
             // response.ContentLength64 = buffer.Length;     //Gets or sets the number of bytes in the body data included in the reponse
-            //                                              //TODO: why is this necessary? it must be set explicitly before writing the the Return Stream Object 
+            //                                              //it must be set explicitly before writing the the Return Stream Object 
             //
             // var output = response.OutputStream;    //Gets a stream object to which a response can be written  
             //
