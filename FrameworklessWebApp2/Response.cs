@@ -11,7 +11,9 @@ namespace FrameworklessWebApp2
             
             var buffer = System.Text.Encoding.UTF8.GetBytes(message);    //A buyes limited resource.   
                                                                                 //convert string to byte array, body in the response
-            context.Response.Headers.Add("Content-Type", "text/html");   //TODO: Refactor, figure out which ones to add                                                                  
+            
+            Headers.AddAllHeaders(context.Response);
+            
             context.Response.ContentLength64 = buffer.Length;                    //it must be set explicitly before writing the the Return Stream Object  
 
             var output = context.Response.OutputStream; 
