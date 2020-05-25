@@ -1,4 +1,4 @@
-namespace FrameworklessWebApp2
+namespace FrameworklessWebApp2.DataAccess
 {
     public class PortConfig
     {

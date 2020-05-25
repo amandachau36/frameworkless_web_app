@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Configuration;
 
-namespace FrameworklessWebApp2
+namespace FrameworklessWebApp2.DataAccess
 {
     public static class PortConfigurationLoader
     {
