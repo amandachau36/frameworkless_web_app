@@ -20,9 +20,10 @@ namespace FrameworklessWebApp2
                     {
                         case "GET":
                             Console.WriteLine("Get users");
+                            
                             Response.Send("All Users", context);
                             break;
-                        case "POST": //TODO: 
+                        case "POST": 
                             Console.WriteLine("posting to /Users");
                             var body = context.Request.InputStream;
                             
@@ -33,10 +34,10 @@ namespace FrameworklessWebApp2
                             
                             //TODO: save to textFile
                            
-                            context.Response.StatusCode = 201;  //TODO: is 201 correct? yes. http.cat also a Enum/ mozilla
+                            context.Response.StatusCode = 201;  
                             
                             Console.WriteLine("============\n" + user.Name + $"({user.Username})");  //TODO: make logging better
-                            Response.Send(user.Name, context);  // TODO: why does this have to happen?  //TODO Idisplay
+                            Response.Send(user.Name, context);  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay
                             break;
                     }
                     break;

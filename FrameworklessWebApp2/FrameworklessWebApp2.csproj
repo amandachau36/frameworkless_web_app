@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="PortConfiguration.json">
+      <None Update="DataAccess\PortConfiguration.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

@@ -8,7 +8,6 @@ namespace FrameworklessWebApp2
     {
         static void Main(string[] prefixes)     //Uniform resource Identifer (URI) prefixes
         {
-         
             Server.StartServer();
         }
     }

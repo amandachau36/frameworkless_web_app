@@ -27,8 +27,8 @@ namespace FrameworklessWebApp2
 
         private static PortConfig GetPortConfig()
         {
-            return PortConfigurationLoader.LoadPortConfig(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                "PortConfiguration.json"));  //TODO: is this correct so that program.cs doesn't know about the data access Layer? 
+            return PortConfigurationLoader.LoadPortConfig(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataAccess",
+                "PortConfiguration.json")); 
         }
     }
 }
