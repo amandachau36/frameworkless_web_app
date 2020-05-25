@@ -20,8 +20,8 @@ namespace FrameworklessWebApp2
                     {
                         case "GET":
                             Console.WriteLine("Get users");
-                            
-                            Response.Send("All Users", context);
+                            var htmlMessage = Html.Wrap("All Users", "<h1></h1>"); 
+                            Response.Send(htmlMessage, context);
                             break;
                         case "POST": 
                             Console.WriteLine("posting to /Users");

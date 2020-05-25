@@ -7,7 +7,6 @@ namespace FrameworklessWebApp2
     {
         public static void Send(string message, HttpListenerContext context)
         {
-            message = $"<h1>{message}</h1>";
             
             var buffer = System.Text.Encoding.UTF8.GetBytes(message);    //A buyes limited resource.   
                                                                                 //convert string to byte array, body in the response
