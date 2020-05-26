@@ -1,13 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Text.Json.Serialization;
+using FrameworklessWebApp2.DataAccess;
 using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2
 {
     public static class Request
-    { 
+    {
+        public static List<User> Users { get; } = new List<User>();
         public static void Process(HttpListenerContext context)
         {
             var request = context.Request; 
@@ -35,12 +37,14 @@ namespace FrameworklessWebApp2
                             var reader = new StreamReader(body, request.ContentEncoding);
 
                             var json = reader.ReadToEnd();
+                            
                             var user = JsonConvert.DeserializeObject<User>(json);
                             
-                            //TODO: save to textFile
-                           
-                            response.StatusCode = (int) HttpStatusCode.Created;  
+                            Users.Add(user);
+
+                            response.StatusCode = (int) HttpStatusCode.Created;
                             
+                            DataManager.WriteToTextFile();
                             Console.WriteLine("============\n" + user.Name + $"({user.Username})");  //TODO: make logging better
                             Response.Send(user.Name, context);  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay
                             break;

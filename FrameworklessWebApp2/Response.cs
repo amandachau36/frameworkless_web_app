@@ -1,5 +1,4 @@
 using System.Net;
-using System.Threading;
 
 namespace FrameworklessWebApp2
 {
@@ -7,7 +6,6 @@ namespace FrameworklessWebApp2
     {
         public static void Send(string message, HttpListenerContext context)
         {
-            
             var buffer = System.Text.Encoding.UTF8.GetBytes(message);    //A buyes limited resource.   
                                                                                 //convert string to byte array, body in the response
             
