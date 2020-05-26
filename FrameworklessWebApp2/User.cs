@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2
 {
-    public class User
+    public class User //model
     {
         [JsonProperty(PropertyName = "username")]
         public string Username { get; set; }

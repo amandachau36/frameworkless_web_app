@@ -1,8 +1,4 @@
-﻿using System;
-using System.Net;
-using System.Transactions;
-
-namespace FrameworklessWebApp2
+﻿namespace FrameworklessWebApp2
 {
     class Program
     {
