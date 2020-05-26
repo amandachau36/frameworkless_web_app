@@ -21,7 +21,10 @@ namespace FrameworklessWebApp2
                 }
             }
             
-            return htmlTagsList[0] + message + htmlTagsList[1];  // needs exception handling 
+            if(htmlTagsList.Count != 2)
+                throw new ArgumentOutOfRangeException("Invalid html tags:" + htmlTags);
+            
+            return htmlTagsList[0] + message + htmlTagsList[1];  
         }
  
     }

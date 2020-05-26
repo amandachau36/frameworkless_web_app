@@ -8,33 +8,38 @@ namespace FrameworklessWebApp2
 {
     public static class Request
     { 
-        public static void Process(HttpListenerContext context) 
+        public static void Process(HttpListenerContext context)
         {
-            switch (context.Request.Url.AbsolutePath)
+            var request = context.Request; 
+            var response = context.Response;
+           
+            switch (request.Url.AbsolutePath)
             {
                 case "/":
+                    response.StatusCode = (int) HttpStatusCode.OK;  
                     Response.Send("Welcome to the Home Page", context);
                     break;
                 case "/users":
-                    switch (context.Request.HttpMethod)
+                    switch (request.HttpMethod)
                     {
                         case "GET":
                             Console.WriteLine("Get users");
-                            var htmlMessage = Html.Wrap("All Users", "<h1></h1>"); 
+                            response.StatusCode = (int) HttpStatusCode.OK;  
+                            var htmlMessage = Html.Wrap("All Users", "<h1></h1>"); //But this should probably be done in the front end?
                             Response.Send(htmlMessage, context);
                             break;
                         case "POST": 
                             Console.WriteLine("posting to /Users");
-                            var body = context.Request.InputStream;
+                            var body = request.InputStream;
                             
-                            var reader = new StreamReader(body, context.Request.ContentEncoding);
+                            var reader = new StreamReader(body, request.ContentEncoding);
 
                             var json = reader.ReadToEnd();
                             var user = JsonConvert.DeserializeObject<User>(json);
                             
                             //TODO: save to textFile
                            
-                            context.Response.StatusCode = 201;  
+                            response.StatusCode = (int) HttpStatusCode.Created;  
                             
                             Console.WriteLine("============\n" + user.Name + $"({user.Username})");  //TODO: make logging better
                             Response.Send(user.Name, context);  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay
@@ -42,12 +47,14 @@ namespace FrameworklessWebApp2
                     }
                     break;
                 case "/countries":
+                    response.StatusCode = (int) HttpStatusCode.OK;  
                     Response.Send("All Countries", context);
                     break;
                 default:
-                    Response.Send("This should be a 404 page", context); //TODO: should this be a default ?? list of routes and raise exception  
+                    response.StatusCode = (int) HttpStatusCode.NotFound;  
+                    Response.Send("Page not found: " + request.Url, context);  
                     break;
-                //context.Response.StatusCode 
+                
             }
         }
     }
