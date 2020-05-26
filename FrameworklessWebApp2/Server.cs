@@ -11,11 +11,13 @@ namespace FrameworklessWebApp2
 
         public static void StartServer()
         {
-            var port = GetPortConfig();
+            DataManager.LoadUsers();
             
+            var port = GetPortConfig();
             _server.Prefixes.Add($"http://localhost:{port.PortNumber}/"); //URI prefixes 
             _server.Start();
             Console.WriteLine("Start listening");
+            
             while (true)
             {
                 var context = _server.GetContext();  

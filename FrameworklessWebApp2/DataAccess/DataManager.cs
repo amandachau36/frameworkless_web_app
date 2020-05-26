@@ -1,15 +1,18 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace FrameworklessWebApp2.DataAccess
 {
     public static class DataManager
     {
+        public static List<User> Users { get; private set; } = new List<User>();
         public static void WriteToTextFile()
         {
             var users = new JArray(
-                from u in Request.Users
+                from u in Users
                 select new JObject(
                     new JProperty("username", u.Username),
                     new JProperty("name", u.Name),
@@ -26,6 +29,16 @@ namespace FrameworklessWebApp2.DataAccess
             sw.Close();
 
         }
+
+        public static void LoadUsers()
+        {
+            var sr = new StreamReader($"/Users/amanda.chau/fma/FrameworklessWebApp2/FrameworklessWebApp2/DataAccess/Users.json");
+
+            var json= sr.ReadToEnd();
+            
+            Users = JsonConvert.DeserializeObject<List<User>>(json);
+        }
+        
     }
 
 }

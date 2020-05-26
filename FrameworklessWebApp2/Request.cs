@@ -9,7 +9,7 @@ namespace FrameworklessWebApp2
 {
     public static class Request
     {
-        public static List<User> Users { get; } = new List<User>();
+    
         public static void Process(HttpListenerContext context)
         {
             var request = context.Request; 
@@ -28,7 +28,7 @@ namespace FrameworklessWebApp2
                             Console.WriteLine("Get users");
                             response.StatusCode = (int) HttpStatusCode.OK;  
                             var htmlMessage = Html.Wrap("All Users", "<h1></h1>"); //But this should probably be done in the front end?
-                            Response.Send(htmlMessage, context);
+                            Response.Send(htmlMessage, context); //TODO: do I sent json? or html 
                             break;
                         case "POST": 
                             Console.WriteLine("posting to /Users");
@@ -40,7 +40,7 @@ namespace FrameworklessWebApp2
                             
                             var user = JsonConvert.DeserializeObject<User>(json);
                             
-                            Users.Add(user);
+                            DataManager.Users.Add(user); //TODO: Not good that I can just alter the list?
 
                             response.StatusCode = (int) HttpStatusCode.Created;
                             
