@@ -14,8 +14,7 @@ namespace FrameworklessWebApp2
         {
             var dataManager = new DataManager();
             var request = new Request(dataManager);
-            dataManager.LoadUsers();
-            
+
             var port = GetPortConfig();
             _server.Prefixes.Add($"http://localhost:{port.PortNumber}/"); //URI prefixes 
             _server.Start();

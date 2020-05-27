@@ -9,9 +9,7 @@ namespace FrameworklessWebApp2.DataAccess
 {
     public class DataManager
     {
-
         private List<User> _users; //TODO: does this mean it has state? 
-
         public ReadOnlyCollection<User> Users => _users.AsReadOnly();
 
         public DataManager()
@@ -40,7 +38,12 @@ namespace FrameworklessWebApp2.DataAccess
 
         }
 
-        public void LoadUsers() //TODO: make private and put in Write to TextFile
+        public void AddUser(User user)
+        {
+            LoadUsers();
+            _users.Add(user);
+        }
+        private void LoadUsers() 
         {
             var sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
 
@@ -52,10 +55,7 @@ namespace FrameworklessWebApp2.DataAccess
             
         }
 
-        public void AddUser(User user)
-        {
-            _users.Add(user);
-        }
+     
         
     }
 
