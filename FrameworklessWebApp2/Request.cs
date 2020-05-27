@@ -7,9 +7,17 @@ using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2
 {
-    public static class Request //TODO: processing of the request is the controller 
+    public class Request //TODO: processing of the request is the controller 
     {//TODO: think about wrapping the HTTPListenerContext
-        public static void Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
+        
+        private readonly DataManager _dataManager;
+        public Request(DataManager dataManager)
+        {
+            _dataManager = dataManager;
+        }
+       
+        
+        public void Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
         {
             var request = context.Request; 
             var response = context.Response;
@@ -39,8 +47,8 @@ namespace FrameworklessWebApp2
                             
                             var user = JsonConvert.DeserializeObject<User>(json);
                             
-                            DataManager.Users.Add(user); //Controller TODO: Not good that I can just alter the list? make a method in DataManager
-                            DataManager.WriteToTextFile(DataManager.Users); //Controller
+                            _dataManager.AddUser(user); //Controller 
+                            _dataManager.WriteToTextFile(_dataManager.Users); //Controller
                             
                             response.StatusCode = (int) HttpStatusCode.Created; //view
                             

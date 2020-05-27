@@ -1,7 +1,12 @@
 [
   {
-    "username": "PaulPaul",
-    "name": "Paul",
-    "location": "Germany"
+    "username": "helpme",
+    "name": "why doesn't this work",
+    "location": "world"
+  },
+  {
+    "username": "helpme",
+    "name": "Amanda",
+    "location": "world"
   }
 ]
