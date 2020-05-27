@@ -34,8 +34,9 @@ namespace FrameworklessWebApp2
                         case "GET": //Routing  
                             Console.WriteLine("Get users");
                             response.StatusCode = (int) HttpStatusCode.OK;  
+                            //TODO: return json 
                             var htmlMessage = Html.Wrap("All Users", "<h1></h1>"); //VIEW //But this should probably be done in the front end?
-                            Response.Send(htmlMessage, context); //TODO: do I sent json? or html 
+                            Response.Send(htmlMessage, context); //TODO: send JSON  
                             break;
                         case "POST": 
                             Console.WriteLine("posting to /Users");
@@ -70,3 +71,5 @@ namespace FrameworklessWebApp2
         }
     }
 }
+
+//TODO: tests

@@ -5,13 +5,15 @@ using FrameworklessWebApp2.DataAccess;
 
 namespace FrameworklessWebApp2
 {
-    public static class Server
+    public class Server
     {
-        private static readonly HttpListener _server = new HttpListener();
+        
+        private readonly HttpListener _server = new HttpListener();
 
-        public static void StartServer()
+        public void StartServer()
         {
             var dataManager = new DataManager();
+            var request = new Request(dataManager);
             dataManager.LoadUsers();
             
             var port = GetPortConfig();
@@ -24,14 +26,14 @@ namespace FrameworklessWebApp2
                 var context = _server.GetContext();  
                 Console.WriteLine($"{context.Request.HttpMethod} {context.Request.Url}");
                 
-                var request = new Request(dataManager);
+                
                 request.Process(context);
 
             }
             _server.Stop();  // never reached...
         }
 
-        private static PortConfig GetPortConfig()
+        private PortConfig GetPortConfig()
         {
             return PortConfigurationLoader.LoadPortConfig(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DataAccess",
                 "PortConfiguration.json")); 

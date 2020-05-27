@@ -20,6 +20,7 @@ namespace FrameworklessWebApp2.DataAccess
         }
         public void WriteToTextFile(ReadOnlyCollection<User> users)
         {
+            
             var usersList = new JArray(
                 from u in users
                 select new JObject(
@@ -39,7 +40,7 @@ namespace FrameworklessWebApp2.DataAccess
 
         }
 
-        public void LoadUsers()
+        public void LoadUsers() //TODO: make private and put in Write to TextFile
         {
             var sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
 
@@ -62,5 +63,5 @@ namespace FrameworklessWebApp2.DataAccess
 
 //TODO: is this right
 //https://stackoverflow.com/questions/6041332/best-way-to-get-application-folder-path
-//AppDomain.CurrentDomain.BaseDirectory, ;
+//AppDomain.CurrentDomain.BaseDirectory, //restarting users over again , don't want to be in bin folder 
 ///Users/amanda.chau/fma/FrameworklessWebApp2/FrameworklessWebApp2/bin/Debug/netcoreapp3.1/DataAccess/Users.json
