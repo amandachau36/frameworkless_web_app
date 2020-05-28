@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Net;
 using FrameworklessWebApp2.DataAccess;
+using FrameworklessWebApp2.Resources;
 
 namespace FrameworklessWebApp2
 {
@@ -13,7 +14,8 @@ namespace FrameworklessWebApp2
         public void StartServer()
         {
             var dataManager = new DataManager();
-            var request = new Request(dataManager);
+            var users = new Users(dataManager);
+            var request = new Request(dataManager, users);
 
             var port = GetPortConfig();
             _server.Prefixes.Add($"http://localhost:{port.PortNumber}/"); //URI prefixes 

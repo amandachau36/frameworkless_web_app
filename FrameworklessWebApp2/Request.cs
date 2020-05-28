@@ -1,8 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using FrameworklessWebApp2.DataAccess;
+using FrameworklessWebApp2.Resources;
 using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2
@@ -11,11 +11,14 @@ namespace FrameworklessWebApp2
     {//TODO: think about wrapping the HTTPListenerContext
         
         private readonly DataManager _dataManager;
-        public Request(DataManager dataManager)
+        private readonly IResource _users;
+
+        public Request(DataManager dataManager, IResource resource)
         {
             _dataManager = dataManager;
+            _users = resource;
         }
-       
+     
         
         public void Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
         {
@@ -33,10 +36,9 @@ namespace FrameworklessWebApp2
                     {
                         case "GET": //Routing  
                             Console.WriteLine("Get users");
-                            response.StatusCode = (int) HttpStatusCode.OK;  
-                            //TODO: return json 
-                            var htmlMessage = Html.Wrap("All Users", "<h1></h1>"); //VIEW //But this should probably be done in the front end?
-                            Response.Send(htmlMessage, context); //TODO: send JSON  
+                            var allUsers = _users.Get();
+                            response.StatusCode = (int) HttpStatusCode.OK;
+                            Response.Send(JsonConvert.SerializeObject(allUsers), context); //TODO: send JSON  
                             break;
                         case "POST": 
                             Console.WriteLine("posting to /Users");
@@ -48,8 +50,8 @@ namespace FrameworklessWebApp2
                             
                             var user = JsonConvert.DeserializeObject<User>(json);
                             
-                            _dataManager.AddUser(user); //Controller 
-                            _dataManager.WriteToTextFile(_dataManager.Users); //Controller
+                            var newUserList = _dataManager.AddUser(user); //Controller 
+                            _dataManager.WriteToTextFile(newUserList); //Controller
                             
                             response.StatusCode = (int) HttpStatusCode.Created; //view
                             
@@ -73,3 +75,5 @@ namespace FrameworklessWebApp2
 }
 
 //TODO: tests
+
+//var htmlMessage = Html.Wrap("All Users", "<h1></h1>"); //VIEW //But this should probably be done in the front end?

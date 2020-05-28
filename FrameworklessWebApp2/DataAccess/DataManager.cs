@@ -9,14 +9,7 @@ namespace FrameworklessWebApp2.DataAccess
 {
     public class DataManager
     {
-        private List<User> _users; //TODO: does this mean it has state? 
-        public ReadOnlyCollection<User> Users => _users.AsReadOnly();
-
-        public DataManager()
-        {
-            _users = new List<User>();
-        }
-        public void WriteToTextFile(ReadOnlyCollection<User> users)
+        public void WriteToTextFile(List<User> users)
         {
             
             var usersList = new JArray(
@@ -38,21 +31,22 @@ namespace FrameworklessWebApp2.DataAccess
 
         }
 
-        public void AddUser(User user)
+        public List<User> AddUser(User user)
         {
-            LoadUsers();
-            _users.Add(user);
+            var users = GetUsers();
+            users.Add(user);
+            
+            return users;
         }
-        private void LoadUsers() 
+        public List<User> GetUsers() 
         {
             var sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
 
             var json= sr.ReadToEnd();
             
             sr.Close();
-            
-            _users = JsonConvert.DeserializeObject<List<User>>(json);
-            
+
+            return JsonConvert.DeserializeObject<List<User>>(json);
         }
 
      
@@ -61,7 +55,11 @@ namespace FrameworklessWebApp2.DataAccess
 
 }
 
-//TODO: is this right
+
+// private List<User> _users;
+// public ReadOnlyCollection<User> Users => _users.AsReadOnly();
+
+
 //https://stackoverflow.com/questions/6041332/best-way-to-get-application-folder-path
 //AppDomain.CurrentDomain.BaseDirectory, //restarting users over again , don't want to be in bin folder 
 ///Users/amanda.chau/fma/FrameworklessWebApp2/FrameworklessWebApp2/bin/Debug/netcoreapp3.1/DataAccess/Users.json
