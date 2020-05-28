@@ -17,7 +17,8 @@ namespace FrameworklessWebApp2.DataAccess
                 select new JObject(
                     new JProperty("username", u.Username),
                     new JProperty("name", u.Name),
-                    new JProperty("location", u.Location)
+                    new JProperty("location", u.Location),
+                    new JProperty("id", u.Id)
                 )
             );
 
@@ -35,6 +36,7 @@ namespace FrameworklessWebApp2.DataAccess
         {
             var users = GetUsers();
             var usersList = JsonConvert.DeserializeObject<List<User>>(users);
+            user.Id = usersList.Last().Id + 1;                                 //TODO: not ideal 
             usersList.Add(user);
             
             return usersList;

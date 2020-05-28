@@ -12,6 +12,9 @@ namespace FrameworklessWebApp2
 
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        [JsonProperty(PropertyName = "id")]
+        public int Id { get; set; }
         
     }
 }

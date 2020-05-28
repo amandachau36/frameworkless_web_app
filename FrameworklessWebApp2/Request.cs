@@ -31,24 +31,33 @@ namespace FrameworklessWebApp2
                     response.StatusCode = (int) HttpStatusCode.OK;  
                     Response.Send("Welcome to the Home Page", context);
                     break;
-                case "/users": //Routing TODO: stragedy pattern
+                case "/users": //Routing TODO: strategy pattern
                     switch (request.HttpMethod)
                     {
                         case "GET": //Routing  
-                            Console.WriteLine("Get users");
+                            Console.WriteLine("Get users");  //TODO: make logging better - Serilog outputs a structured log
                             var getMessage = _users.Get(); //Controller
                             response.StatusCode = (int) HttpStatusCode.OK;
                             Response.Send(getMessage, context); 
                             break;
+                        
                         case "POST": 
                             Console.WriteLine("posting to /Users");
-
-                            var postMessage = _users.Post(context);
-                            
+                            var postMessage = _users.Post(context); // Controller
                             response.StatusCode = (int) HttpStatusCode.Created; //view
-                            //Console.WriteLine("============\n" + user.Name + $"({user.Username})");  //TODO: make logging better - Serilog outputs a structured log
                             Response.Send(postMessage, context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
                             break;
+                    }
+                    break;
+                case "/users/id":
+                    switch (request.HttpMethod)
+                    {
+                        case "GET": //Routing  
+                            break;
+                        case "PUT":
+                            break;
+                        case "DELETE":
+                            break; 
                     }
                     break;
                 case "/countries":
@@ -68,3 +77,20 @@ namespace FrameworklessWebApp2
 //TODO: tests
 
 //var htmlMessage = Html.Wrap("All Users", "<h1></h1>"); //VIEW //But this should probably be done in the front end?
+// class Resource {
+// public Response Process(Request request) ; // interface
+// }
+// var routes = new Dictionary<string, Resource>();
+// routes.Add("/customers", new Resource.. ) // where is the verbs?
+// routes.Add("/customers/:customerId")
+// var routes = new Dictionary<Tuple<Verb, string>, Resource>();
+// var routes1 = new Dictionary<(Verb, string), Resource>();
+// routes.Add(Tuple.Create(POST, "/..."), TODO);
+// routes.Add((POST, "..."), resource)
+// /// ...
+// resourceBuilder.Build(routes);
+// // customer resource builder
+// void Build(routes)
+// {
+// routes.Add(...)
+// }

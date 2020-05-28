@@ -1,5 +1,3 @@
-
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using FrameworklessWebApp2.DataAccess;
@@ -24,7 +22,7 @@ namespace FrameworklessWebApp2.Resources
 
         public void Put() 
         {
-            throw new System.NotImplementedException(); //unused
+            //unused
         }
 
         public string Post(HttpListenerContext context)
@@ -46,7 +44,7 @@ namespace FrameworklessWebApp2.Resources
 
         public void Delete()
         {
-            throw new System.NotImplementedException(); //unused //TODO: breaks solid principle (interface segregation) 
+            //throw new System.NotImplementedException(); //unused //TODO: breaks solid principle (interface segregation) 
         }
     }
 }

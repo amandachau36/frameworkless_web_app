@@ -1,37 +1,26 @@
 [
   {
     "username": "helpme",
-    "name": "why doesn't this work",
-    "location": "world"
-  },
-  {
-    "username": "helpme",
-    "name": "Amanda",
-    "location": "world"
-  },
-  {
-    "username": "helpme",
-    "name": "Chito",
-    "location": "Mexico"
+    "name": "harry",
+    "location": "hogswart",
+    "id": 1
   },
   {
     "username": "helpme",
     "name": "Paul",
-    "location": "Germany"
+    "location": "Germany",
+    "id": 2
   },
   {
     "username": "helpme",
-    "name": "Tina",
-    "location": "China"
+    "name": "Ann",
+    "location": "Uk",
+    "id": 3
   },
   {
     "username": "helpme",
     "name": "Monica",
-    "location": "USA"
-  },
-  {
-    "username": "helpme",
-    "name": "Bob",
-    "location": "Mars"
+    "location": "Canada",
+    "id": 4
   }
 ]
