@@ -38,17 +38,16 @@ namespace FrameworklessWebApp2
                             Console.WriteLine("Get users");
                             var getMessage = _users.Get(); //Controller
                             response.StatusCode = (int) HttpStatusCode.OK;
-                            Response.Send(JsonConvert.SerializeObject(getMessage), context); //TODO: send JSON  
+                            Response.Send(getMessage, context); 
                             break;
                         case "POST": 
                             Console.WriteLine("posting to /Users");
 
                             var postMessage = _users.Post(context);
-
-                            response.StatusCode = (int) HttpStatusCode.Created; //view
                             
+                            response.StatusCode = (int) HttpStatusCode.Created; //view
                             //Console.WriteLine("============\n" + user.Name + $"({user.Username})");  //TODO: make logging better - Serilog outputs a structured log
-                            Response.Send(JsonConvert.SerializeObject(postMessage), context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
+                            Response.Send(postMessage, context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
                             break;
                     }
                     break;

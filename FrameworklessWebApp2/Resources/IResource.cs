@@ -5,9 +5,9 @@ namespace FrameworklessWebApp2.Resources
 {
     public interface IResource
     { 
-        List<User> Get();
+        string Get();
         void Put();
-        List<User> Post(HttpListenerContext context);
+        string Post(HttpListenerContext context);
         void Delete();
     }
 }

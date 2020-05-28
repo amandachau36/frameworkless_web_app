@@ -16,7 +16,7 @@ namespace FrameworklessWebApp2.Resources
             _dataManager = dataManager;
         }
         
-        public List<User> Get()
+        public string Get()
         {
            return _dataManager.GetUsers();
            
@@ -27,7 +27,7 @@ namespace FrameworklessWebApp2.Resources
             throw new System.NotImplementedException(); //unused
         }
 
-        public List<User> Post(HttpListenerContext context)
+        public string Post(HttpListenerContext context)
         {
             var body = context.Request.InputStream;  //Controller
                             

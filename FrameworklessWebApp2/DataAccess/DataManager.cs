@@ -34,11 +34,12 @@ namespace FrameworklessWebApp2.DataAccess
         public List<User> AddUser(User user)
         {
             var users = GetUsers();
-            users.Add(user);
+            var usersList = JsonConvert.DeserializeObject<List<User>>(users);
+            usersList.Add(user);
             
-            return users;
+            return usersList;
         }
-        public List<User> GetUsers() 
+        public string GetUsers() 
         {
             var sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
 
@@ -46,11 +47,10 @@ namespace FrameworklessWebApp2.DataAccess
             
             sr.Close();
 
-            return JsonConvert.DeserializeObject<List<User>>(json);
+            return json;
+            //JsonConvert.DeserializeObject<List<User>>(json);
         }
 
-     
-        
     }
 
 }
