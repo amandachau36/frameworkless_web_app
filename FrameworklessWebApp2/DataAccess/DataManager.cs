@@ -36,7 +36,10 @@ namespace FrameworklessWebApp2.DataAccess
         {
             var users = GetUsers();
             var usersList = JsonConvert.DeserializeObject<List<User>>(users);
-            user.Id = usersList.Last().Id + 1;                                 //TODO: not ideal 
+            
+            var id = usersList.Last().Id + 1;                            //TODO: not ideal
+            User.SetId(user, id);
+            
             usersList.Add(user);
             
             return usersList;

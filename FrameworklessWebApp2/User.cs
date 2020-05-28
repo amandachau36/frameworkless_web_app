@@ -14,7 +14,13 @@ namespace FrameworklessWebApp2
         public string Location { get; set; }
 
         [JsonProperty(PropertyName = "id")]
-        public int Id { get; set; }
+        public int Id { get; private set; }
+
+        public static void SetId(User user, int id)
+        {
+            user.Id = id;
+        }
+        
         
     }
 }
