@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using FrameworklessWebApp2.DataAccess;
@@ -10,12 +11,10 @@ namespace FrameworklessWebApp2
     public class Request //TODO: processing of the request is the controller 
     {//TODO: think about wrapping the HTTPListenerContext
         
-        private readonly DataManager _dataManager;
         private readonly IResource _users;
 
         public Request(DataManager dataManager, IResource resource)
         {
-            _dataManager = dataManager;
             _users = resource;
         }
      
@@ -24,24 +23,31 @@ namespace FrameworklessWebApp2
         {
             var request = context.Request; 
             var response = context.Response;
-           
-            switch (request.Url.AbsolutePath) 
+
+            foreach (var s in request.Url.Segments)
+            {
+                Console.WriteLine(s);
+            }
+            
+            var verb = ConvertHttpMethodToEnum(request.HttpMethod);
+
+            switch (request.Url.AbsolutePath)
             {
                 case "/":
                     response.StatusCode = (int) HttpStatusCode.OK;  
                     Response.Send("Welcome to the Home Page", context);
                     break;
                 case "/users": //Routing TODO: strategy pattern
-                    switch (request.HttpMethod)
+                    switch (verb)
                     {
-                        case "GET": //Routing  
+                        case HttpVerb.Get: //Routing  
                             Console.WriteLine("Get users");  //TODO: make logging better - Serilog outputs a structured log
                             var getMessage = _users.Get(); //Controller
                             response.StatusCode = (int) HttpStatusCode.OK;
                             Response.Send(getMessage, context); 
                             break;
                         
-                        case "POST": 
+                        case HttpVerb.Post: 
                             Console.WriteLine("posting to /Users");
                             var postMessage = _users.Post(context); // Controller
                             response.StatusCode = (int) HttpStatusCode.Created; //view
@@ -50,13 +56,13 @@ namespace FrameworklessWebApp2
                     }
                     break;
                 case "/users/id":
-                    switch (request.HttpMethod)
+                    switch (verb)
                     {
-                        case "GET": //Routing  
+                        case HttpVerb.Get: //Routing  
                             break;
-                        case "PUT":
+                        case HttpVerb.Put:
                             break;
-                        case "DELETE":
+                        case HttpVerb.Delete:
                             break; 
                     }
                     break;
@@ -70,6 +76,16 @@ namespace FrameworklessWebApp2
                     break;
                 
             }
+        }
+
+        private HttpVerb ConvertHttpMethodToEnum(string httpMethod)
+        {
+            if (Enum.TryParse(httpMethod, true, out HttpVerb verb))
+            {
+                return verb;
+            }
+            
+            throw new InvalidEnumArgumentException("Invalid http method: " + httpMethod);
         }
     }
 }
@@ -85,7 +101,7 @@ namespace FrameworklessWebApp2
 // routes.Add("/customers/:customerId")
 // var routes = new Dictionary<Tuple<Verb, string>, Resource>();
 // var routes1 = new Dictionary<(Verb, string), Resource>();
-// routes.Add(Tuple.Create(POST, "/..."), TODO);
+// routes.Add(Tuple.Create(POST, "/..."), todo);
 // routes.Add((POST, "..."), resource)
 // /// ...
 // resourceBuilder.Build(routes);

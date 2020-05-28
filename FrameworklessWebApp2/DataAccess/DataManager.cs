@@ -53,7 +53,7 @@ namespace FrameworklessWebApp2.DataAccess
             sr.Close();
 
             return json;
-            //JsonConvert.DeserializeObject<List<User>>(json);
+          
         }
 
     }

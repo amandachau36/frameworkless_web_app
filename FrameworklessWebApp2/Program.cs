@@ -1,4 +1,6 @@
-﻿namespace FrameworklessWebApp2
+﻿using System;
+
+namespace FrameworklessWebApp2
 {
     class Program
     {
@@ -6,6 +8,13 @@
         {
             var server = new Server();
             server.StartServer();
+
+            // if (Enum.TryParse("GET", true, out HttpVerb verb))
+            // {
+            //     Console.WriteLine(verb);
+            // }
+
+            
         }
     }
 } 
