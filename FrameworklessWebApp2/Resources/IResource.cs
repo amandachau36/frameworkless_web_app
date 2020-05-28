@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Net;
 
 namespace FrameworklessWebApp2.Resources
 {
@@ -6,7 +7,7 @@ namespace FrameworklessWebApp2.Resources
     { 
         List<User> Get();
         void Put();
-        void Post();
+        List<User> Post(HttpListenerContext context);
         void Delete();
     }
 }

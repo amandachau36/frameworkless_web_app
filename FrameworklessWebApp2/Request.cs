@@ -36,27 +36,19 @@ namespace FrameworklessWebApp2
                     {
                         case "GET": //Routing  
                             Console.WriteLine("Get users");
-                            var allUsers = _users.Get();
+                            var getMessage = _users.Get(); //Controller
                             response.StatusCode = (int) HttpStatusCode.OK;
-                            Response.Send(JsonConvert.SerializeObject(allUsers), context); //TODO: send JSON  
+                            Response.Send(JsonConvert.SerializeObject(getMessage), context); //TODO: send JSON  
                             break;
                         case "POST": 
                             Console.WriteLine("posting to /Users");
-                            var body = request.InputStream;  //Controller
-                            
-                            var reader = new StreamReader(body, request.ContentEncoding);
 
-                            var json = reader.ReadToEnd();
-                            
-                            var user = JsonConvert.DeserializeObject<User>(json);
-                            
-                            var newUserList = _dataManager.AddUser(user); //Controller 
-                            _dataManager.WriteToTextFile(newUserList); //Controller
-                            
+                            var postMessage = _users.Post(context);
+
                             response.StatusCode = (int) HttpStatusCode.Created; //view
                             
-                            Console.WriteLine("============\n" + user.Name + $"({user.Username})");  //TODO: make logging better - Serilog outputs a structured log
-                            Response.Send(user.Name, context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
+                            //Console.WriteLine("============\n" + user.Name + $"({user.Username})");  //TODO: make logging better - Serilog outputs a structured log
+                            Response.Send(JsonConvert.SerializeObject(postMessage), context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
                             break;
                     }
                     break;

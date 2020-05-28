@@ -1,6 +1,9 @@
 
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using FrameworklessWebApp2.DataAccess;
+using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2.Resources
 {
@@ -24,9 +27,21 @@ namespace FrameworklessWebApp2.Resources
             throw new System.NotImplementedException(); //unused
         }
 
-        public void Post()
+        public List<User> Post(HttpListenerContext context)
         {
+            var body = context.Request.InputStream;  //Controller
+                            
+            var reader = new StreamReader(body, context.Request.ContentEncoding);
+
+            var json = reader.ReadToEnd();
+                            
+            var user = JsonConvert.DeserializeObject<User>(json);
+                            
+            var newUserList = _dataManager.AddUser(user); //Controller 
             
+            _dataManager.WriteToTextFile(newUserList); //Controller
+
+            return _dataManager.GetUsers();
         }
 
         public void Delete()
