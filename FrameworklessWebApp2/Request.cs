@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Net;
 using FrameworklessWebApp2.DataAccess;
 using FrameworklessWebApp2.Resources;
@@ -24,20 +26,17 @@ namespace FrameworklessWebApp2
             var request = context.Request; 
             var response = context.Response;
 
-            foreach (var s in request.Url.Segments)
-            {
-                Console.WriteLine(s);
-            }
-            
+            var path = ConvertPathToResource(request.Url);
+
             var verb = ConvertHttpMethodToEnum(request.HttpMethod);
 
-            switch (request.Url.AbsolutePath)
+            switch (path.Item1)
             {
-                case "/":
-                    response.StatusCode = (int) HttpStatusCode.OK;  
-                    Response.Send("Welcome to the Home Page", context);
-                    break;
-                case "/users": //Routing TODO: strategy pattern
+                // case "/":
+                //     response.StatusCode = (int) HttpStatusCode.OK;  
+                //     Response.Send("Welcome to the Home Page", context);
+                //     break;
+                case Resource.Users: //Routing TODO: strategy pattern
                     switch (verb)
                     {
                         case HttpVerb.Get: //Routing  
@@ -55,10 +54,11 @@ namespace FrameworklessWebApp2
                             break;
                     }
                     break;
-                case "/users/id":
+                case Resource.User:
                     switch (verb)
                     {
                         case HttpVerb.Get: //Routing  
+                            Console.WriteLine($"/users/{path.Item2}");
                             break;
                         case HttpVerb.Put:
                             break;
@@ -66,10 +66,10 @@ namespace FrameworklessWebApp2
                             break; 
                     }
                     break;
-                case "/countries":
-                    response.StatusCode = (int) HttpStatusCode.OK;  
-                    Response.Send("All Countries", context);
-                    break;
+                // case "/countries":
+                //     response.StatusCode = (int) HttpStatusCode.OK;  
+                //     Response.Send("All Countries", context);
+                //     break;
                 default:
                     response.StatusCode = (int) HttpStatusCode.NotFound;  
                     Response.Send("Page not found: " + request.Url, context);  
@@ -86,6 +86,37 @@ namespace FrameworklessWebApp2
             }
             
             throw new InvalidEnumArgumentException("Invalid http method: " + httpMethod);
+        }
+
+        private (Resource, int? id) ConvertPathToResource(Uri uri)
+        {
+            var segments = uri.Segments;
+
+            var processedSegments = segments.Select(s => s.TrimEnd('/')).ToList();
+
+            Resource resource = Resource.ResourceNotFound;
+
+            int? id = null;
+
+            if (processedSegments[1].ToLower() == "users")
+            {
+                if (processedSegments.Count == 2)
+                {
+                    resource = Resource.Users;
+                }
+
+                if (processedSegments.Count == 3 && int.TryParse(processedSegments[2], out int num))
+                {
+                    resource = Resource.User;
+                    id = num;
+                }
+            }
+            
+            // Console.WriteLine("---resource----" + resource);
+            // Console.WriteLine("---id----" + id);
+            
+
+            return (resource, id);
         }
     }
 }
