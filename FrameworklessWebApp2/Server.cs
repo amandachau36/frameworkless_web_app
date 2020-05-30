@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Resources;
 using FrameworklessWebApp2.DataAccess;
 using FrameworklessWebApp2.Resources;
 
@@ -14,8 +16,13 @@ namespace FrameworklessWebApp2
         public void StartServer()
         {
             var dataManager = new DataManager();
-            var users = new Users(dataManager);
-            var request = new Request(dataManager, users);
+            var resources = new Dictionary<Resource, IResource>
+            {
+                {Resource.Users, new UsersResource(dataManager)},
+                {Resource.User, new UserResource(dataManager)}
+            };
+            
+            var request = new Request(dataManager, resources);
 
             var port = GetPortConfig();
             _server.Prefixes.Add($"http://localhost:{port.PortNumber}/"); //URI prefixes 

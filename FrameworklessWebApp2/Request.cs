@@ -13,11 +13,11 @@ namespace FrameworklessWebApp2
     public class Request //TODO: processing of the request is the controller 
     {//TODO: think about wrapping the HTTPListenerContext
         
-        private readonly IResource _users;
+        private readonly Dictionary<Resource, IResource> _resources;
 
-        public Request(DataManager dataManager, IResource resource)
+        public Request(DataManager dataManager, Dictionary<Resource, IResource> resources)
         {
-            _users = resource;
+            _resources = resources;
         }
      
         
@@ -41,14 +41,14 @@ namespace FrameworklessWebApp2
                     {
                         case HttpVerb.Get: //Routing  
                             Console.WriteLine("Get users");  //TODO: make logging better - Serilog outputs a structured log
-                            var getMessage = _users.Get(); //Controller
+                            var getMessage = _resources[Resource.Users].Get(); //Controller
                             response.StatusCode = (int) HttpStatusCode.OK;
                             Response.Send(getMessage, context); 
                             break;
                         
                         case HttpVerb.Post: 
                             Console.WriteLine("posting to /Users");
-                            var postMessage = _users.Post(context); // Controller
+                            var postMessage = _resources[Resource.Users].Post(context); // Controller
                             response.StatusCode = (int) HttpStatusCode.Created; //view
                             Response.Send(postMessage, context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
                             break;
@@ -57,8 +57,10 @@ namespace FrameworklessWebApp2
                 case Resource.User:
                     switch (verb)
                     {
-                        case HttpVerb.Get: //Routing  
+                        case HttpVerb.Get: //Routing
                             Console.WriteLine($"/users/{path.Item2}");
+                            var getMessage = _resources[Resource.User].Get(path.Item2);
+                            Response.Send(getMessage, context);
                             break;
                         case HttpVerb.Put:
                             break;
@@ -112,10 +114,6 @@ namespace FrameworklessWebApp2
                 }
             }
             
-            // Console.WriteLine("---resource----" + resource);
-            // Console.WriteLine("---id----" + id);
-            
-
             return (resource, id);
         }
     }

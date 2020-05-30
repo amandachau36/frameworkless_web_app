@@ -34,15 +34,14 @@ namespace FrameworklessWebApp2.DataAccess
 
         public List<User> AddUser(User user)
         {
-            var users = GetUsers();
-            var usersList = JsonConvert.DeserializeObject<List<User>>(users);
+            var users = GetAllUsersList();
             
-            var id = usersList.Last().Id + 1;                            //TODO: not ideal
+            var id = users.Last().Id + 1;                            //TODO: not ideal
             User.SetId(user, id);
             
-            usersList.Add(user);
+            users.Add(user);
             
-            return usersList;
+            return users;
         }
         public string GetUsers() 
         {
@@ -54,6 +53,23 @@ namespace FrameworklessWebApp2.DataAccess
 
             return json;
           
+        }
+
+        public string GetUser(int? id)
+        {
+            var users = GetAllUsersList();
+
+            var user = users.Find(x => x.Id == id);
+
+            return JsonConvert.SerializeObject(user);
+
+        }
+
+        private List<User> GetAllUsersList()
+        {
+            var users = GetUsers();
+            
+            return JsonConvert.DeserializeObject<List<User>>(users);
         }
 
     }

@@ -5,11 +5,11 @@ using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2.Resources
 {
-    public class Users : IResource
+    public class UsersResource : IResource
     {
         private readonly DataManager _dataManager;
 
-        public Users(DataManager dataManager)
+        public UsersResource(DataManager dataManager)
         {
             _dataManager = dataManager;
         }
@@ -18,6 +18,11 @@ namespace FrameworklessWebApp2.Resources
         {
            return _dataManager.GetUsers();
            
+        }
+
+        public string Get(int? id)
+        {
+            throw new System.NotImplementedException();
         }
 
         public void Put() 
