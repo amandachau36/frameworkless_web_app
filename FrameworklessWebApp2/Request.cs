@@ -34,11 +34,7 @@ namespace FrameworklessWebApp2
             {
                 switch (path.Item1)
                 {
-                // case "/":
-                //     response.StatusCode = (int) HttpStatusCode.OK;  
-                //     Response.Send("Welcome to the Home Page", context);
-                //     break;
-                case Resource.Users: //Routing TODO: strategy pattern
+                    case Resource.Users: //Routing TODO: strategy pattern
                     switch (verb)
                     {
                         case HttpVerb.Get: //Routing  
@@ -62,9 +58,13 @@ namespace FrameworklessWebApp2
                         case HttpVerb.Get: //Routing
                             Console.WriteLine($"/users/{path.Item2}");
                             var getMessage = _resources[Resource.User].Get(path.Item2);
+                            response.StatusCode = (int) HttpStatusCode.OK;
                             Response.Send(getMessage, context);
                             break;
                         case HttpVerb.Put:
+                            var putMessage = _resources[Resource.User].Put(path.Item2, context);
+                            response.StatusCode = (int) HttpStatusCode.OK;
+                            Response.Send(putMessage, context);
                             break;
                         case HttpVerb.Delete:
                             break; 

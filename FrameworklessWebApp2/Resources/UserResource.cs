@@ -1,5 +1,8 @@
+using System;
+using System.IO;
 using System.Net;
 using FrameworklessWebApp2.DataAccess;
+using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2.Resources
 {
@@ -13,20 +16,32 @@ namespace FrameworklessWebApp2.Resources
         }
         public string Get()
         {
-            throw new System.NotImplementedException();
+            throw new System.NotImplementedException(); // unused
         }
 
         public string Get(int? id)
         {
-           return _dataManager.GetUser(id);
+           return _dataManager.ReadUser(id);
         }
 
-        public void Put()
+        public string Put(int? id, HttpListenerContext context)
         {
-            throw new System.NotImplementedException();
+            var body = context.Request.InputStream;  //Controller
+                            
+            var reader = new StreamReader(body, context.Request.ContentEncoding);
+
+            var json = reader.ReadToEnd();
+                            
+            var userUpdate = JsonConvert.DeserializeObject<User>(json);
+
+            var updatedUsersList = _dataManager.UpdateUser(id, userUpdate);
+            
+            _dataManager.WriteToTextFile(updatedUsersList);
+
+            return _dataManager.ReadUser(id);
         }
 
-        public string Post(HttpListenerContext context)
+        public string Post(HttpListenerContext context) //unused
         {
             throw new System.NotImplementedException();
         }

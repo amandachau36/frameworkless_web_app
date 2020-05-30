@@ -1,3 +1,4 @@
+using System.Reflection;
 using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2
@@ -20,7 +21,7 @@ namespace FrameworklessWebApp2
         {
             user.Id = id;
         }
-        
+
         
     }
 }

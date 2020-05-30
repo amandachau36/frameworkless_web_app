@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -34,7 +35,7 @@ namespace FrameworklessWebApp2.DataAccess
 
         }
 
-        public List<User> AddUser(User user)
+        public List<User> CreateUser(User user)
         {
             var users = GetAllUsersList();
             
@@ -45,7 +46,7 @@ namespace FrameworklessWebApp2.DataAccess
             
             return users;
         }
-        public string GetUsers() 
+        public string ReadUsers() 
         {
             var sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
 
@@ -57,7 +58,7 @@ namespace FrameworklessWebApp2.DataAccess
           
         }
 
-        public string GetUser(int? id)
+        public string ReadUser(int? id)
         {
             var users = GetAllUsersList();
 
@@ -70,9 +71,39 @@ namespace FrameworklessWebApp2.DataAccess
 
         }
 
+        public List<User> UpdateUser(int? id, User user)
+        {
+            var users = GetAllUsersList();
+
+            var index = users.FindIndex(x => x.Id == id);
+
+            if (index < 0) 
+                throw new HttpRequestException("Page not found: ");
+            
+            foreach (var prop in user.GetType().GetProperties())
+            {
+                var value = prop.GetValue(user);
+
+                if (value is null || prop.Name == "Id") continue;
+                
+                users[index].GetType().GetProperty(prop.Name)?.SetValue(users[index], prop.GetValue(user));
+                
+                Console.WriteLine("prop" + prop.Name);
+                Console.WriteLine("...." + prop.GetValue(user));
+                // if (!string.IsNullOrWhiteSpace(value))
+                // {
+                //     prop.Name + prop.GetValue(user)); 
+                // }
+                //
+            }
+            
+
+            return users;
+        }
+
         private List<User> GetAllUsersList()
         {
-            var users = GetUsers();
+            var users = ReadUsers();
             
             return JsonConvert.DeserializeObject<List<User>>(users);
         }

@@ -7,7 +7,7 @@ namespace FrameworklessWebApp2.Resources
     { 
         string Get();
         string Get(int? id);
-        void Put();
+        string Put(int? id, HttpListenerContext context);
         string Post(HttpListenerContext context);
         void Delete();
     }

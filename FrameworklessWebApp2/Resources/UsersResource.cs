@@ -16,7 +16,7 @@ namespace FrameworklessWebApp2.Resources
         
         public string Get()
         {
-           return _dataManager.GetUsers();
+           return _dataManager.ReadUsers();
            
         }
 
@@ -25,9 +25,9 @@ namespace FrameworklessWebApp2.Resources
             throw new System.NotImplementedException();
         }
 
-        public void Put() 
+        public string Put(int? id, HttpListenerContext context) 
         {
-            //unused
+            throw new System.NotImplementedException();
         }
 
         public string Post(HttpListenerContext context)
@@ -40,11 +40,11 @@ namespace FrameworklessWebApp2.Resources
                             
             var user = JsonConvert.DeserializeObject<User>(json);
                             
-            var newUserList = _dataManager.AddUser(user); //Controller 
+            var newUserList = _dataManager.CreateUser(user); //Controller 
             
             _dataManager.WriteToTextFile(newUserList); //Controller
 
-            return _dataManager.GetUsers();
+            return _dataManager.ReadUsers();
         }
 
         public void Delete()
