@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -59,9 +61,12 @@ namespace FrameworklessWebApp2.DataAccess
         {
             var users = GetAllUsersList();
 
-            var user = users.Find(x => x.Id == id);
+            var index = users.FindIndex(x => x.Id == id);
+            
+            if (index < 0) 
+                throw new HttpRequestException("Page not found: ");
 
-            return JsonConvert.SerializeObject(user);
+            return JsonConvert.SerializeObject(users[index]);
 
         }
 

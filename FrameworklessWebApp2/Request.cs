@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using FrameworklessWebApp2.DataAccess;
 using FrameworklessWebApp2.Resources;
-using Newtonsoft.Json;
+
 
 namespace FrameworklessWebApp2
 {
@@ -30,8 +30,10 @@ namespace FrameworklessWebApp2
 
             var verb = ConvertHttpMethodToEnum(request.HttpMethod);
 
-            switch (path.Item1)
+            try
             {
+                switch (path.Item1)
+                {
                 // case "/":
                 //     response.StatusCode = (int) HttpStatusCode.OK;  
                 //     Response.Send("Welcome to the Home Page", context);
@@ -73,11 +75,16 @@ namespace FrameworklessWebApp2
                 //     Response.Send("All Countries", context);
                 //     break;
                 default:
-                    response.StatusCode = (int) HttpStatusCode.NotFound;  
-                    Response.Send("Page not found: " + request.Url, context);  
-                    break;
-                
+                    throw new HttpRequestException("Page not found: ");
+                }
+
             }
+            catch (HttpRequestException e)
+            {
+                response.StatusCode = (int) HttpStatusCode.NotFound;  
+                Response.Send(e.Message + request.Url, context);  
+            }
+            
         }
 
         private HttpVerb ConvertHttpMethodToEnum(string httpMethod)
@@ -116,6 +123,8 @@ namespace FrameworklessWebApp2
             
             return (resource, id);
         }
+        
+        
     }
 }
 

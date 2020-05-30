@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FrameworklessWebApp2
 {
@@ -8,12 +9,6 @@ namespace FrameworklessWebApp2
         {
             var server = new Server();
             server.StartServer();
-
-            // if (Enum.TryParse("GET", true, out HttpVerb verb))
-            // {
-            //     Console.WriteLine(verb);
-            // }
-
             
         }
     }
