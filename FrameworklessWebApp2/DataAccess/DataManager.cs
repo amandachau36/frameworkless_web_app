@@ -84,17 +84,14 @@ namespace FrameworklessWebApp2.DataAccess
             {
                 var value = prop.GetValue(user);
 
-                if (value is null || prop.Name == "Id") continue;
+                if (value is null) continue;
+                
+                if (prop.Name == "Id")
+                    throw new HttpRequestException("Cannot update user id: ");
                 
                 users[index].GetType().GetProperty(prop.Name)?.SetValue(users[index], prop.GetValue(user));
                 
-                Console.WriteLine("prop" + prop.Name);
-                Console.WriteLine("...." + prop.GetValue(user));
-                // if (!string.IsNullOrWhiteSpace(value))
-                // {
-                //     prop.Name + prop.GetValue(user)); 
-                // }
-                //
+         
             }
             
 
