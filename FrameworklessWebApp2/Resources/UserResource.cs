@@ -26,11 +26,8 @@ namespace FrameworklessWebApp2.Resources
 
         public string Put(int? id, HttpListenerContext context)
         {
-            var body = context.Request.InputStream;  //Controller
-                            
-            var reader = new StreamReader(body, context.Request.ContentEncoding);
-
-            var json = reader.ReadToEnd();
+            
+            var json = Json.Read(context);
                             
             var userUpdate = JsonConvert.DeserializeObject<User>(json);
             

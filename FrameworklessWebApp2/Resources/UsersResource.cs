@@ -32,12 +32,8 @@ namespace FrameworklessWebApp2.Resources
 
         public string Post(HttpListenerContext context)
         {
-            var body = context.Request.InputStream;  //Controller
-                            
-            var reader = new StreamReader(body, context.Request.ContentEncoding);
-
-            var json = reader.ReadToEnd();
-                            
+            var json = Json.Read(context); 
+            
             var user = JsonConvert.DeserializeObject<User>(json);
             
             _dataManager.CreateUser(user); //Controller 
@@ -51,3 +47,5 @@ namespace FrameworklessWebApp2.Resources
         }
     }
 }
+
+//TODO: test what would happen with ID
