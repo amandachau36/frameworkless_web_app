@@ -20,13 +20,13 @@
   {
     "username": "helloWorld",
     "name": "hello",
-    "location": "Canada",
+    "location": "north pole",
     "id": 4
   },
   {
     "username": "helpme",
     "name": "Steph",
-    "location": "Switzerland",
+    "location": "Bern",
     "id": 5
   },
   {
@@ -46,5 +46,11 @@
     "name": "new",
     "location": "World",
     "id": 8
+  },
+  {
+    "username": "bob",
+    "name": "bobby",
+    "location": "USA",
+    "id": 9
   }
 ]

@@ -12,30 +12,7 @@ namespace FrameworklessWebApp2.DataAccess
 {
     public class DataManager
     {
-        public void WriteToTextFile(List<User> users)
-        {
-            
-            var usersList = new JArray(
-                from u in users
-                select new JObject(
-                    new JProperty("username", u.Username),
-                    new JProperty("name", u.Name),
-                    new JProperty("location", u.Location),
-                    new JProperty("id", u.Id)
-                )
-            );
-
-            var sw = new StreamWriter(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
-            
-            sw.WriteLine(usersList);
-            
-            sw.Flush();
-
-            sw.Close();
-
-        }
-
-        public List<User> CreateUser(User user)
+        public void CreateUser(User user)
         {
             var users = GetAllUsersList();
             
@@ -44,7 +21,8 @@ namespace FrameworklessWebApp2.DataAccess
             
             users.Add(user);
             
-            return users;
+            WriteToTextFile(users);
+            
         }
         public string ReadUsers() 
         {
@@ -71,7 +49,7 @@ namespace FrameworklessWebApp2.DataAccess
 
         }
 
-        public List<User> UpdateUser(int? id, User user)
+        public void UpdateUser(int? id, User user)
         {
             var users = GetAllUsersList();
 
@@ -79,25 +57,47 @@ namespace FrameworklessWebApp2.DataAccess
 
             if (index < 0) 
                 throw new HttpRequestException("Page not found: ");
-            
-            foreach (var prop in user.GetType().GetProperties())
+
+            var propertiesToUpdate = user.GetType().GetProperties();
+
+            foreach (var prop in propertiesToUpdate)
             {
                 var value = prop.GetValue(user);
 
-                if (value is null) continue;
-                
-                if (prop.Name == "Id")
-                    throw new HttpRequestException("Cannot update user id: ");
-                
+                if (value is null || prop.Name == "Id") continue;  //TODO: Throw Exception when trying to change ID 
+
                 users[index].GetType().GetProperty(prop.Name)?.SetValue(users[index], prop.GetValue(user));
                 
-         
             }
             
-
-            return users;
+            WriteToTextFile(users);
+            
         }
 
+        private void WriteToTextFile(List<User> users)
+        {
+            
+            var usersList = new JArray(
+                from u in users
+                select new JObject(
+                    new JProperty("username", u.Username),
+                    new JProperty("name", u.Name),
+                    new JProperty("location", u.Location),
+                    new JProperty("id", u.Id)
+                )
+            );
+
+            var sw = new StreamWriter(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
+            
+            sw.WriteLine(usersList);
+            
+            sw.Flush();
+
+            sw.Close();
+
+        }
+        
+        
         private List<User> GetAllUsersList()
         {
             var users = ReadUsers();

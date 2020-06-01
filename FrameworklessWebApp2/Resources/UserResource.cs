@@ -33,10 +33,8 @@ namespace FrameworklessWebApp2.Resources
             var json = reader.ReadToEnd();
                             
             var userUpdate = JsonConvert.DeserializeObject<User>(json);
-
-            var updatedUsersList = _dataManager.UpdateUser(id, userUpdate);
             
-            _dataManager.WriteToTextFile(updatedUsersList);
+            _dataManager.UpdateUser(id, userUpdate);
 
             return _dataManager.ReadUser(id);
         }

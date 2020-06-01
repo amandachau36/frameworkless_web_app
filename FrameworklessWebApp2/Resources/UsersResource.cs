@@ -39,10 +39,8 @@ namespace FrameworklessWebApp2.Resources
             var json = reader.ReadToEnd();
                             
             var user = JsonConvert.DeserializeObject<User>(json);
-                            
-            var newUserList = _dataManager.CreateUser(user); //Controller 
             
-            _dataManager.WriteToTextFile(newUserList); //Controller
+            _dataManager.CreateUser(user); //Controller 
 
             return _dataManager.ReadUsers();
         }
