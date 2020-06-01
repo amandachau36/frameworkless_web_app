@@ -19,13 +19,9 @@ namespace FrameworklessWebApp2.Resources
            return _dataManager.ReadUsers();
            
         }
+        
 
-        public string Get(int? id)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public string Put(int? id, HttpListenerContext context) 
+        public string Put(HttpListenerContext context) 
         {
             throw new System.NotImplementedException();
         }

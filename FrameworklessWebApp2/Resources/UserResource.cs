@@ -8,32 +8,29 @@ namespace FrameworklessWebApp2.Resources
 {
     public class UserResource : IResource
     {
+        private readonly int _id;
         private readonly DataManager _dataManager;
 
-        public UserResource(DataManager dataManager)
+        public UserResource(DataManager dataManager, int id)
         {
             _dataManager = dataManager;
+            _id = id;
         }
         public string Get()
         {
-            throw new System.NotImplementedException(); // unused
+            return _dataManager.ReadUser(_id);
         }
-
-        public string Get(int? id)
-        {
-           return _dataManager.ReadUser(id);
-        }
-
-        public string Put(int? id, HttpListenerContext context)
+        
+        public string Put(HttpListenerContext context)
         {
             
             var json = Json.Read(context);
                             
             var userUpdate = JsonConvert.DeserializeObject<User>(json);
             
-            _dataManager.UpdateUser(id, userUpdate);
-
-            return _dataManager.ReadUser(id);
+            _dataManager.UpdateUser(_id, userUpdate);
+        
+            return _dataManager.ReadUser(_id);
         }
 
         public string Post(HttpListenerContext context) //unused

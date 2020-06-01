@@ -2,7 +2,7 @@
   {
     "username": "helpme",
     "name": "harry",
-    "location": "Chile",
+    "location": "Hogswart",
     "id": 1
   },
   {
@@ -58,5 +58,17 @@
     "name": "amanda",
     "location": "Aus",
     "id": 10
+  },
+  {
+    "username": "please work",
+    "name": "Monica",
+    "location": "Vancouver",
+    "id": 11
+  },
+  {
+    "username": "refactor put",
+    "name": "test",
+    "location": "Toronto",
+    "id": 12
   }
 ]

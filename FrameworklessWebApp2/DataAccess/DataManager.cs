@@ -10,7 +10,7 @@ using Newtonsoft.Json.Linq;
 
 namespace FrameworklessWebApp2.DataAccess
 {
-    public class DataManager
+    public class DataManager //TODO: consider static 
     {
         public void CreateUser(User user)
         {
@@ -36,7 +36,7 @@ namespace FrameworklessWebApp2.DataAccess
           
         }
 
-        public string ReadUser(int? id)
+        public string ReadUser(int id)
         {
             var users = GetAllUsersList();
 

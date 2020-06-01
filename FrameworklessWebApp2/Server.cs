@@ -16,13 +16,13 @@ namespace FrameworklessWebApp2
         public void StartServer()
         {
             var dataManager = new DataManager();
-            var resources = new Dictionary<Resource, IResource>
-            {
-                {Resource.Users, new UsersResource(dataManager)},
-                {Resource.User, new UserResource(dataManager)}
-            };
-            
-            var request = new Request(dataManager, resources);
+            // var resources = new Dictionary<Resource, IResource>
+            // {
+            //     {Resource.Users, new UsersResource(dataManager)},
+            //     {Resource.User, new UserResource(dataManager, null)}
+            // };
+            //
+            var request = new Request(dataManager);
 
             var port = GetPortConfig();
             _server.Prefixes.Add($"http://localhost:{port.PortNumber}/"); //URI prefixes 
