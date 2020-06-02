@@ -1,8 +1,6 @@
-using System;
-using System.IO;
+
 using System.Net;
 using FrameworklessWebApp2.DataAccess;
-using FrameworklessWebApp2.Resources;
 using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2.Controllers
@@ -18,13 +16,10 @@ namespace FrameworklessWebApp2.Controllers
         }
         
         
-        public string Post(HttpListenerContext context)
+        public string Post(User newUser)
         {
-            var json = Json.Read(context); 
-            
-            var user = JsonConvert.DeserializeObject<User>(json);
-            
-            _dataManager.CreateUser(user); //Controller 
+
+            _dataManager.CreateUser(newUser); //Controller 
 
             return _dataManager.ReadUsers();
         }
@@ -40,14 +35,10 @@ namespace FrameworklessWebApp2.Controllers
             return _dataManager.ReadUser(id);
         }
         
-        public string Put(HttpListenerContext context, int id) //TODO: consider passing in model instead of entire HH
+        public string Put(User userToUpdate, int id) //TODO: consider passing in model instead of entire HH
         {
-            
-            var json = Json.Read(context);
-                            
-            var userUpdate = JsonConvert.DeserializeObject<User>(json);
-            
-            _dataManager.UpdateUser(id, userUpdate);
+
+            _dataManager.UpdateUser(id, userToUpdate);
         
             return _dataManager.ReadUser(id);
         }

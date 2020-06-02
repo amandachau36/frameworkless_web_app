@@ -1,10 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Resources;
 using FrameworklessWebApp2.DataAccess;
-using FrameworklessWebApp2.Resources;
+
 
 namespace FrameworklessWebApp2
 {

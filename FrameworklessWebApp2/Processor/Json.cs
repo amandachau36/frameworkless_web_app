@@ -2,7 +2,7 @@ using System.IO;
 using System.Net;
 using System.Xml.Linq;
 
-namespace FrameworklessWebApp2.Resources
+namespace FrameworklessWebApp2
 {
     public class Json
     {

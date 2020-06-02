@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using FrameworklessWebApp2.Controllers;
 using FrameworklessWebApp2.DataAccess;
+using Newtonsoft.Json;
 
 
 namespace FrameworklessWebApp2
@@ -26,7 +27,6 @@ namespace FrameworklessWebApp2
             var response = context.Response;
             try
             {
-                
                 var verb = ConvertHttpMethodToEnum(request.HttpMethod);
             
                 var resourceInfo = ConvertPathToResource(request.Url);
@@ -40,24 +40,24 @@ namespace FrameworklessWebApp2
 
                 var id = resourceInfo.Item2.GetValueOrDefault();
                 
-                
+                var json = Json.Read(context);
+                var user = ConvertJsonToModel(json);
                 
                 switch (verb)
                 {
                     case HttpVerb.Get: //Routing // URL
                         Console.WriteLine("hello from get"); //TODO: make logging better - Serilog outputs a structured log
-                        string getMessage;
-                        getMessage = resourceInfo.Item2 == null ? usersController.Get() : usersController.Get(id);
+                        var getMessage = resourceInfo.Item2 == null ? usersController.Get() : usersController.Get(id);
                         response.StatusCode = (int) HttpStatusCode.OK;
                         Response.Send(getMessage, context); //TODO: NOT CONTROLLER, return json/string  
                         break;
                     case HttpVerb.Put:  //URL and body
-                        var putMessage = usersController.Put(context, id);
+                        var putMessage = usersController.Put(user, id);
                         response.StatusCode = (int) HttpStatusCode.OK;
                         Response.Send(putMessage, context);
                         break;
                     case HttpVerb.Post:  //body
-                        var postMessage = usersController.Post(context); // Controller
+                        var postMessage = usersController.Post(user); // Controller
                         response.StatusCode = (int) HttpStatusCode.Created; //view
                         Response.Send(postMessage, context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
                         break;
@@ -66,7 +66,6 @@ namespace FrameworklessWebApp2
                     default:
                         throw new HttpRequestException("Page not found: "); 
                 }
-
             }
             catch (HttpRequestException e)
             {
@@ -100,7 +99,6 @@ namespace FrameworklessWebApp2
 
         private static Controller GetController(string controllerString)
         {
-
             if (Enum.TryParse(controllerString, true, out Controller controller))
             {
                 return controller;
@@ -115,12 +113,20 @@ namespace FrameworklessWebApp2
                 return id;
 
             return null; //TODO: case users/cats Throw exception 
-
         }
 
-
+        private static User ConvertJsonToModel(string json)
+        {
+            return JsonConvert.DeserializeObject<User>(json);
+        }
+        
     }
 }
+
+
+
+
+//var json = Json.Read(context);
 
 //TODO: tests
 
