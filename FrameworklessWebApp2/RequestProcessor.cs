@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -33,7 +34,7 @@ namespace FrameworklessWebApp2
                 //var resource = ResourceFactory.CreateResource(resourceInfo, _dataManager);   //Routing  //
                 var usersController = resourceInfo.Item1 switch
                 {
-                    Resource.Users => new UsersController(_dataManager),
+                    Controller.Users => new UsersController(_dataManager),
                     _ => throw new HttpRequestException("Page not found: ")
                 };
 
@@ -84,30 +85,40 @@ namespace FrameworklessWebApp2
             throw new HttpRequestException("Invalid http method: " + httpMethod);
         }
 
-        private static (Resource, int? id) ConvertPathToResource(Uri uri)
+        private (Controller, int? id) ConvertPathToResource(Uri uri)
         {
             var segments = uri.Segments;
 
             var processedSegments = segments.Select(s => s.TrimEnd('/')).ToList();
 
-            Resource resource = Resource.ResourceNotFound;
+            var controller = GetController(processedSegments[1]);
 
-            if (processedSegments[1].ToLower() == "users") 
-                resource = Resource.Users;
-                
-            int? id = null;
-            
-            if (processedSegments.Count > 2 && int.TryParse(processedSegments[2], out int num))
-                id = num;
+            var id = GetId(processedSegments);
 
-            if(resource == Resource.ResourceNotFound)
-                throw new HttpRequestException("Page not found: ");
-            
-            return (resource, id);
+            return (controller, id);
         }
-        
-        
-        
+
+        private static Controller GetController(string controllerString)
+        {
+
+            if (Enum.TryParse(controllerString, true, out Controller controller))
+            {
+                return controller;
+            }
+            
+            throw new HttpRequestException($"Controller not found: {controllerString}");
+        }
+
+        private static int? GetId(List<string> processedSegments)
+        {
+            if (processedSegments.Count > 2 && int.TryParse(processedSegments[2], out var id))
+                return id;
+
+            return null; //TODO: case users/cats Throw exception 
+
+        }
+
+
     }
 }
 

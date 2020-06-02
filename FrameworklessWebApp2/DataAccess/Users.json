@@ -32,7 +32,7 @@
   {
     "username": "helpme",
     "name": "Kris",
-    "location": "Whistler",
+    "location": "calgary",
     "id": 6
   },
   {
@@ -82,5 +82,11 @@
     "name": "CM",
     "location": "trash can",
     "id": 14
+  },
+  {
+    "username": "Lochy",
+    "name": "Lochness Monster",
+    "location": "scotland",
+    "id": 15
   }
 ]
