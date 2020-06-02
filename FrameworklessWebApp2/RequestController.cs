@@ -10,57 +10,53 @@ using FrameworklessWebApp2.Resources;
 
 namespace FrameworklessWebApp2
 {
-    public class Request //TODO: processing of the request is the controller 
+    public class RequestController //TODO: processing of the request is the controller 
     {//TODO: think about wrapping the HTTPListenerContext
 
         private readonly DataManager _dataManager;
-        //private readonly Dictionary<Resource, IResource> _resources;
-
-        public Request(DataManager dataManager)
+        public RequestController(DataManager dataManager)
         {
             _dataManager = dataManager;
-            //_resources = resources;
-            //Dictionary<Resource, IResource> resources
+           
         }
-     
-        
+
         public void Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
         {
+            
             var request = context.Request; 
             var response = context.Response;
-
-            var verb = ConvertHttpMethodToEnum(request.HttpMethod);
-            
-            var resourceInfo = ConvertPathToResource(request.Url);
-
-            var resource = ResourceFactory.CreateResource(resourceInfo, _dataManager);   //Routing 
-
-
             try
             {
+                
+                var verb = ConvertHttpMethodToEnum(request.HttpMethod);
+            
+                var resourceInfo = ConvertPathToResource(request.Url);
+
+                var resource = ResourceFactory.CreateResource(resourceInfo, _dataManager);   //Routing  //
+                
                 switch (verb)
                 {
-                    case HttpVerb.Get: //Routing 
-                        Console.WriteLine($"/users/{resourceInfo.Item2}"); //TODO: make logging better - Serilog outputs a structured log
-                        var getMessage = resource.Get();  //Controller
-                        response.StatusCode = (int) HttpStatusCode.OK;
-                        Response.Send(getMessage, context);
+                    case HttpVerb.Get: //Routing // URL
+                        //Console.WriteLine($"/users/{resourceInfo.Item2}"); //TODO: make logging better - Serilog outputs a structured log
+                        var getMessage = resource.Get();  //Controller //TODO: don't hide id . . .
+                        response.StatusCode = (int) HttpStatusCode.OK; //Controller
+                        Response.Send(getMessage, context); //TODO: NOT CONTROLLER, return json/string  
                         break;
-                    case HttpVerb.Put:
+                    case HttpVerb.Put:  //URL and body
                         var putMessage = resource.Put(context);
                         response.StatusCode = (int) HttpStatusCode.OK;
                         Response.Send(putMessage, context);
                         break;
-                    case HttpVerb.Post: 
-                        Console.WriteLine("posting to /Users");
+                    case HttpVerb.Post:  //body
+                        //Console.WriteLine("posting to /Users");
                         var postMessage = resource.Post(context); // Controller
                         response.StatusCode = (int) HttpStatusCode.Created; //view
                         Response.Send(postMessage, context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
                         break;
-                    case HttpVerb.Delete:
+                    case HttpVerb.Delete: //URL
                         break;
                     default:
-                        throw new HttpRequestException("Page not found: ");
+                        throw new HttpRequestException("Page not found: "); 
                 }
 
             }
@@ -78,7 +74,7 @@ namespace FrameworklessWebApp2
                 return verb;
             }
             
-            throw new InvalidEnumArgumentException("Invalid http method: " + httpMethod);
+            throw new HttpRequestException("Invalid http method: " + httpMethod);
         }
 
         private static (Resource, int? id) ConvertPathToResource(Uri uri)
@@ -104,6 +100,9 @@ namespace FrameworklessWebApp2
                     id = num;
                 }
             }
+            
+            if(resource == Resource.ResourceNotFound)
+                throw new HttpRequestException("Page not found: ");
             
             return (resource, id);
         }

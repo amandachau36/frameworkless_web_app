@@ -17,5 +17,4 @@ namespace FrameworklessWebApp2.Resources
             };
     }
     
-   
 }
