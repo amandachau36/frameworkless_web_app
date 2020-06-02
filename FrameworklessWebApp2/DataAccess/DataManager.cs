@@ -14,7 +14,7 @@ namespace FrameworklessWebApp2.DataAccess
     {
         public void CreateUser(User user)
         {
-            var users = GetAllUsersList();
+            var users = ReadUsers();
             
             var id = users.Last().Id + 1;                            //TODO: not ideal
             User.SetId(user, id);
@@ -24,7 +24,7 @@ namespace FrameworklessWebApp2.DataAccess
             WriteToTextFile(users);
             
         }
-        public string ReadUsers() 
+        public List<User> ReadUsers() 
         {
             var sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
 
@@ -32,26 +32,27 @@ namespace FrameworklessWebApp2.DataAccess
             
             sr.Close();
 
-            return json;
+            return JsonConvert.DeserializeObject<List<User>>(json);
+            
           
         }
 
-        public string ReadUser(int id)
+        public User ReadUser(int id)
         {
-            var users = GetAllUsersList();
+            var users = ReadUsers();
 
             var index = users.FindIndex(x => x.Id == id);
             
             if (index < 0) 
                 throw new HttpRequestException("Page not found: ");
 
-            return JsonConvert.SerializeObject(users[index]);
+            return users[index];
 
         }
 
         public void UpdateUser(int? id, User user)
         {
-            var users = GetAllUsersList();
+            var users = ReadUsers();
 
             var index = users.FindIndex(x => x.Id == id);
 
@@ -98,12 +99,12 @@ namespace FrameworklessWebApp2.DataAccess
         }
         
         
-        private List<User> GetAllUsersList()
-        {
-            var users = ReadUsers();
-            
-            return JsonConvert.DeserializeObject<List<User>>(users);
-        }
+        // private List<User> GetAllUsersList()
+        // {
+        //     var users = ReadUsers();
+        //     
+        //     return JsonConvert.DeserializeObject<List<User>>(users);
+        // }
 
     }
 

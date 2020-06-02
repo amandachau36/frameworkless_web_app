@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using System.Net;
 using FrameworklessWebApp2.DataAccess;
 using Newtonsoft.Json;
@@ -16,7 +17,7 @@ namespace FrameworklessWebApp2.Controllers
         }
         
         
-        public string Post(User newUser)
+        public List<User> Post(User newUser)
         {
 
             _dataManager.CreateUser(newUser); //Controller 
@@ -24,18 +25,18 @@ namespace FrameworklessWebApp2.Controllers
             return _dataManager.ReadUsers();
         }
         
-        public string Get()
+        public List<User> Get()
         {
             return _dataManager.ReadUsers();
            
         }
         
-        public string Get(int id)
+        public User Get(int id)
         {
             return _dataManager.ReadUser(id);
         }
         
-        public string Put(User userToUpdate, int id) //TODO: consider passing in model instead of entire HH
+        public User Put(User userToUpdate, int id) //TODO: consider passing in model instead of entire HH
         {
 
             _dataManager.UpdateUser(id, userToUpdate);

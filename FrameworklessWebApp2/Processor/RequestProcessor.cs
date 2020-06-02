@@ -29,10 +29,9 @@ namespace FrameworklessWebApp2
             {
                 var verb = ConvertHttpMethodToEnum(request.HttpMethod);
             
-                var resourceInfo = ConvertPathToResource(request.Url);
-
-                //var resource = ResourceFactory.CreateResource(resourceInfo, _dataManager);   //Routing  //
-                var usersController = resourceInfo.Item1 switch
+                var resourceInfo = ConvertPathToResource(request.Url); 
+           
+                var usersController = resourceInfo.Item1 switch       //Routing  but need to make a Icontroller interface with generics . . .
                 {
                     Controller.Users => new UsersController(_dataManager),
                     _ => throw new HttpRequestException("Page not found: ")
@@ -47,17 +46,21 @@ namespace FrameworklessWebApp2
                 {
                     case HttpVerb.Get: //Routing // URL
                         Console.WriteLine("hello from get"); //TODO: make logging better - Serilog outputs a structured log
-                        var getMessage = resourceInfo.Item2 == null ? usersController.Get() : usersController.Get(id);
+                        var getMessage = resourceInfo.Item2 == null 
+                            ? JsonConvert.SerializeObject(usersController.Get()) 
+                            : JsonConvert.SerializeObject(usersController.Get(id));
                         response.StatusCode = (int) HttpStatusCode.OK;
                         Response.Send(getMessage, context); //TODO: NOT CONTROLLER, return json/string  
                         break;
                     case HttpVerb.Put:  //URL and body
-                        var putMessage = usersController.Put(user, id);
+                        var updatedUser = usersController.Put(user, id);
+                        var putMessage = JsonConvert.SerializeObject(updatedUser);
                         response.StatusCode = (int) HttpStatusCode.OK;
                         Response.Send(putMessage, context);
                         break;
                     case HttpVerb.Post:  //body
-                        var postMessage = usersController.Post(user); // Controller
+                        var allUsers= usersController.Post(user); // Controller
+                        var postMessage = JsonConvert.SerializeObject(allUsers);
                         response.StatusCode = (int) HttpStatusCode.Created; //view
                         Response.Send(postMessage, context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
                         break;
