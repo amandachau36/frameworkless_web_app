@@ -1,20 +1,18 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using FrameworklessWebApp2.Controllers;
 using FrameworklessWebApp2.DataAccess;
-using FrameworklessWebApp2.Resources;
 
 
 namespace FrameworklessWebApp2
 {
-    public class RequestController //TODO: processing of the request is the controller 
+    public class RequestProcessor //TODO: processing of the request is the controller 
     {//TODO: think about wrapping the HTTPListenerContext
 
         private readonly DataManager _dataManager;
-        public RequestController(DataManager dataManager)
+        public RequestProcessor(DataManager dataManager)
         {
             _dataManager = dataManager;
            
@@ -32,24 +30,33 @@ namespace FrameworklessWebApp2
             
                 var resourceInfo = ConvertPathToResource(request.Url);
 
-                var resource = ResourceFactory.CreateResource(resourceInfo, _dataManager);   //Routing  //
+                //var resource = ResourceFactory.CreateResource(resourceInfo, _dataManager);   //Routing  //
+                var usersController = resourceInfo.Item1 switch
+                {
+                    Resource.Users => new UsersController(_dataManager),
+                    _ => throw new HttpRequestException("Page not found: ")
+                };
+
+                var id = resourceInfo.Item2.GetValueOrDefault();
+                
+                
                 
                 switch (verb)
                 {
                     case HttpVerb.Get: //Routing // URL
-                        //Console.WriteLine($"/users/{resourceInfo.Item2}"); //TODO: make logging better - Serilog outputs a structured log
-                        var getMessage = resource.Get();  //Controller //TODO: don't hide id . . .
-                        response.StatusCode = (int) HttpStatusCode.OK; //Controller
+                        Console.WriteLine("hello from get"); //TODO: make logging better - Serilog outputs a structured log
+                        string getMessage;
+                        getMessage = resourceInfo.Item2 == null ? usersController.Get() : usersController.Get(id);
+                        response.StatusCode = (int) HttpStatusCode.OK;
                         Response.Send(getMessage, context); //TODO: NOT CONTROLLER, return json/string  
                         break;
                     case HttpVerb.Put:  //URL and body
-                        var putMessage = resource.Put(context);
+                        var putMessage = usersController.Put(context, id);
                         response.StatusCode = (int) HttpStatusCode.OK;
                         Response.Send(putMessage, context);
                         break;
                     case HttpVerb.Post:  //body
-                        //Console.WriteLine("posting to /Users");
-                        var postMessage = resource.Post(context); // Controller
+                        var postMessage = usersController.Post(context); // Controller
                         response.StatusCode = (int) HttpStatusCode.Created; //view
                         Response.Send(postMessage, context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
                         break;
@@ -85,22 +92,14 @@ namespace FrameworklessWebApp2
 
             Resource resource = Resource.ResourceNotFound;
 
+            if (processedSegments[1].ToLower() == "users") 
+                resource = Resource.Users;
+                
             int? id = null;
-
-            if (processedSegments[1].ToLower() == "users")
-            {
-                if (processedSegments.Count == 2)
-                {
-                    resource = Resource.Users;
-                }
-
-                if (processedSegments.Count == 3 && int.TryParse(processedSegments[2], out int num))
-                {
-                    resource = Resource.User;
-                    id = num;
-                }
-            }
             
+            if (processedSegments.Count > 2 && int.TryParse(processedSegments[2], out int num))
+                id = num;
+
             if(resource == Resource.ResourceNotFound)
                 throw new HttpRequestException("Page not found: ");
             

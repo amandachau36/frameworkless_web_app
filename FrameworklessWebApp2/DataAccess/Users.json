@@ -12,9 +12,9 @@
     "id": 2
   },
   {
-    "username": "helpme",
+    "username": "ask me",
     "name": "Ann",
-    "location": "Uk",
+    "location": "USA",
     "id": 3
   },
   {
@@ -70,5 +70,17 @@
     "name": "test",
     "location": "Toronto",
     "id": 12
+  },
+  {
+    "username": "Mars",
+    "name": "M",
+    "location": "Milky way",
+    "id": 13
+  },
+  {
+    "username": "cookie monster",
+    "name": "CM",
+    "location": "trash can",
+    "id": 14
   }
 ]
