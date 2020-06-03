@@ -114,9 +114,15 @@
     "id": 19
   },
   {
-    "username": "Unicorn",
+    "username": "Rainbow",
     "name": "test",
     "location": "test",
     "id": 20
+  },
+  {
+    "username": "MA",
+    "name": "Mary-Anne",
+    "location": "Toronto",
+    "id": 21
   }
 ]

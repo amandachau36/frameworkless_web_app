@@ -22,17 +22,8 @@ namespace FrameworklessWebApp2
             
             throw new HttpRequestException("Invalid http method: " + httpMethod);
         }
+        
         //https://stackoverflow.com/questions/39386586/c-sharp-generic-interface-and-factory-pattern
-        // public static object GetController<T>(string route, DataManager dataManager) where T : class
-        // {
-        //
-        //     if (route == "users")
-        //         return (IController<T>) new UsersController<User>(dataManager);
-        //     
-        //     throw new HttpRequestException($"Controller not found: " + route); //TODO: notFOUndException
-        // } 
-        
-        
         public static object GetController(string controllerString, DataManager dataManager)
         {
             return controllerString switch

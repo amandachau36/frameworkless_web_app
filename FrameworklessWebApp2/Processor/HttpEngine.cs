@@ -70,44 +70,6 @@ namespace FrameworklessWebApp2
                 Response.Send(e.Message, context);
             }
         }
-        
-
-        // private (Controller, int? id) ConvertPathToResource(Uri uri)
-        // {
-        //     var segments = uri.Segments;
-        //
-        //     var processedSegments = segments.Select(s => s.TrimEnd('/')).ToList();
-        //
-        //     var controller = GetController(processedSegments[1]);
-        //
-        //     var id = GetId(processedSegments);
-        //
-        //     return (controller, id);
-        // }
-        //
-        // private static Controller GetController(string controllerString)
-        // {
-        //     if (Enum.TryParse(controllerString, true, out Controller controller))
-        //     {
-        //         return controller;
-        //     }
-        //     
-        //     throw new HttpRequestException($"Controller not found: {controllerString}");
-        // }
-        //
-        // private static int? GetId(List<string> processedSegments)
-        // {
-        //     if (processedSegments.Count > 2 && int.TryParse(processedSegments[2], out var id))
-        //         return id;
-        //
-        //     return null; //TODO: case users/cats Throw exception 
-        // }
-        //
-        // private static User ConvertJsonToModel(string json)
-        // {
-        //     return JsonConvert.DeserializeObject<User>(json);
-        // }
-        
     }
 }
 

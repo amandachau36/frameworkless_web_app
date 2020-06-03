@@ -33,8 +33,6 @@ namespace FrameworklessWebApp2.DataAccess
             sr.Close();
 
             return JsonConvert.DeserializeObject<List<User>>(json);
-            
-          
         }
 
         public User ReadUser(int id)
@@ -98,14 +96,6 @@ namespace FrameworklessWebApp2.DataAccess
 
         }
         
-        
-        // private List<User> GetAllUsersList()
-        // {
-        //     var users = ReadUsers();
-        //     
-        //     return JsonConvert.DeserializeObject<List<User>>(users);
-        // }
-
     }
 
 }
