@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2.Controllers
 {
-    public class UsersController<T> : IController<User>
+    public class UsersController : IController<User>  //UsersController<T>
     {
         private readonly DataManager _dataManager;
 
@@ -19,7 +19,6 @@ namespace FrameworklessWebApp2.Controllers
         public User Post(User model)
         {
               return _dataManager.CreateUser(model); //Controller 
-              
         }
 
         public List<User> Get()
@@ -36,7 +35,6 @@ namespace FrameworklessWebApp2.Controllers
         public User Put(User model, int id)
         {
             return _dataManager.UpdateUser(id, model);
-            
         }
 
         public void Delete(int id)

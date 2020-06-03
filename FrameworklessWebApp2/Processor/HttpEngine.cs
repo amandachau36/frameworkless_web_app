@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Net.Http;
 using FrameworklessWebApp2.DataAccess;
+using FrameworklessWebApp2.Processor;
 using Newtonsoft.Json;
 
 
@@ -33,29 +34,25 @@ namespace FrameworklessWebApp2
                 {
                     case HttpVerb.Get: //Routing // URL  //TODO: make logging better - Serilog outputs a structured log
                         var getMessage = id == null 
-                            ? JsonConvert.SerializeObject(controller.Get()) 
-                            : JsonConvert.SerializeObject(controller.Get(id.GetValueOrDefault())); 
-                        response.StatusCode = (int) HttpStatusCode.OK;
-                        Response.Send(getMessage, context); 
+                            ? Response.PrepareMessage(controller.Get()) 
+                            : Response.PrepareMessage(controller.Get(id.GetValueOrDefault()));
+                        Response.Send( HttpStatusCode.OK, getMessage, response); 
                         break;
                     case HttpVerb.Put:  //URL and body
                         var modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request);
                         var updatedUser = controller.Put(modelToUpdate, id.GetValueOrDefault());
-                        var putMessage = JsonConvert.SerializeObject(updatedUser);
-                        response.StatusCode = (int) HttpStatusCode.OK;
-                        Response.Send(putMessage, context);
+                        var putMessage = Response.PrepareMessage(updatedUser);
+                        Response.Send( HttpStatusCode.OK, putMessage, response);
                         break;
                     case HttpVerb.Post:  //body
                         var modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
                         var newUser = controller.Post(modelToCreate);
-                        var postMessage = JsonConvert.SerializeObject(newUser);
-                        response.StatusCode = (int) HttpStatusCode.Created; //view
-                        Response.Send(postMessage, context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
+                        var postMessage = Response.PrepareMessage(newUser);
+                        Response.Send(HttpStatusCode.Created, postMessage,response); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
                         break;
                     case HttpVerb.Delete: //URL
                         controller.Delete(id.GetValueOrDefault());
-                        response.StatusCode = (int) HttpStatusCode.OK;
-                        Response.Send("Deleted " + id , context);
+                        Response.Send(HttpStatusCode.OK, "Deleted " + id , response);
                         break;
                     default:
                         throw new HttpRequestException("Page not found: "); 
@@ -63,13 +60,11 @@ namespace FrameworklessWebApp2
             }
             catch (HttpRequestException e) //TODO: custom exception with a property? 
             {
-                response.StatusCode = (int) HttpStatusCode.NotFound;  
-                Response.Send(e.Message + request.Url, context);
+                Response.Send(HttpStatusCode.NotFound,e.Message + request.Url, response);
             }
             catch (Exception e)
             {
-                response.StatusCode = (int) HttpStatusCode.InternalServerError;
-                Response.Send(e.Message, context);
+                Response.Send(HttpStatusCode.InternalServerError, e.Message, response);
             }
         }
     }

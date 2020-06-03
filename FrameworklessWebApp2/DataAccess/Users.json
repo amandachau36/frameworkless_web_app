@@ -28,17 +28,31 @@
     "isDeleted": false
   },
   {
-    "username": "ni hao",
-    "name": "hi",
-    "location": "China",
-    "id": 6,
-    "isDeleted": true
-  },
-  {
     "username": "hola",
     "name": "amigos",
     "location": "spain",
     "id": 7,
+    "isDeleted": false
+  },
+  {
+    "username": "Mon",
+    "name": "monica",
+    "location": "vancouver",
+    "id": 9,
+    "isDeleted": false
+  },
+  {
+    "username": "a",
+    "name": "amanda",
+    "location": "SYD",
+    "id": 10,
+    "isDeleted": true
+  },
+  {
+    "username": "AC",
+    "name": "amanda",
+    "location": "SYD",
+    "id": 11,
     "isDeleted": false
   }
 ]

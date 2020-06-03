@@ -28,7 +28,7 @@ namespace FrameworklessWebApp2
         {
             return controllerString switch
             {
-                "users" => new UsersController<User>(dataManager),
+                "users" => new UsersController(dataManager), //UsersController<user>(dataManager)
                 _ => throw new InvalidOperationException("Invalid type specified.")
             };
         }
@@ -42,7 +42,7 @@ namespace FrameworklessWebApp2
             return null; //TODO: case users/cats Throw exception 
         }
         
-        public static User GetModel(string route, HttpListenerRequest request)
+        public static User GetModel(string route, HttpListenerRequest request)  //TODO: how to return this IModel
         {
             var json = ReadBody(request);
             
@@ -68,8 +68,6 @@ namespace FrameworklessWebApp2
             return reader.ReadToEnd();
         }
         
-        
-
 
     }
 }
