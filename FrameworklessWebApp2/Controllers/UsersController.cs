@@ -11,16 +11,15 @@ namespace FrameworklessWebApp2.Controllers
     {
         private readonly DataManager _dataManager;
 
-        public UsersController(DataManager dataManager)  //TODO: Controller - not to deal with context, process before, the controller should receive an object/model/user
+        public UsersController(DataManager dataManager)  
         {
             _dataManager = dataManager;
         }
 
         public User Post(User model)
         {
-              _dataManager.CreateUser(model); //Controller 
-            
-              return _dataManager.ReadUsers().Last();
+              return _dataManager.CreateUser(model); //Controller 
+              
         }
 
         public List<User> Get()
@@ -36,9 +35,8 @@ namespace FrameworklessWebApp2.Controllers
 
         public User Put(User model, int id)
         {
-            _dataManager.UpdateUser(id, model);
+            return _dataManager.UpdateUser(id, model);
             
-            return _dataManager.ReadUser(id); //TODO: return updated object without reading
         }
 
         public void Delete(int id)
@@ -48,38 +46,5 @@ namespace FrameworklessWebApp2.Controllers
     }
 }
 
-// public UsersController()
-// { 
-// UserRepository _userRepository
-// UsersController(UserRepository userRepository)
-// {
-//     _userRepository = userRepository;
-// }
-//     
-// [GET]
-// public User Get(Guid id)
-// {
-//     return _userRepository.GetById(id);
-// }
-//     
-//     
-// [PUT]
-// public User Update(User user)
-// {
-//     return _userRepository.Update(user);
-// }
-//     
-// [GET]
-// public List<Users> Get()
-// {
-//     return _userRepository.Get();
-// }
-//     
-// [POST]
-// public User Create(User)
-// {
-//     return _userRepository.Create(user);
-// }
-// }
-//
+
 // RequestProcessor -> Controller -> Engine (Iresponse -> Status Code)

@@ -9,27 +9,23 @@ namespace FrameworklessWebApp2.DataAccess
 {
     public class DataManager //TODO: consider static 
     {
-        public void CreateUser(User user)
+        public User CreateUser(User user)
         {
-            var users = ReadUsers();
+            var users = ReadAllUsers();
             
-            var id = users.Last().Id + 1;                            //TODO: not ideal
-            User.SetId(user, id);
+            var id = users.Last().Id + 1;  //TODO: not ideal
+            user.SetId(id);
             
             users.Add(user);
             
             WriteToTextFile(users);
-            
+
+            return user;
+
         }
-        public List<User> ReadUsers() 
+        public List<User> ReadUsers()
         {
-            var sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
-
-            var json= sr.ReadToEnd();
-            
-            sr.Close();
-
-            var allUsers = JsonConvert.DeserializeObject<List<User>>(json);
+            var allUsers = ReadAllUsers();
 
             return allUsers.Where(x => x.IsDeleted == false).ToList();
         }
@@ -47,11 +43,11 @@ namespace FrameworklessWebApp2.DataAccess
 
         }
 
-        public void UpdateUser(int? id, User user) //TODO: is this really a nullable?  
+        public User UpdateUser(int id, User user)
         {
-            var users = ReadUsers();
+            var users = ReadAllUsers();
 
-            var index = users.FindIndex(x => x.Id == id);
+            var index = users.FindIndex(x => x.Id == id && x.IsDeleted == false);
 
             if (index < 0) 
                 throw new HttpRequestException("Page not found: ");
@@ -69,10 +65,12 @@ namespace FrameworklessWebApp2.DataAccess
             }
             
             WriteToTextFile(users);
-            
+
+            return users[index];
+
         }
         
-        public void DeleteUser(int id) //TODO: is this really a nullable?  
+        public void DeleteUser(int id) 
         {
             var users = ReadUsers();
 
@@ -109,6 +107,17 @@ namespace FrameworklessWebApp2.DataAccess
 
             sw.Close();
 
+        }
+
+        private List<User> ReadAllUsers()
+        {
+            var sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
+
+            var json= sr.ReadToEnd();
+            
+            sr.Close();
+
+            return JsonConvert.DeserializeObject<List<User>>(json);
         }
         
     }

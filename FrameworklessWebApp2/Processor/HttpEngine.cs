@@ -7,8 +7,8 @@ using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2
 {
-    public class HttpEngine //TODO: processing of the request is the controller 
-    {//TODO: think about wrapping the HTTPListenerContext
+    public class HttpEngine 
+    {
 
         private readonly DataManager _dataManager;
         public HttpEngine(DataManager dataManager)
@@ -36,7 +36,7 @@ namespace FrameworklessWebApp2
                             ? JsonConvert.SerializeObject(controller.Get()) 
                             : JsonConvert.SerializeObject(controller.Get(id.GetValueOrDefault())); 
                         response.StatusCode = (int) HttpStatusCode.OK;
-                        Response.Send(getMessage, context); //TODO: NOT CONTROLLER, return json/string  
+                        Response.Send(getMessage, context); 
                         break;
                     case HttpVerb.Put:  //URL and body
                         var modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request);
@@ -94,7 +94,7 @@ namespace FrameworklessWebApp2
 // routes.Add("/customers/:customerId")
 // var routes = new Dictionary<Tuple<Verb, string>, Resource>();
 // var routes1 = new Dictionary<(Verb, string), Resource>();
-// routes.Add(Tuple.Create(POST, "/..."), todo);
+// routes.Add(Tuple.Create(POST, "/..."), todi);
 // routes.Add((POST, "..."), resource)
 // /// ...
 // resourceBuilder.Build(routes);

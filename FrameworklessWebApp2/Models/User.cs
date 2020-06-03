@@ -23,9 +23,9 @@ namespace FrameworklessWebApp2
         [JsonProperty(PropertyName = "isDeleted")]
         public bool IsDeleted { get; private set; }
         
-        public static void SetId(User user, int id)
+        public void SetId(int id)
         {
-            user.Id = id;
+            Id = id;
         }
         
         public void SetIsDeletedToTrue()
