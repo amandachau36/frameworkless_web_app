@@ -28,7 +28,7 @@
     "isDeleted": false
   },
   {
-    "username": "hola",
+    "username": "Ciao",
     "name": "amigos",
     "location": "spain",
     "id": 7,
@@ -42,17 +42,17 @@
     "isDeleted": false
   },
   {
-    "username": "a",
-    "name": "amanda",
-    "location": "SYD",
-    "id": 10,
-    "isDeleted": true
-  },
-  {
     "username": "AC",
     "name": "amanda",
     "location": "SYD",
     "id": 11,
+    "isDeleted": true
+  },
+  {
+    "username": "kia ora",
+    "name": "kia",
+    "location": "nz",
+    "id": 12,
     "isDeleted": false
   }
 ]

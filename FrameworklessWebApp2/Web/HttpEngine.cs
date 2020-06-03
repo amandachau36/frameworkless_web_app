@@ -3,7 +3,6 @@ using System.Net;
 using System.Net.Http;
 using FrameworklessWebApp2.DataAccess;
 using FrameworklessWebApp2.Processor;
-using Newtonsoft.Json;
 
 
 namespace FrameworklessWebApp2
