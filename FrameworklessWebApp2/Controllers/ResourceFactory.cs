@@ -4,17 +4,17 @@ using FrameworklessWebApp2.DataAccess;
 
 namespace FrameworklessWebApp2.Controllers
 {
-    // public class ResourceFactory
-    // {
-    //     public static IResource CreateResource((Resource, int?) resource, DataManager dataManager) =>
-    //         
-    //         resource.Item1 switch 
-    //         {
-    //             Resource.Users => new UsersResource(dataManager),
-    //             Resource.User => new UserResource(dataManager, resource.Item2.GetValueOrDefault()),
-    //             _ => throw new ArgumentException("Enum does not exist") 
-    //         
-    //         };
-    // }
+    public class ResourceFactory
+    {
+        // public static IResource CreateResource((Resource, int?) resource, DataManager dataManager) =>
+        //     
+        //     resource.Item1 switch 
+        //     {
+        //         Resource.Users => new UsersResource(dataManager),
+        //         Resource.User => new UserResource(dataManager, resource.Item2.GetValueOrDefault()),
+        //         _ => throw new ArgumentException("Enum does not exist") 
+        //     
+        //     };
+    }
     
 }

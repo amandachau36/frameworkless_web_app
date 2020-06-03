@@ -1,10 +1,13 @@
 using System.Reflection;
+using FrameworklessWebApp2.Controllers;
+using FrameworklessWebApp2.Models;
 using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2
 {
-    public class User //model
+    public class User : IModel
     {
+       
         [JsonProperty(PropertyName = "username")]
         public string Username { get; set; }
         

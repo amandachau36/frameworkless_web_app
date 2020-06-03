@@ -1,83 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using FrameworklessWebApp2.Controllers;
 using FrameworklessWebApp2.DataAccess;
+using FrameworklessWebApp2.Models;
 using Newtonsoft.Json;
-
 
 namespace FrameworklessWebApp2
 {
-    public class RequestProcessor //TODO: processing of the request is the controller 
-    {//TODO: think about wrapping the HTTPListenerContext
-
-        private readonly DataManager _dataManager;
-        public RequestProcessor(DataManager dataManager)
-        {
-            _dataManager = dataManager;
-           
-        }
-
-        public void Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
-        {
-            
-            var request = context.Request; 
-            var response = context.Response;
-            try
-            {
-                var verb = ConvertHttpMethodToEnum(request.HttpMethod);
-            
-                var resourceInfo = ConvertPathToResource(request.Url); 
-           
-                var usersController = resourceInfo.Item1 switch       //Routing  but need to make a Icontroller interface with generics . . .
-                {
-                    Controller.Users => new UsersController(_dataManager),
-                    _ => throw new HttpRequestException("Page not found: ")
-                };
-
-                var id = resourceInfo.Item2.GetValueOrDefault();
-                
-                var json = Json.Read(context);
-                var user = ConvertJsonToModel(json);
-                
-                switch (verb)
-                {
-                    case HttpVerb.Get: //Routing // URL
-                        Console.WriteLine("hello from get"); //TODO: make logging better - Serilog outputs a structured log
-                        var getMessage = resourceInfo.Item2 == null 
-                            ? JsonConvert.SerializeObject(usersController.Get()) 
-                            : JsonConvert.SerializeObject(usersController.Get(id));
-                        response.StatusCode = (int) HttpStatusCode.OK;
-                        Response.Send(getMessage, context); //TODO: NOT CONTROLLER, return json/string  
-                        break;
-                    case HttpVerb.Put:  //URL and body
-                        var updatedUser = usersController.Put(user, id);
-                        var putMessage = JsonConvert.SerializeObject(updatedUser);
-                        response.StatusCode = (int) HttpStatusCode.OK;
-                        Response.Send(putMessage, context);
-                        break;
-                    case HttpVerb.Post:  //body
-                        var allUsers= usersController.Post(user); // Controller
-                        var postMessage = JsonConvert.SerializeObject(allUsers);
-                        response.StatusCode = (int) HttpStatusCode.Created; //view
-                        Response.Send(postMessage, context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
-                        break;
-                    case HttpVerb.Delete: //URL
-                        break;
-                    default:
-                        throw new HttpRequestException("Page not found: "); 
-                }
-            }
-            catch (HttpRequestException e)
-            {
-                response.StatusCode = (int) HttpStatusCode.NotFound;  
-                Response.Send(e.Message + request.Url, context);
-            }
-        }
-
-        private HttpVerb ConvertHttpMethodToEnum(string httpMethod)
+    public class RequestProcessor
+    {
+        public static HttpVerb GetVerb(string httpMethod)
         {
             if (Enum.TryParse(httpMethod, true, out HttpVerb verb))
             {
@@ -86,68 +22,65 @@ namespace FrameworklessWebApp2
             
             throw new HttpRequestException("Invalid http method: " + httpMethod);
         }
-
-        private (Controller, int? id) ConvertPathToResource(Uri uri)
+        //https://stackoverflow.com/questions/39386586/c-sharp-generic-interface-and-factory-pattern
+        // public static object GetController<T>(string route, DataManager dataManager) where T : class
+        // {
+        //
+        //     if (route == "users")
+        //         return (IController<T>) new UsersController<User>(dataManager);
+        //     
+        //     throw new HttpRequestException($"Controller not found: " + route); //TODO: notFOUndException
+        // } 
+        
+        
+        public static object GetController(string controllerString, DataManager dataManager)
         {
-            var segments = uri.Segments;
-
-            var processedSegments = segments.Select(s => s.TrimEnd('/')).ToList();
-
-            var controller = GetController(processedSegments[1]);
-
-            var id = GetId(processedSegments);
-
-            return (controller, id);
-        }
-
-        private static Controller GetController(string controllerString)
-        {
-            if (Enum.TryParse(controllerString, true, out Controller controller))
+            return controllerString switch
             {
-                return controller;
-            }
-            
-            throw new HttpRequestException($"Controller not found: {controllerString}");
+                "users" => new UsersController<User>(dataManager),
+                _ => throw new InvalidOperationException("Invalid type specified.")
+            };
         }
-
-        private static int? GetId(List<string> processedSegments)
+        
+        public static int? GetId(List<string> uriSegments)
         {
-            if (processedSegments.Count > 2 && int.TryParse(processedSegments[2], out var id))
+            
+            if (uriSegments.Count > 2 && int.TryParse(uriSegments[2], out var id))
                 return id;
 
             return null; //TODO: case users/cats Throw exception 
         }
-
-        private static User ConvertJsonToModel(string json)
+        
+        public static User GetModel(string route, HttpListenerRequest request)
         {
-            return JsonConvert.DeserializeObject<User>(json);
+            var json = ReadBody(request);
+            
+            if(route == "users") 
+                return JsonConvert.DeserializeObject<User>(json); 
+            
+            throw new HttpRequestException($"Model not found: " + route); //TODO: 404 
+        }
+
+        public static List<string> GetProcessedUriSegments(Uri uri)
+        {
+            var segments = uri.Segments;
+
+            return segments.Select(s => s.TrimEnd('/')).ToList();
         }
         
+        private static string ReadBody(HttpListenerRequest request)
+        {
+            var body = request.InputStream;  //Controller
+                            
+            var reader = new StreamReader(body, request.ContentEncoding);
+
+            return reader.ReadToEnd();
+        }
+        
+        
+        
+        
+
+
     }
 }
-
-
-
-
-//var json = Json.Read(context);
-
-//TODO: tests
-
-//var htmlMessage = Html.Wrap("All Users", "<h1></h1>"); //VIEW //But this should probably be done in the front end?
-// class Resource {
-// public Response Process(Request request) ; // interface
-// }
-// var routes = new Dictionary<string, Resource>();
-// routes.Add("/customers", new Resource.. ) // where is the verbs?
-// routes.Add("/customers/:customerId")
-// var routes = new Dictionary<Tuple<Verb, string>, Resource>();
-// var routes1 = new Dictionary<(Verb, string), Resource>();
-// routes.Add(Tuple.Create(POST, "/..."), todo);
-// routes.Add((POST, "..."), resource)
-// /// ...
-// resourceBuilder.Build(routes);
-// // customer resource builder
-// void Build(routes)
-// {
-// routes.Add(...)
-// }
