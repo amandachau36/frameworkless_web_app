@@ -69,8 +69,6 @@ namespace FrameworklessWebApp2
         }
         
         
-        
-        
 
 
     }

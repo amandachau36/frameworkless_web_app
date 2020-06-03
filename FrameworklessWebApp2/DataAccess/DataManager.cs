@@ -1,10 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -32,7 +29,9 @@ namespace FrameworklessWebApp2.DataAccess
             
             sr.Close();
 
-            return JsonConvert.DeserializeObject<List<User>>(json);
+            var allUsers = JsonConvert.DeserializeObject<List<User>>(json);
+
+            return allUsers.Where(x => x.IsDeleted == false).ToList();
         }
 
         public User ReadUser(int id)
@@ -48,7 +47,7 @@ namespace FrameworklessWebApp2.DataAccess
 
         }
 
-        public void UpdateUser(int? id, User user)
+        public void UpdateUser(int? id, User user) //TODO: is this really a nullable?  
         {
             var users = ReadUsers();
 
@@ -72,6 +71,21 @@ namespace FrameworklessWebApp2.DataAccess
             WriteToTextFile(users);
             
         }
+        
+        public void DeleteUser(int id) //TODO: is this really a nullable?  
+        {
+            var users = ReadUsers();
+
+            var index = users.FindIndex(x => x.Id == id);
+
+            if (index < 0) 
+                throw new HttpRequestException("Page not found: ");
+            
+            users[index].SetIsDeletedToTrue();
+            
+            WriteToTextFile(users);
+            
+        }
 
         private void WriteToTextFile(List<User> users)
         {
@@ -82,7 +96,8 @@ namespace FrameworklessWebApp2.DataAccess
                     new JProperty("username", u.Username),
                     new JProperty("name", u.Name),
                     new JProperty("location", u.Location),
-                    new JProperty("id", u.Id)
+                    new JProperty("id", u.Id),
+                    new JProperty("isDeleted", u.IsDeleted)
                 )
             );
 

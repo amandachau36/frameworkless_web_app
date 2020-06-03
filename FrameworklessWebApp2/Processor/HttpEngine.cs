@@ -31,8 +31,7 @@ namespace FrameworklessWebApp2
                 
                 switch (verb)
                 {
-                    case HttpVerb.Get: //Routing // URL
-                        Console.WriteLine("hello from get"); //TODO: make logging better - Serilog outputs a structured log
+                    case HttpVerb.Get: //Routing // URL  //TODO: make logging better - Serilog outputs a structured log
                         var getMessage = id == null 
                             ? JsonConvert.SerializeObject(controller.Get()) 
                             : JsonConvert.SerializeObject(controller.Get(id.GetValueOrDefault())); 
@@ -54,6 +53,9 @@ namespace FrameworklessWebApp2
                         Response.Send(postMessage, context); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
                         break;
                     case HttpVerb.Delete: //URL
+                        controller.Delete(id.GetValueOrDefault());
+                        response.StatusCode = (int) HttpStatusCode.OK;
+                        Response.Send("Deleted " + id , context);
                         break;
                     default:
                         throw new HttpRequestException("Page not found: "); 

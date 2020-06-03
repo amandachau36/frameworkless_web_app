@@ -1,128 +1,37 @@
 [
   {
-    "username": "helpme",
-    "name": "harry",
-    "location": "Hogswart",
-    "id": 1
-  },
-  {
     "username": "p",
     "name": "Paul",
     "location": "Spain",
-    "id": 2
+    "id": 2,
+    "isDeleted": false
   },
   {
-    "username": "hola",
+    "username": "bonjour",
     "name": "Ann",
     "location": "USA",
-    "id": 3
-  },
-  {
-    "username": "helloWorld",
-    "name": "hello",
-    "location": "north pole",
-    "id": 4
+    "id": 3,
+    "isDeleted": false
   },
   {
     "username": "helpme",
     "name": "Steph",
     "location": "Germany",
-    "id": 5
+    "id": 5,
+    "isDeleted": false
   },
   {
     "username": "helpme",
     "name": "Kris",
     "location": "calgary",
-    "id": 6
-  },
-  {
-    "username": "B",
-    "name": "T",
-    "location": "a",
-    "id": 7
-  },
-  {
-    "username": "helpme",
-    "name": "new",
-    "location": "World",
-    "id": 8
-  },
-  {
-    "username": "bob",
-    "name": "bobby",
-    "location": "USA",
-    "id": 9
-  },
-  {
-    "username": "ac",
-    "name": "amanda",
-    "location": "Aus",
-    "id": 10
-  },
-  {
-    "username": "please work",
-    "name": "Monica",
-    "location": "Vancouver",
-    "id": 11
-  },
-  {
-    "username": "refactor put",
-    "name": "test",
-    "location": "Toronto",
-    "id": 12
-  },
-  {
-    "username": "Mercury",
-    "name": "M",
-    "location": "Milky way",
-    "id": 13
-  },
-  {
-    "username": "cookie monster",
-    "name": "CM",
-    "location": "trash can",
-    "id": 14
-  },
-  {
-    "username": "Lochy",
-    "name": "Lochness Monster",
-    "location": "scotland",
-    "id": 15
-  },
-  {
-    "username": "hi",
-    "name": "hellooo",
-    "location": "home",
-    "id": 16
-  },
-  {
-    "username": "a",
-    "name": "b",
-    "location": "c",
-    "id": 17
-  },
-  {
-    "username": "will this work",
-    "name": "test",
-    "location": "test",
-    "id": 18
-  },
-  {
-    "username": "testing123",
-    "name": "test",
-    "location": "test",
-    "id": 19
-  },
-  {
-    "username": "Rainbow",
-    "name": "test",
-    "location": "test",
-    "id": 20
+    "id": 6,
+    "isDeleted": false
   },
   {
     "username": "MA",
     "name": "Mary-Anne",
     "location": "Toronto",
-    "id": 21
+    "id": 7,
+    "isDeleted": false
   }
 ]

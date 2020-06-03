@@ -43,7 +43,7 @@ namespace FrameworklessWebApp2.Controllers
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            _dataManager.DeleteUser(id);
         }
     }
 }
