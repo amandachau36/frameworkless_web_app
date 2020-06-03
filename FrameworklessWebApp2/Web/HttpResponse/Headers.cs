@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Net;
 
 
-namespace FrameworklessWebApp2
+namespace FrameworklessWebApp2.Web.HttpResponse
 {
     public static class Headers
     {

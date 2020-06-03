@@ -1,7 +1,8 @@
 using System.Net;
+using FrameworklessWebApp2.Web.HttpResponse;
 using Newtonsoft.Json;
 
-namespace FrameworklessWebApp2.Processor
+namespace FrameworklessWebApp2.Web.HttpResponse
 {
     public static class Response
     {

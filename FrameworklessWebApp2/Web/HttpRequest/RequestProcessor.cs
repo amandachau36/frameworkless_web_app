@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using FrameworklessWebApp2.Controllers;
 using FrameworklessWebApp2.DataAccess;
-using FrameworklessWebApp2.Models;
 using Newtonsoft.Json;
 
-namespace FrameworklessWebApp2
+namespace FrameworklessWebApp2.Web.HttpRequest
 {
     public class RequestProcessor
     {
@@ -20,7 +18,7 @@ namespace FrameworklessWebApp2
                 return verb;
             }
             
-            throw new HttpRequestException("Invalid http method: " + httpMethod);
+            throw new HttpRequestException($"Invalid http method: {httpMethod} for ", HttpStatusCode.MethodNotAllowed);
         }
         
         //https://stackoverflow.com/questions/39386586/c-sharp-generic-interface-and-factory-pattern
@@ -29,7 +27,7 @@ namespace FrameworklessWebApp2
             return controllerString switch
             {
                 "users" => new UsersController(dataManager), //UsersController<user>(dataManager)
-                _ => throw new InvalidOperationException("Invalid type specified.")
+                _ => throw new HttpRequestException("Page not found: ", HttpStatusCode.NotFound)
             };
         }
         
@@ -45,11 +43,11 @@ namespace FrameworklessWebApp2
         public static User GetModel(string route, HttpListenerRequest request)  //TODO: how to return this IModel
         {
             var json = ReadBody(request);
-            
+
             if(route == "users") 
-                return JsonConvert.DeserializeObject<User>(json); 
+                return JsonConvert.DeserializeObject<User>(json);   //TODO: need to throw exception and try/catch exception here if it can't be DeSerialized 
             
-            throw new HttpRequestException($"Model not found: " + route); //TODO: 404 
+            throw new HttpRequestException($"Model not found: {route}. ", HttpStatusCode.BadRequest ); //TODO: 404 
         }
 
         public static List<string> GetProcessedUriSegments(Uri uri)

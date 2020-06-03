@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -37,7 +38,7 @@ namespace FrameworklessWebApp2.DataAccess
             var index = users.FindIndex(x => x.Id == id);
             
             if (index < 0) 
-                throw new HttpRequestException("Page not found: ");
+                throw new HttpRequestException("Page not found: ", HttpStatusCode.NotFound); //TODO: probably need to throw a non HTTP  exception here then catch it in the web layer and throw a HTTP excpetion there 
 
             return users[index];
 
@@ -50,7 +51,7 @@ namespace FrameworklessWebApp2.DataAccess
             var index = users.FindIndex(x => x.Id == id && x.IsDeleted == false);
 
             if (index < 0) 
-                throw new HttpRequestException("Page not found: ");
+                throw new HttpRequestException("Page not found: ", HttpStatusCode.NotFound);
 
             var propertiesToUpdate = user.GetType().GetProperties();
 
@@ -77,7 +78,7 @@ namespace FrameworklessWebApp2.DataAccess
             var index = users.FindIndex(x => x.Id == id);
 
             if (index < 0) 
-                throw new HttpRequestException("Page not found: ");
+                throw new HttpRequestException("Page not found: ", HttpStatusCode.NotFound);
             
             users[index].SetIsDeletedToTrue();
             

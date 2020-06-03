@@ -2,10 +2,11 @@ using System;
 using System.Net;
 using System.Net.Http;
 using FrameworklessWebApp2.DataAccess;
-using FrameworklessWebApp2.Processor;
+using FrameworklessWebApp2.Web.HttpRequest;
+using FrameworklessWebApp2.Web.HttpResponse;
 
 
-namespace FrameworklessWebApp2
+namespace FrameworklessWebApp2.Web
 {
     public class HttpEngine 
     {
@@ -54,17 +55,17 @@ namespace FrameworklessWebApp2
                         Response.Send(HttpStatusCode.OK, "Deleted " + id , response);
                         break;
                     default:
-                        throw new HttpRequestException("Page not found: "); 
+                        throw new HttpRequestException($"Invalid http method: {verb} for ", HttpStatusCode.MethodNotAllowed); 
                 }
             }
             catch (HttpRequestException e) //TODO: custom exception with a property? 
             {
-                Response.Send(HttpStatusCode.NotFound,e.Message + request.Url, response);
+                Response.Send(e.StatusCode,e.Message + request.Url, response);
             }
-            catch (Exception e)
-            {
-                Response.Send(HttpStatusCode.InternalServerError, e.Message, response);
-            }
+            // catch (Exception e)
+            // {
+            //     Response.Send(HttpStatusCode.InternalServerError, e.Message, response);
+            // }
         }
     }
 }
