@@ -1,10 +1,13 @@
 using System.Reflection;
+using FrameworklessWebApp2.Controllers;
+using FrameworklessWebApp2.Models;
 using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2
 {
-    public class User //model
+    public class User : IModel
     {
+       
         [JsonProperty(PropertyName = "username")]
         public string Username { get; set; }
         
@@ -17,9 +20,17 @@ namespace FrameworklessWebApp2
         [JsonProperty(PropertyName = "id")]
         public int Id { get; private set; }
 
-        public static void SetId(User user, int id)
+        [JsonProperty(PropertyName = "isDeleted")]
+        public bool IsDeleted { get; private set; }
+        
+        public void SetId(int id)
         {
-            user.Id = id;
+            Id = id;
+        }
+        
+        public void SetIsDeletedToTrue()
+        {
+            IsDeleted = true;
         }
 
         

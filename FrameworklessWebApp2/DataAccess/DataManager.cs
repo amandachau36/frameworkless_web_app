@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
-using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -12,51 +10,48 @@ namespace FrameworklessWebApp2.DataAccess
 {
     public class DataManager //TODO: consider static 
     {
-        public void CreateUser(User user)
+        public User CreateUser(User user)
         {
-            var users = GetAllUsersList();
+            var users = ReadAllUsers();
             
-            var id = users.Last().Id + 1;                            //TODO: not ideal
-            User.SetId(user, id);
+            var id = users.Last().Id + 1;  
+            user.SetId(id);
             
             users.Add(user);
             
             WriteToTextFile(users);
-            
+
+            return user;
+
         }
-        public string ReadUsers() 
+        public List<User> ReadUsers()
         {
-            var sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
+            var allUsers = ReadAllUsers();
 
-            var json= sr.ReadToEnd();
-            
-            sr.Close();
-
-            return json;
-          
+            return allUsers.Where(x => x.IsDeleted == false).ToList();
         }
 
-        public string ReadUser(int id)
+        public User ReadUser(int id)
         {
-            var users = GetAllUsersList();
+            var users = ReadUsers();
 
             var index = users.FindIndex(x => x.Id == id);
             
             if (index < 0) 
-                throw new HttpRequestException("Page not found: ");
+                throw new HttpRequestException("Page not found: ", HttpStatusCode.NotFound); //TODO: probably need to throw a non HTTP  exception here then catch it in the web layer and throw a HTTP excpetion there 
 
-            return JsonConvert.SerializeObject(users[index]);
+            return users[index];
 
         }
 
-        public void UpdateUser(int? id, User user)
+        public User UpdateUser(int id, User user)
         {
-            var users = GetAllUsersList();
+            var users = ReadAllUsers();
 
-            var index = users.FindIndex(x => x.Id == id);
+            var index = users.FindIndex(x => x.Id == id && x.IsDeleted == false);
 
             if (index < 0) 
-                throw new HttpRequestException("Page not found: ");
+                throw new HttpRequestException("Page not found: ", HttpStatusCode.NotFound);
 
             var propertiesToUpdate = user.GetType().GetProperties();
 
@@ -71,6 +66,23 @@ namespace FrameworklessWebApp2.DataAccess
             }
             
             WriteToTextFile(users);
+
+            return users[index];
+
+        }
+        
+        public void DeleteUser(int id) 
+        {
+            var users = ReadUsers();
+
+            var index = users.FindIndex(x => x.Id == id);
+
+            if (index < 0) 
+                throw new HttpRequestException("Page not found: ", HttpStatusCode.NotFound);
+            
+            users[index].SetIsDeletedToTrue();
+            
+            WriteToTextFile(users);
             
         }
 
@@ -83,7 +95,8 @@ namespace FrameworklessWebApp2.DataAccess
                     new JProperty("username", u.Username),
                     new JProperty("name", u.Name),
                     new JProperty("location", u.Location),
-                    new JProperty("id", u.Id)
+                    new JProperty("id", u.Id),
+                    new JProperty("isDeleted", u.IsDeleted)
                 )
             );
 
@@ -96,15 +109,18 @@ namespace FrameworklessWebApp2.DataAccess
             sw.Close();
 
         }
-        
-        
-        private List<User> GetAllUsersList()
-        {
-            var users = ReadUsers();
-            
-            return JsonConvert.DeserializeObject<List<User>>(users);
-        }
 
+        private List<User> ReadAllUsers()
+        {
+            var sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
+
+            var json= sr.ReadToEnd();
+            
+            sr.Close();
+
+            return JsonConvert.DeserializeObject<List<User>>(json);
+        }
+        
     }
 
 }

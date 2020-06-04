@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Net;
-using FrameworklessWebApp2.DataAccess;
 
-namespace FrameworklessWebApp2
+
+namespace FrameworklessWebApp2.Web.HttpResponse
 {
     public static class Headers
     {

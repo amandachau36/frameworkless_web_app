@@ -1,10 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Resources;
 using FrameworklessWebApp2.DataAccess;
-using FrameworklessWebApp2.Resources;
+using FrameworklessWebApp2.Web;
+using Serilog;
+
 
 namespace FrameworklessWebApp2
 {
@@ -16,22 +16,22 @@ namespace FrameworklessWebApp2
         public void StartServer()
         {
             var dataManager = new DataManager();
-            var request = new RequestController(dataManager);
+            var httpEngine = new HttpEngine(dataManager);
 
             var port = GetPortConfig();
             _server.Prefixes.Add($"http://localhost:{port.PortNumber}/"); //URI prefixes 
             _server.Start();
             Console.WriteLine("Start listening");
             
-            while (true)
+            while (true) //TODO: Instead of true. Stop server when requested. 
             {
                 var context = _server.GetContext();  
-                Console.WriteLine($"{context.Request.HttpMethod} {context.Request.Url}");
-
-                request.Process(context);
+                Log.Information($"{context.Request.HttpMethod} {context.Request.Url}");
+                httpEngine.Process(context);
 
             }
             _server.Stop();  // never reached...
+          
         }
 
         private PortConfig GetPortConfig()
