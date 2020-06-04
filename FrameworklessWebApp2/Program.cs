@@ -17,8 +17,10 @@ namespace FrameworklessWebApp2
                 .CreateLogger();
             
             var server = new Server();
+            
             server.StartServer();
             
+            Log.CloseAndFlush(); 
         }
     }
 } 

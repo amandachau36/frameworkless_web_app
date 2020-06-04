@@ -87,3 +87,54 @@
 2020-06-04 14:45:43.272 +10:00 [INF] PUT http://localhost:8080/users/2
 2020-06-04 14:45:43.273 +10:00 [DBG] uriSegments[1]: users, id: 2, verb: Put
 2020-06-04 14:45:43.291 +10:00 [DBG] Sending put response. Message: {"username":"Annie","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-04 14:49:37.703 +10:00 [INF] POST http://localhost:8080/users
+2020-06-04 14:49:37.779 +10:00 [DBG] uriSegments[1]: users, id: , verb: Post
+2020-06-04 14:49:37.979 +10:00 [DBG] Sending post response. Message: {"username":"Cookies","name":"kate","location":"USA","id":18,"isDeleted":false}
+2020-06-04 14:49:43.571 +10:00 [INF] GET http://localhost:8080/users
+2020-06-04 14:49:43.572 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-04 14:49:43.582 +10:00 [DBG] Sending get response. Message: [{"username":"P","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"Annie","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"stef","location":"Germany","id":3,"isDeleted":false},{"username":"helpme","name":"Kris","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"Mon","name":"monica","location":"vancouver","id":9,"isDeleted":false},{"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":null,"name":null,"location":null,"id":13,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false},{"username":"Cookies","name":"kate","location":"USA","id":18,"isDeleted":false}]
+2020-06-04 14:50:14.231 +10:00 [INF] DELETE http://localhost:8080/users/13
+2020-06-04 14:50:14.232 +10:00 [DBG] uriSegments[1]: users, id: 13, verb: Delete
+2020-06-04 14:50:14.241 +10:00 [DBG] Sending delete response. Message: Deleted 13
+2020-06-04 14:50:18.441 +10:00 [INF] GET http://localhost:8080/users/13
+2020-06-04 14:50:18.442 +10:00 [DBG] uriSegments[1]: users, id: 13, verb: Get
+2020-06-04 14:50:18.455 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users/13, Status Code: NotFound
+2020-06-04 14:50:23.932 +10:00 [INF] GET http://localhost:8080/users
+2020-06-04 14:50:23.933 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-04 14:50:23.934 +10:00 [DBG] Sending get response. Message: [{"username":"P","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"Annie","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"stef","location":"Germany","id":3,"isDeleted":false},{"username":"helpme","name":"Kris","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"Mon","name":"monica","location":"vancouver","id":9,"isDeleted":false},{"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false},{"username":"Cookies","name":"kate","location":"USA","id":18,"isDeleted":false}]
+2020-06-04 18:21:19.529 +10:00 [INF] GET http://localhost:8080/users
+2020-06-04 18:21:19.620 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-04 18:21:19.863 +10:00 [DBG] Sending get response. Message: [{"username":"P","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"Annie","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"stef","location":"Germany","id":3,"isDeleted":false},{"username":"helpme","name":"Kris","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"Mon","name":"monica","location":"vancouver","id":9,"isDeleted":false},{"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false},{"username":"Cookies","name":"kate","location":"USA","id":18,"isDeleted":false}]
+2020-06-04 18:21:29.665 +10:00 [INF] GET http://localhost:8080/users/2
+2020-06-04 18:21:29.666 +10:00 [DBG] uriSegments[1]: users, id: 2, verb: Get
+2020-06-04 18:21:29.675 +10:00 [DBG] Sending get response. Message: {"username":"Annie","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-04 18:21:32.400 +10:00 [INF] GET http://localhost:8080/users/4
+2020-06-04 18:21:32.401 +10:00 [DBG] uriSegments[1]: users, id: 4, verb: Get
+2020-06-04 18:21:32.403 +10:00 [DBG] Sending get response. Message: {"username":"helpme","name":"Kris","location":"calgary","id":4,"isDeleted":false}
+2020-06-04 18:21:34.514 +10:00 [INF] GET http://localhost:8080/users/7
+2020-06-04 18:21:34.514 +10:00 [DBG] uriSegments[1]: users, id: 7, verb: Get
+2020-06-04 18:21:34.516 +10:00 [DBG] Sending get response. Message: {"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false}
+2020-06-04 18:21:36.263 +10:00 [INF] GET http://localhost:8080/users/76
+2020-06-04 18:21:36.264 +10:00 [DBG] uriSegments[1]: users, id: 76, verb: Get
+2020-06-04 18:21:36.265 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users/76, Status Code: NotFound
+2020-06-04 18:21:57.295 +10:00 [INF] GET http://localhost:8080/users/4
+2020-06-04 18:21:57.295 +10:00 [DBG] uriSegments[1]: users, id: 4, verb: Get
+2020-06-04 18:21:57.296 +10:00 [DBG] Sending get response. Message: {"username":"helpme","name":"Kris","location":"calgary","id":4,"isDeleted":false}
+2020-06-04 18:22:18.156 +10:00 [INF] PUT http://localhost:8080/users/4
+2020-06-04 18:22:18.156 +10:00 [DBG] uriSegments[1]: users, id: 4, verb: Put
+2020-06-04 18:22:18.179 +10:00 [DBG] Sending put response. Message: {"username":"helpme","name":"kristina","location":"calgary","id":4,"isDeleted":false}
+2020-06-04 18:22:29.205 +10:00 [INF] DELETE http://localhost:8080/users/9
+2020-06-04 18:22:29.206 +10:00 [DBG] uriSegments[1]: users, id: 9, verb: Delete
+2020-06-04 18:22:29.218 +10:00 [DBG] Sending delete response. Message: Deleted 9
+2020-06-04 18:22:35.564 +10:00 [INF] GET http://localhost:8080/users/9
+2020-06-04 18:22:35.565 +10:00 [DBG] uriSegments[1]: users, id: 9, verb: Get
+2020-06-04 18:22:35.565 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users/9, Status Code: NotFound
+2020-06-04 18:22:40.991 +10:00 [INF] GET http://localhost:8080/users
+2020-06-04 18:22:40.992 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-04 18:22:40.993 +10:00 [DBG] Sending get response. Message: [{"username":"P","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"Annie","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"stef","location":"Germany","id":3,"isDeleted":false},{"username":"helpme","name":"kristina","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false},{"username":"Cookies","name":"kate","location":"USA","id":18,"isDeleted":false}]
+2020-06-04 18:23:05.241 +10:00 [INF] GET http://localhost:8080/users/12
+2020-06-04 18:23:05.241 +10:00 [DBG] uriSegments[1]: users, id: 12, verb: Get
+2020-06-04 18:23:05.242 +10:00 [DBG] Sending get response. Message: {"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false}
+2020-06-04 18:23:36.068 +10:00 [INF] POST http://localhost:8080/users/12
+2020-06-04 18:23:36.068 +10:00 [DBG] uriSegments[1]: users, id: 12, verb: Post
+2020-06-04 18:23:36.076 +10:00 [DBG] Sending post response. Message: {"username":"testing","name":"test","location":"test","id":19,"isDeleted":false}

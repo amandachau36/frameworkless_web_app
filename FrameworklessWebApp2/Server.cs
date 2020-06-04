@@ -23,15 +23,15 @@ namespace FrameworklessWebApp2
             _server.Start();
             Console.WriteLine("Start listening");
             
-            while (true)
+            while (true) //TODO: Instead of true. Stop server when requested. 
             {
                 var context = _server.GetContext();  
                 Log.Information($"{context.Request.HttpMethod} {context.Request.Url}");
-                //Log.CloseAndFlush();                                     //TODO: is this required here? 
                 httpEngine.Process(context);
 
             }
             _server.Stop();  // never reached...
+          
         }
 
         private PortConfig GetPortConfig()

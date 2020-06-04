@@ -12,9 +12,13 @@ namespace FrameworklessWebApp2.Web
     public class HttpEngine 
     {
         private readonly DataManager _dataManager;
+        //private readonly ILogger _logger;
+
         public HttpEngine(DataManager dataManager)
+            //ILogger logger)
         {
             _dataManager = dataManager;
+            //_logger = logger;
         }
 
         public void Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
@@ -27,7 +31,7 @@ namespace FrameworklessWebApp2.Web
                 dynamic controller = RequestProcessor.GetController(uriSegments[1], _dataManager);
                 var id = RequestProcessor.GetId(uriSegments);
                 var verb = RequestProcessor.GetVerb(request.HttpMethod);
-                Log.Debug($"uriSegments[1]: {uriSegments[1]}, id: {id}, verb: {verb}");
+                Log.Debug($"uriSegments[1]: {uriSegments[1]}, id: {id}, verb: {verb}"); // can't swap it out
 
                 switch (verb)
                 {
@@ -36,10 +40,12 @@ namespace FrameworklessWebApp2.Web
                             ? Response.PrepareMessage(controller.Get())
                             : Response.PrepareMessage(controller.Get(id.GetValueOrDefault()));
                         Log.Debug($"Sending get response. Message: {getMessage}");
+                        //TODO: return ResponseMessage (status code, object )
+                        //Response.Send(Response.statusCode, Serialise(responseMessage.Body) // BUT not here . .
                         Response.Send(HttpStatusCode.OK, getMessage, response);
                         break;
                     case HttpVerb.Put: //URL and body
-                        dynamic modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request);
+                        dynamic modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request); //TODO: getControllerAndModelForURISegment  return controller
                         var updatedUser = controller.Put(modelToUpdate, id.GetValueOrDefault());
                         var putMessage = Response.PrepareMessage(updatedUser);
                         Log.Debug($"Sending put response. Message: {putMessage}");

@@ -45,7 +45,7 @@ namespace FrameworklessWebApp2.Web.HttpRequest
             var json = ReadBody(request);
 
             if(route == "users") 
-                return JsonConvert.DeserializeObject<User>(json);   //TODO: need to throw exception and try/catch exception here if it can't be DeSerialized 
+                return JsonConvert.DeserializeObject<User>(json);   
             
             throw new HttpRequestException($"Model not found: {route}. ", HttpStatusCode.BadRequest ); //TODO: 404 
         }
