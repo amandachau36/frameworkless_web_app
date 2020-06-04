@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using FrameworklessWebApp2.DataAccess;
 using FrameworklessWebApp2.Web;
+using Serilog;
 
 
 namespace FrameworklessWebApp2
@@ -15,7 +16,7 @@ namespace FrameworklessWebApp2
         public void StartServer()
         {
             var dataManager = new DataManager();
-            var request = new HttpEngine(dataManager);
+            var httpEngine = new HttpEngine(dataManager);
 
             var port = GetPortConfig();
             _server.Prefixes.Add($"http://localhost:{port.PortNumber}/"); //URI prefixes 
@@ -25,9 +26,9 @@ namespace FrameworklessWebApp2
             while (true)
             {
                 var context = _server.GetContext();  
-                Console.WriteLine($"{context.Request.HttpMethod} {context.Request.Url}");
-
-                request.Process(context);
+                Log.Information($"{context.Request.HttpMethod} {context.Request.Url}");
+                //Log.CloseAndFlush();                                     //TODO: is this required here? 
+                httpEngine.Process(context);
 
             }
             _server.Stop();  // never reached...

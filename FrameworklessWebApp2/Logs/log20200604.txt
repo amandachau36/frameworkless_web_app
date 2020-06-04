@@ -1,0 +1,71 @@
+2020-06-04 10:53:02.856 +10:00 [DBG] GET http://localhost:8080/users/2
+2020-06-04 13:29:28.916 +10:00 [INF] GET http://localhost:8080/users/2
+2020-06-04 13:31:37.499 +10:00 [INF] GET http://localhost:8080/users
+2020-06-04 13:31:37.579 +10:00 [DBG] uriSegments[1]: System.Collections.Generic.List`1[System.String], id: , verb: Get
+2020-06-04 13:31:37.774 +10:00 [DBG] Sending get response. Message: [{"username":"p","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"bonjour","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"stef","location":"Germany","id":3,"isDeleted":false},{"username":"helpme","name":"Kris","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"Mon","name":"monica","location":"vancouver","id":9,"isDeleted":false},{"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":null,"name":null,"location":null,"id":13,"isDeleted":false}]
+2020-06-04 13:34:23.642 +10:00 [INF] GET http://localhost:8080/users/1
+2020-06-04 13:34:23.725 +10:00 [DBG] uriSegments[1]: System.Collections.Generic.List`1[System.String], id: 1, verb: Get
+2020-06-04 13:34:23.942 +10:00 [DBG] Sending get response. Message: {"username":"p","name":"Paul","location":"Germany","id":1,"isDeleted":false}
+2020-06-04 13:34:23.948 +10:00 [INF] reaching finally block
+2020-06-04 13:34:46.883 +10:00 [INF] GET http://localhost:8080/users/6
+2020-06-04 13:34:46.884 +10:00 [DBG] uriSegments[1]: System.Collections.Generic.List`1[System.String], id: 6, verb: Get
+2020-06-04 13:34:46.889 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users/6, Status Code: NotFound
+2020-06-04 13:34:46.890 +10:00 [INF] reaching finally block
+2020-06-04 13:35:11.889 +10:00 [INF] GET http://localhost:8080/users
+2020-06-04 13:35:11.890 +10:00 [DBG] uriSegments[1]: System.Collections.Generic.List`1[System.String], id: , verb: Get
+2020-06-04 13:35:11.902 +10:00 [DBG] Sending get response. Message: [{"username":"p","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"bonjour","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"stef","location":"Germany","id":3,"isDeleted":false},{"username":"helpme","name":"Kris","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"Mon","name":"monica","location":"vancouver","id":9,"isDeleted":false},{"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":null,"name":null,"location":null,"id":13,"isDeleted":false}]
+2020-06-04 13:35:11.903 +10:00 [INF] reaching finally block
+2020-06-04 13:36:21.094 +10:00 [INF] PUT http://localhost:8080/users/1
+2020-06-04 13:36:21.095 +10:00 [DBG] uriSegments[1]: System.Collections.Generic.List`1[System.String], id: 1, verb: Put
+2020-06-04 13:36:21.113 +10:00 [DBG] Sending put response. Message: {"username":"P from Germany","name":"Paul","location":"Germany","id":1,"isDeleted":false}
+2020-06-04 13:36:21.114 +10:00 [INF] reaching finally block
+2020-06-04 13:36:36.069 +10:00 [INF] GET http://localhost:8080/users
+2020-06-04 13:36:36.070 +10:00 [DBG] uriSegments[1]: System.Collections.Generic.List`1[System.String], id: , verb: Get
+2020-06-04 13:36:36.072 +10:00 [DBG] Sending get response. Message: [{"username":"P from Germany","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"bonjour","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"stef","location":"Germany","id":3,"isDeleted":false},{"username":"helpme","name":"Kris","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"Mon","name":"monica","location":"vancouver","id":9,"isDeleted":false},{"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":null,"name":null,"location":null,"id":13,"isDeleted":false}]
+2020-06-04 13:36:36.073 +10:00 [INF] reaching finally block
+2020-06-04 13:36:45.701 +10:00 [INF] PUT http://localhost:8080/users/5
+2020-06-04 13:36:45.701 +10:00 [DBG] uriSegments[1]: System.Collections.Generic.List`1[System.String], id: 5, verb: Put
+2020-06-04 13:36:45.703 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users/5, Status Code: NotFound
+2020-06-04 13:36:45.704 +10:00 [INF] reaching finally block
+2020-06-04 13:37:42.687 +10:00 [INF] GET http://localhost:8080/users/5
+2020-06-04 13:37:42.766 +10:00 [DBG] uriSegments[1]: users, id: 5, verb: Get
+2020-06-04 13:37:42.938 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users/5, Status Code: NotFound
+2020-06-04 13:38:45.140 +10:00 [INF] GET http://localhost:8080/users
+2020-06-04 13:38:45.141 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-04 13:38:45.173 +10:00 [DBG] Sending get response. Message: [{"username":"P from Germany","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"bonjour","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"stef","location":"Germany","id":3,"isDeleted":false},{"username":"helpme","name":"Kris","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"Mon","name":"monica","location":"vancouver","id":9,"isDeleted":false},{"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":null,"name":null,"location":null,"id":13,"isDeleted":false}]
+2020-06-04 13:39:51.658 +10:00 [INF] POST http://localhost:8080/users
+2020-06-04 13:39:51.658 +10:00 [DBG] uriSegments[1]: users, id: , verb: Post
+2020-06-04 13:39:51.674 +10:00 [DBG] Sending post response. Message: {"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false}
+{"Timestamp":"2020-06-04T13:54:24.7414540+10:00","Level":"Information","MessageTemplate":"POST http://localhost:8080/users"}
+{"Timestamp":"2020-06-04T13:54:24.8027120+10:00","Level":"Debug","MessageTemplate":"uriSegments[1]: users, id: , verb: Post"}
+{"Timestamp":"2020-06-04T13:54:24.9976980+10:00","Level":"Debug","MessageTemplate":"Sending post response. Message: {\"username\":\"A\",\"name\":\"Amanda\",\"location\":\"Home\",\"id\":15,\"isDeleted\":false}"}
+{"Timestamp":"2020-06-04T13:54:43.8952160+10:00","Level":"Information","MessageTemplate":"POST http://localhost:8080/use"}
+{"Timestamp":"2020-06-04T13:54:43.8960820+10:00","Level":"Error","MessageTemplate":"Exception message: Page not found: http://localhost:8080/use, Status Code: NotFound"}
+2020-06-04 14:01:50.484 +10:00 [INF] POST http://localhost:8080/use
+2020-06-04 14:01:50.561 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/use, Status Code: NotFound
+2020-06-04 14:04:55.410 +10:00 [INF] POST http://localhost:8080/users
+2020-06-04 14:04:55.412 +10:00 [DBG] uriSegments[1]: users, id: , verb: Post
+2020-06-04 14:04:55.646 +10:00 [DBG] Sending post response. Message: {"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false}
+2020-06-04 14:04:59.151 +10:00 [INF] POST http://localhost:8080/users
+2020-06-04 14:04:59.152 +10:00 [DBG] uriSegments[1]: users, id: , verb: Post
+2020-06-04 14:04:59.156 +10:00 [DBG] Sending post response. Message: {"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false}
+2020-06-04 14:05:53.969 +10:00 [INF] GET http://localhost:8080/users
+2020-06-04 14:05:53.970 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-04 14:05:53.982 +10:00 [DBG] Sending get response. Message: [{"username":"P from Germany","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"bonjour","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"stef","location":"Germany","id":3,"isDeleted":false},{"username":"helpme","name":"Kris","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"Mon","name":"monica","location":"vancouver","id":9,"isDeleted":false},{"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":null,"name":null,"location":null,"id":13,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false}]
+2020-06-04 14:06:01.414 +10:00 [INF] GET http://localhost:8080/users.5
+2020-06-04 14:06:01.415 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users.5, Status Code: NotFound
+2020-06-04 14:06:09.636 +10:00 [INF] GET http://localhost:8080/users/5
+2020-06-04 14:06:09.636 +10:00 [DBG] uriSegments[1]: users, id: 5, verb: Get
+2020-06-04 14:06:09.645 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users/5, Status Code: NotFound
+2020-06-04 14:06:21.854 +10:00 [INF] GET http://localhost:8080/users/1
+2020-06-04 14:06:21.855 +10:00 [DBG] uriSegments[1]: users, id: 1, verb: Get
+2020-06-04 14:06:21.856 +10:00 [DBG] Sending get response. Message: {"username":"P from Germany","name":"Paul","location":"Germany","id":1,"isDeleted":false}
+2020-06-04 14:07:16.720 +10:00 [INF] PUT http://localhost:8080/users/1
+2020-06-04 14:07:16.722 +10:00 [DBG] uriSegments[1]: users, id: 1, verb: Put
+2020-06-04 14:07:16.732 +10:00 [DBG] Sending put response. Message: {"username":"P","name":"Paul","location":"Germany","id":1,"isDeleted":false}
+2020-06-04 14:11:07.590 +10:00 [INF] PUT http://localhost:8080/users/1
+2020-06-04 14:11:07.666 +10:00 [DBG] uriSegments[1]: users, id: 1, verb: Put
+2020-06-04 14:11:07.850 +10:00 [DBG] Sending put response. Message: {"username":"P","name":"Paul","location":"Germany","id":1,"isDeleted":false}
+2020-06-04 14:11:17.214 +10:00 [INF] PUT http://localhost:8080/users
+2020-06-04 14:11:17.215 +10:00 [DBG] uriSegments[1]: users, id: , verb: Put
+2020-06-04 14:11:17.217 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users, Status Code: NotFound

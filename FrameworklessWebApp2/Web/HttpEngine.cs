@@ -4,18 +4,17 @@ using System.Net.Http;
 using FrameworklessWebApp2.DataAccess;
 using FrameworklessWebApp2.Web.HttpRequest;
 using FrameworklessWebApp2.Web.HttpResponse;
+using Serilog;
 
 
 namespace FrameworklessWebApp2.Web
 {
     public class HttpEngine 
     {
-
         private readonly DataManager _dataManager;
         public HttpEngine(DataManager dataManager)
         {
             _dataManager = dataManager;
-           
         }
 
         public void Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
@@ -25,47 +24,56 @@ namespace FrameworklessWebApp2.Web
             try
             {
                 var uriSegments = RequestProcessor.GetProcessedUriSegments(request.Url);
-
                 dynamic controller = RequestProcessor.GetController(uriSegments[1], _dataManager);
                 var id = RequestProcessor.GetId(uriSegments);
                 var verb = RequestProcessor.GetVerb(request.HttpMethod);
-                
+                Log.Debug($"uriSegments[1]: {uriSegments[1]}, id: {id}, verb: {verb}");
+
                 switch (verb)
                 {
                     case HttpVerb.Get: //Routing // URL  //TODO: make logging better - Serilog outputs a structured log
-                        var getMessage = id == null 
-                            ? Response.PrepareMessage(controller.Get()) 
+                        var getMessage = id == null
+                            ? Response.PrepareMessage(controller.Get())
                             : Response.PrepareMessage(controller.Get(id.GetValueOrDefault()));
-                        Response.Send( HttpStatusCode.OK, getMessage, response); 
+                        Log.Debug($"Sending get response. Message: {getMessage}");
+                        Response.Send(HttpStatusCode.OK, getMessage, response);
                         break;
-                    case HttpVerb.Put:  //URL and body
+                    case HttpVerb.Put: //URL and body
                         var modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request);
                         var updatedUser = controller.Put(modelToUpdate, id.GetValueOrDefault());
                         var putMessage = Response.PrepareMessage(updatedUser);
-                        Response.Send( HttpStatusCode.OK, putMessage, response);
+                        Log.Debug($"Sending put response. Message: {putMessage}");
+                        Response.Send(HttpStatusCode.OK, putMessage, response);
                         break;
-                    case HttpVerb.Post:  //body
+                    case HttpVerb.Post: //body
                         var modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
                         var newUser = controller.Post(modelToCreate);
                         var postMessage = Response.PrepareMessage(newUser);
-                        Response.Send(HttpStatusCode.Created, postMessage,response); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
+                        Log.Debug($"Sending post response. Message: {postMessage}");
+                        Response.Send(HttpStatusCode.Created, postMessage,
+                            response); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
                         break;
                     case HttpVerb.Delete: //URL
                         controller.Delete(id.GetValueOrDefault());
-                        Response.Send(HttpStatusCode.OK, "Deleted " + id , response);
+                        Log.Debug($"Sending delete response. Message: Deleted {id}");
+                        Response.Send(HttpStatusCode.OK, "Deleted " + id, response);
                         break;
                     default:
-                        throw new HttpRequestException($"Invalid http method: {verb} for ", HttpStatusCode.MethodNotAllowed); 
+                        throw new HttpRequestException($"Invalid http method: {verb} for ",
+                            HttpStatusCode.MethodNotAllowed);
                 }
             }
-            catch (HttpRequestException e) //TODO: custom exception with a property? 
+            catch (HttpRequestException e)
             {
-                Response.Send(e.StatusCode,e.Message + request.Url, response);
+                Log.Error($"Exception message: {e.Message + request.Url}, Status Code: {e.StatusCode}");
+                Response.Send(e.StatusCode, e.Message + request.Url, response);
             }
-            // catch (Exception e)
-            // {
-            //     Response.Send(HttpStatusCode.InternalServerError, e.Message, response);
-            // }
+            catch (Exception e)
+            {
+                Log.Error($"Exception message: {e.Message}, Status Code: {HttpStatusCode.InternalServerError}");
+                Response.Send(HttpStatusCode.InternalServerError, e.Message, response);
+            }
+         
         }
     }
 }

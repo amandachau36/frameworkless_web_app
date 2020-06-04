@@ -1,5 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
+using Serilog;
+using Serilog.Formatting.Json;
 
 namespace FrameworklessWebApp2
 {
@@ -7,6 +9,13 @@ namespace FrameworklessWebApp2
     {
         static void Main(string[] prefixes)     //Uniform resource Identifer (URI) prefixes
         {
+            var path = 
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console()
+                .WriteTo.File( Path.Combine(Directory.GetCurrentDirectory(), "Logs", "log.txt"), rollingInterval: RollingInterval.Day)
+                .CreateLogger();
+            
             var server = new Server();
             server.StartServer();
             
