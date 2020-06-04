@@ -69,3 +69,21 @@
 2020-06-04 14:11:17.214 +10:00 [INF] PUT http://localhost:8080/users
 2020-06-04 14:11:17.215 +10:00 [DBG] uriSegments[1]: users, id: , verb: Put
 2020-06-04 14:11:17.217 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users, Status Code: NotFound
+2020-06-04 14:43:57.806 +10:00 [INF] GET http://localhost:8080/users
+2020-06-04 14:43:57.886 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-04 14:43:58.082 +10:00 [DBG] Sending get response. Message: [{"username":"P","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"bonjour","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"stef","location":"Germany","id":3,"isDeleted":false},{"username":"helpme","name":"Kris","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"Mon","name":"monica","location":"vancouver","id":9,"isDeleted":false},{"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":null,"name":null,"location":null,"id":13,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false}]
+2020-06-04 14:44:06.334 +10:00 [INF] GET http://localhost:8080/users/1
+2020-06-04 14:44:06.335 +10:00 [DBG] uriSegments[1]: users, id: 1, verb: Get
+2020-06-04 14:44:06.341 +10:00 [DBG] Sending get response. Message: {"username":"P","name":"Paul","location":"Germany","id":1,"isDeleted":false}
+2020-06-04 14:44:10.343 +10:00 [INF] GET http://localhost:8080/users/8
+2020-06-04 14:44:10.343 +10:00 [DBG] uriSegments[1]: users, id: 8, verb: Get
+2020-06-04 14:44:10.347 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users/8, Status Code: NotFound
+2020-06-04 14:44:25.321 +10:00 [INF] GET http://localhost:8080/users/1
+2020-06-04 14:44:25.322 +10:00 [DBG] uriSegments[1]: users, id: 1, verb: Get
+2020-06-04 14:44:25.323 +10:00 [DBG] Sending get response. Message: {"username":"P","name":"Paul","location":"Germany","id":1,"isDeleted":false}
+2020-06-04 14:44:37.014 +10:00 [INF] GET http://localhost:8080/users/2
+2020-06-04 14:44:37.015 +10:00 [DBG] uriSegments[1]: users, id: 2, verb: Get
+2020-06-04 14:44:37.016 +10:00 [DBG] Sending get response. Message: {"username":"bonjour","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-04 14:45:43.272 +10:00 [INF] PUT http://localhost:8080/users/2
+2020-06-04 14:45:43.273 +10:00 [DBG] uriSegments[1]: users, id: 2, verb: Put
+2020-06-04 14:45:43.291 +10:00 [DBG] Sending put response. Message: {"username":"Annie","name":"Ann","location":"USA","id":2,"isDeleted":false}
