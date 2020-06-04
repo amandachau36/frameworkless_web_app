@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using FrameworklessWebApp2.Controllers;
 using FrameworklessWebApp2.DataAccess;
+using FrameworklessWebApp2.Models;
 using Newtonsoft.Json;
 
 namespace FrameworklessWebApp2.Web.HttpRequest
@@ -40,7 +41,7 @@ namespace FrameworklessWebApp2.Web.HttpRequest
             return null; //TODO: case users/cats Throw exception 
         }
         
-        public static object GetModel(string route, HttpListenerRequest request)  //TODO: how to return this IModel
+        public static IModel GetModel(string route, HttpListenerRequest request)  //TODO: how to return this IModel
         {
             var json = ReadBody(request);
 

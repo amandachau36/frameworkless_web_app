@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using FrameworklessWebApp2.DataAccess;
+using FrameworklessWebApp2.Models;
 
 
 namespace FrameworklessWebApp2.Controllers
@@ -15,9 +16,9 @@ namespace FrameworklessWebApp2.Controllers
             _dataManager = dataManager;
         }
 
-        public User Post(User model)
+        public User Post(IModel model)
         {
-              return _dataManager.CreateUser(model); //Controller 
+              return _dataManager.CreateUser((User)model); //Controller 
         }
 
         public List<User> Get()
@@ -31,10 +32,9 @@ namespace FrameworklessWebApp2.Controllers
             return _dataManager.ReadUser(id);
         }
 
-        public User Put(User model, int id)
+        public User Put(IModel model, int id)
         {
-            //TODO:
-            return _dataManager.UpdateUser(id, model);
+            return _dataManager.UpdateUser(id, (User)model);
         }
 
         public void Delete(int id)

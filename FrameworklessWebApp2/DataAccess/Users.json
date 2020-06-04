@@ -42,7 +42,7 @@
     "isDeleted": true
   },
   {
-    "username": "kia ora",
+    "username": "mia",
     "name": "kia",
     "location": "nz",
     "id": 12,
@@ -88,6 +88,13 @@
     "name": "test",
     "location": "test",
     "id": 19,
+    "isDeleted": false
+  },
+  {
+    "username": "pia",
+    "name": "pia k",
+    "location": "Berlin",
+    "id": 20,
     "isDeleted": false
   }
 ]

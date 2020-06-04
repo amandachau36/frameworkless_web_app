@@ -138,3 +138,12 @@
 2020-06-04 18:23:36.068 +10:00 [INF] POST http://localhost:8080/users/12
 2020-06-04 18:23:36.068 +10:00 [DBG] uriSegments[1]: users, id: 12, verb: Post
 2020-06-04 18:23:36.076 +10:00 [DBG] Sending post response. Message: {"username":"testing","name":"test","location":"test","id":19,"isDeleted":false}
+2020-06-04 18:53:11.616 +10:00 [INF] GET http://localhost:8080/users/12
+2020-06-04 18:53:11.703 +10:00 [DBG] uriSegments[1]: users, id: 12, verb: Get
+2020-06-04 18:53:11.945 +10:00 [DBG] Sending get response. Message: {"username":"kia ora","name":"kia","location":"nz","id":12,"isDeleted":false}
+2020-06-04 18:53:34.540 +10:00 [INF] PUT http://localhost:8080/users/12
+2020-06-04 18:53:34.541 +10:00 [DBG] uriSegments[1]: users, id: 12, verb: Put
+2020-06-04 18:53:34.564 +10:00 [DBG] Sending put response. Message: {"username":"mia","name":"kia","location":"nz","id":12,"isDeleted":false}
+2020-06-04 18:54:25.085 +10:00 [INF] POST http://localhost:8080/users
+2020-06-04 18:54:25.086 +10:00 [DBG] uriSegments[1]: users, id: , verb: Post
+2020-06-04 18:54:25.099 +10:00 [DBG] Sending post response. Message: {"username":"pia","name":"pia k","location":"Berlin","id":20,"isDeleted":false}

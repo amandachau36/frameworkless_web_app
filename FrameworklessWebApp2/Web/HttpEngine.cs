@@ -45,14 +45,14 @@ namespace FrameworklessWebApp2.Web
                         Response.Send(HttpStatusCode.OK, getMessage, response);
                         break;
                     case HttpVerb.Put: //URL and body
-                        dynamic modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request); //TODO: getControllerAndModelForURISegment  return controller
+                        var modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request); //TODO: getControllerAndModelForURISegment  return controller
                         var updatedUser = controller.Put(modelToUpdate, id.GetValueOrDefault());
                         var putMessage = Response.PrepareMessage(updatedUser);
                         Log.Debug($"Sending put response. Message: {putMessage}");
                         Response.Send(HttpStatusCode.OK, putMessage, response);
                         break;
                     case HttpVerb.Post: //body
-                        dynamic modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
+                        var modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
                         var newUser = controller.Post(modelToCreate);
                         var postMessage = Response.PrepareMessage(newUser);
                         Log.Debug($"Sending post response. Message: {postMessage}");
