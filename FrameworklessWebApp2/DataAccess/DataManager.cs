@@ -14,7 +14,7 @@ namespace FrameworklessWebApp2.DataAccess
         {
             var users = ReadAllUsers();
             
-            var id = users.Last().Id + 1;  //TODO: not ideal
+            var id = users.Last().Id + 1;  
             user.SetId(id);
             
             users.Add(user);

@@ -31,7 +31,7 @@ namespace FrameworklessWebApp2.Web
 
                 switch (verb)
                 {
-                    case HttpVerb.Get: //Routing // URL  //TODO: make logging better - Serilog outputs a structured log
+                    case HttpVerb.Get: //Routing // URL  
                         var getMessage = id == null
                             ? Response.PrepareMessage(controller.Get())
                             : Response.PrepareMessage(controller.Get(id.GetValueOrDefault()));
@@ -51,7 +51,7 @@ namespace FrameworklessWebApp2.Web
                         var postMessage = Response.PrepareMessage(newUser);
                         Log.Debug($"Sending post response. Message: {postMessage}");
                         Response.Send(HttpStatusCode.Created, postMessage,
-                            response); //View  // Must send response but sometimes if doesn't have content 204 /TODO Idisplay may need to make not static 
+                            response); //View  // Must send response but sometimes if doesn't have content 204 
                         break;
                     case HttpVerb.Delete: //URL
                         controller.Delete(id.GetValueOrDefault());
