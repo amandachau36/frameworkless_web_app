@@ -7,7 +7,7 @@
     "isDeleted": false
   },
   {
-    "username": "Annie",
+    "username": "landers",
     "name": "Ann",
     "location": "USA",
     "id": 2,
@@ -95,6 +95,13 @@
     "name": "pia k",
     "location": "Berlin",
     "id": 20,
+    "isDeleted": false
+  },
+  {
+    "username": "unicorn",
+    "name": "rainbow",
+    "location": "in the clouds",
+    "id": 21,
     "isDeleted": false
   }
 ]

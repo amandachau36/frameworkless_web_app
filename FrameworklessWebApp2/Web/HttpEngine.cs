@@ -12,13 +12,12 @@ namespace FrameworklessWebApp2.Web
     public class HttpEngine 
     {
         private readonly DataManager _dataManager;
-        //private readonly ILogger _logger;
+        private readonly ILogger _logger;
 
-        public HttpEngine(DataManager dataManager)
-            //ILogger logger)
+        public HttpEngine(DataManager dataManager, ILogger logger)
         {
-            _dataManager = dataManager;
-            //_logger = logger;
+            _dataManager = dataManager; 
+            _logger = logger;
         }
 
         public void Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
@@ -31,7 +30,7 @@ namespace FrameworklessWebApp2.Web
                 dynamic controller = RequestProcessor.GetController(uriSegments[1], _dataManager);
                 var id = RequestProcessor.GetId(uriSegments);
                 var verb = RequestProcessor.GetVerb(request.HttpMethod);
-                Log.Debug($"uriSegments[1]: {uriSegments[1]}, id: {id}, verb: {verb}"); // can't swap it out
+                _logger.Debug($"uriSegments[1]: {uriSegments[1]}, id: {id}, verb: {verb}"); // can't swap it out
 
                 switch (verb)
                 {
@@ -39,7 +38,7 @@ namespace FrameworklessWebApp2.Web
                         var getMessage = id == null
                             ? Response.PrepareMessage(controller.Get())
                             : Response.PrepareMessage(controller.Get(id.GetValueOrDefault()));
-                        Log.Debug($"Sending get response. Message: {getMessage}");
+                        _logger.Debug($"Sending get response. Message: {getMessage}");
                         //TODO: return ResponseMessage (status code, object )
                         //Response.Send(Response.statusCode, Serialise(responseMessage.Body) // BUT not here . .
                         Response.Send(HttpStatusCode.OK, getMessage, response);
@@ -48,20 +47,20 @@ namespace FrameworklessWebApp2.Web
                         var modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request); //TODO: getControllerAndModelForURISegment  return controller
                         var updatedUser = controller.Put(modelToUpdate, id.GetValueOrDefault());
                         var putMessage = Response.PrepareMessage(updatedUser);
-                        Log.Debug($"Sending put response. Message: {putMessage}");
+                        _logger.Debug($"Sending put response. Message: {putMessage}");
                         Response.Send(HttpStatusCode.OK, putMessage, response);
                         break;
                     case HttpVerb.Post: //body
                         var modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
                         var newUser = controller.Post(modelToCreate);
                         var postMessage = Response.PrepareMessage(newUser);
-                        Log.Debug($"Sending post response. Message: {postMessage}");
+                        _logger.Debug($"Sending post response. Message: {postMessage}");
                         Response.Send(HttpStatusCode.Created, postMessage,
                             response); //View  // Must send response but sometimes if doesn't have content 204 
                         break;
                     case HttpVerb.Delete: //URL
                         controller.Delete(id.GetValueOrDefault());
-                        Log.Debug($"Sending delete response. Message: Deleted {id}");
+                        _logger.Debug($"Sending delete response. Message: Deleted {id}");
                         Response.Send(HttpStatusCode.OK, "Deleted " + id, response);
                         break;
                     default:
@@ -71,12 +70,13 @@ namespace FrameworklessWebApp2.Web
             }
             catch (HttpRequestException e)
             {
-                Log.Error($"Exception message: {e.Message + request.Url}, Status Code: {e.StatusCode}");
+                _logger.Error($"Exception message: {e.Message + request.Url}, Status Code: {(int)e.StatusCode} {e.StatusCode}");
                 Response.Send(e.StatusCode, e.Message + request.Url, response);
             }
             catch (Exception e)
             {
-                Log.Error($"Exception message: {e.Message}, Status Code: {HttpStatusCode.InternalServerError}");
+                var statusCode = HttpStatusCode.InternalServerError; 
+                _logger.Error($"Exception message: {e.Message}, Status Code: {HttpStatusCode.InternalServerError}");
                 Response.Send(HttpStatusCode.InternalServerError, e.Message, response);
             }
          

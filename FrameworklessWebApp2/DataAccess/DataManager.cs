@@ -5,11 +5,18 @@ using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Serilog;
 
 namespace FrameworklessWebApp2.DataAccess
 {
     public class DataManager //TODO: consider static 
     {
+        private readonly ILogger _logger;
+
+        public DataManager(ILogger logger)
+        {
+            _logger = logger;
+        }
         public User CreateUser(User user)
         {
             var users = ReadAllUsers();

@@ -7,11 +7,18 @@ using FrameworklessWebApp2.Controllers;
 using FrameworklessWebApp2.DataAccess;
 using FrameworklessWebApp2.Models;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace FrameworklessWebApp2.Web.HttpRequest
 {
     public class RequestProcessor
     {
+        private readonly ILogger _logger;
+
+        public RequestProcessor(ILogger logger)
+        {
+            _logger = logger;
+        }
         public static HttpVerb GetVerb(string httpMethod)
         {
             if (Enum.TryParse(httpMethod, true, out HttpVerb verb))
