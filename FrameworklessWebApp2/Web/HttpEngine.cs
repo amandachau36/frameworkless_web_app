@@ -28,7 +28,7 @@ namespace FrameworklessWebApp2.Web
                 dynamic controller = RequestProcessor.GetController(uriSegments[1], _dataManager);
                 var id = RequestProcessor.GetId(uriSegments);
                 var verb = RequestProcessor.GetVerb(request.HttpMethod);
-                _logger.Debug($"uriSegments[1]: {uriSegments[1]}, id: {id}, verb: {verb}");
+                _logger.Debug($"controller/model: {uriSegments[1]}, id: {id}, verb: {verb}");
 
                 switch (verb)
                 {
@@ -36,21 +36,21 @@ namespace FrameworklessWebApp2.Web
                         var getMessage = id == null
                             ? controller.Get()
                             : controller.Get(id.GetValueOrDefault());
-                        _logger.Debug($"Sending get response. Message: {getMessage}");
+                        _logger.Information("Preparing get message");
                         return new ResponseMessage(HttpStatusCode.OK, getMessage);
                     case HttpVerb.Put: //URL and body
                         var modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request);
                         var updatedUser = controller.Put(modelToUpdate, id.GetValueOrDefault());
-                        _logger.Debug($"Sending put response. Message: {updatedUser}");
+                        _logger.Information("Preparing put message");
                         return new ResponseMessage(HttpStatusCode.OK, updatedUser);
                     case HttpVerb.Post: //body
                          var modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
                          var newUser = controller.Post(modelToCreate);
-                         _logger.Debug($"Sending post response. Message: {newUser}");
+                         _logger.Information("Preparing post message");
                          return new ResponseMessage(HttpStatusCode.Created, newUser);
                     case HttpVerb.Delete: //URL
                          controller.Delete(id.GetValueOrDefault());
-                         _logger.Debug($"Sending delete response. Message: Deleted {id}");
+                         _logger.Information("Preparing delete message");
                          return new ResponseMessage(HttpStatusCode.OK, $"Deleted {id}");
                     default:
                         throw new HttpRequestException($"Invalid http method: {verb} for ",
@@ -76,6 +76,7 @@ namespace FrameworklessWebApp2.Web
         public void Send(ResponseMessage responseMessage, HttpListenerResponse response)
         {
             var message = Response.PrepareMessage(responseMessage.Message);
+            _logger.Debug($"Sending response. \nStatusCode: {responseMessage.StatusCode}. \nMessage: {message}");
             Response.Send(responseMessage.StatusCode, message, response );
         }
     }

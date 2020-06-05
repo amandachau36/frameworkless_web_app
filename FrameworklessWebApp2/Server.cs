@@ -32,7 +32,7 @@ namespace FrameworklessWebApp2
             
             while (true) //TODO: Instead of true. Stop server when requested. 
             {
-                var context = _server.GetContext();  
+                var context = _server.GetContext();
                 _logger.Debug($"{context.Request.HttpMethod} {context.Request.Url}");
                 var responseMessage = httpEngine.Process(context.Request);
                 httpEngine.Send(responseMessage, context.Response);
