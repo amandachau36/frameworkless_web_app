@@ -20,11 +20,11 @@ namespace FrameworklessWebApp2.Web
             _logger = logger;
         }
 
-        public ResponseMessage Process(HttpListenerRequest request) //TODO: breakdown/ be able to use a new route
+        public ResponseMessage Process(IHttpListenerRequestWrapper request) //TODO: breakdown/ be able to use a new route
         {
             try
             {
-                var uriSegments = RequestProcessor.GetProcessedUriSegments(request.Url);
+                var uriSegments = RequestProcessor.GetProcessedUriSegments(request.Uri);
                 dynamic controller = RequestProcessor.GetController(uriSegments[1], _dataManager);
                 var id = RequestProcessor.GetId(uriSegments);
                 var verb = RequestProcessor.GetVerb(request.HttpMethod);
@@ -59,9 +59,8 @@ namespace FrameworklessWebApp2.Web
             }
             catch (HttpRequestException e)
             {
-                _logger.Error(
-                    $"Exception message: {e.Message + request.Url}, Status Code: {(int) e.StatusCode} {e.StatusCode}");
-                return new ResponseMessage(e.StatusCode, e.Message + request.Url);
+                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) e.StatusCode} {e.StatusCode}");
+                return new ResponseMessage(e.StatusCode, e.Message + request.Uri);
             }
             catch (Exception e)
             {
@@ -76,7 +75,7 @@ namespace FrameworklessWebApp2.Web
         public void Send(ResponseMessage responseMessage, HttpListenerResponse response)
         {
             var message = Response.PrepareMessage(responseMessage.Message);
-            _logger.Debug($"Sending response. \nStatusCode: {responseMessage.StatusCode}. \nMessage: {message}");
+            _logger.Debug($"Sending response. \nStatusCode: {responseMessage.StatusCode}. \nMessage: {message}"); //TODO: does this log errors twice?
             Response.Send(responseMessage.StatusCode, message, response );
         }
     }

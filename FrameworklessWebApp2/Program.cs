@@ -14,10 +14,8 @@ namespace FrameworklessWebApp2
                 .MinimumLevel.Debug()
                 .WriteTo.Console()
                 .WriteTo.File(Path.Combine(Directory.GetCurrentDirectory(), "Logs", "log.txt"), rollingInterval: RollingInterval.Day)
-                .CreateLogger(); 
-            
-            //TODO: do I only log when there's a try catch block? 
-            
+                .CreateLogger();
+
             var server = new Server(path);
             
             server.StartServer();

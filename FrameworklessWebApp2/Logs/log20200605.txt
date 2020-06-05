@@ -91,3 +91,52 @@ Message: {"username":"a","name":"a","location":"a","id":25,"isDeleted":false}
 2020-06-05 11:17:05.755 +10:00 [DBG] Sending response. 
 StatusCode: OK. 
 Message: [{"username":"paulpaul","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"a","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"kristina","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"mia","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false},{"username":"Cookies","name":"kate","location":"USA","id":18,"isDeleted":false},{"username":"testing","name":"test","location":"test","id":19,"isDeleted":false},{"username":"pia","name":"pia k","location":"Berlin","id":20,"isDeleted":false},{"username":"Hello","name":"hi","location":"home","id":22,"isDeleted":false},{"username":"t","name":"t","location":"t","id":23,"isDeleted":false},{"username":"a","name":"a","location":"a","id":24,"isDeleted":false},{"username":"a","name":"a","location":"a","id":25,"isDeleted":false}]
+2020-06-05 16:26:44.138 +10:00 [INF] Start listening on 8080
+2020-06-05 16:26:53.311 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-05 16:26:53.327 +10:00 [DBG] controller/model: users, id: , verb: Get
+2020-06-05 16:26:53.545 +10:00 [INF] Preparing get message
+2020-06-05 16:26:53.582 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: [{"username":"paulpaul","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"a","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"kristina","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"mia","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false},{"username":"Cookies","name":"kate","location":"USA","id":18,"isDeleted":false},{"username":"testing","name":"test","location":"test","id":19,"isDeleted":false},{"username":"pia","name":"pia k","location":"Berlin","id":20,"isDeleted":false},{"username":"Hello","name":"hi","location":"home","id":22,"isDeleted":false},{"username":"t","name":"t","location":"t","id":23,"isDeleted":false},{"username":"a","name":"a","location":"a","id":24,"isDeleted":false},{"username":"a","name":"a","location":"a","id":25,"isDeleted":false}]
+2020-06-05 16:27:03.625 +10:00 [DBG] GET http://localhost:8080/users/14
+2020-06-05 16:27:03.626 +10:00 [DBG] controller/model: users, id: 14, verb: Get
+2020-06-05 16:27:03.634 +10:00 [INF] Preparing get message
+2020-06-05 16:27:03.636 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: {"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false}
+2020-06-05 16:27:10.181 +10:00 [DBG] GET http://localhost:8080/users/20
+2020-06-05 16:27:10.182 +10:00 [DBG] controller/model: users, id: 20, verb: Get
+2020-06-05 16:27:10.184 +10:00 [INF] Preparing get message
+2020-06-05 16:27:10.185 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: {"username":"pia","name":"pia k","location":"Berlin","id":20,"isDeleted":false}
+2020-06-05 16:27:27.958 +10:00 [DBG] GET http://localhost:8080/users/2000
+2020-06-05 16:27:27.958 +10:00 [DBG] controller/model: users, id: 2000, verb: Get
+2020-06-05 16:27:27.960 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users/2000, Status Code: 404 NotFound
+2020-06-05 16:27:27.960 +10:00 [DBG] Sending response. 
+StatusCode: NotFound. 
+Message: "Page not found: http://localhost:8080/users/2000"
+2020-06-05 16:27:49.514 +10:00 [DBG] GET http://localhost:8080/users/2
+2020-06-05 16:27:49.514 +10:00 [DBG] controller/model: users, id: 2, verb: Get
+2020-06-05 16:27:49.516 +10:00 [INF] Preparing get message
+2020-06-05 16:27:49.516 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: {"username":"a","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-05 16:28:02.669 +10:00 [DBG] PUT http://localhost:8080/users/2
+2020-06-05 16:28:02.669 +10:00 [DBG] controller/model: users, id: 2, verb: Put
+2020-06-05 16:28:02.691 +10:00 [INF] Preparing put message
+2020-06-05 16:28:02.691 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: {"username":"annie","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-05 16:28:34.978 +10:00 [DBG] POST http://localhost:8080/users/2
+2020-06-05 16:28:34.978 +10:00 [DBG] controller/model: users, id: 2, verb: Post
+2020-06-05 16:28:34.985 +10:00 [INF] Preparing post message
+2020-06-05 16:28:34.987 +10:00 [DBG] Sending response. 
+StatusCode: Created. 
+Message: {"username":"c","name":"c","location":"c","id":26,"isDeleted":false}
+2020-06-05 16:28:45.129 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-05 16:28:45.129 +10:00 [DBG] controller/model: users, id: , verb: Get
+2020-06-05 16:28:45.130 +10:00 [INF] Preparing get message
+2020-06-05 16:28:45.132 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: [{"username":"paulpaul","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"annie","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"kristina","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"mia","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false},{"username":"Cookies","name":"kate","location":"USA","id":18,"isDeleted":false},{"username":"testing","name":"test","location":"test","id":19,"isDeleted":false},{"username":"pia","name":"pia k","location":"Berlin","id":20,"isDeleted":false},{"username":"Hello","name":"hi","location":"home","id":22,"isDeleted":false},{"username":"t","name":"t","location":"t","id":23,"isDeleted":false},{"username":"a","name":"a","location":"a","id":24,"isDeleted":false},{"username":"a","name":"a","location":"a","id":25,"isDeleted":false},{"username":"c","name":"c","location":"c","id":26,"isDeleted":false}]

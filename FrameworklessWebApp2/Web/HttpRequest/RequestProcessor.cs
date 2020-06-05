@@ -48,7 +48,7 @@ namespace FrameworklessWebApp2.Web.HttpRequest
             return null; //TODO: case users/cats Throw exception 
         }
         
-        public static IModel GetModel(string route, HttpListenerRequest request)  
+        public static IModel GetModel(string route, IHttpListenerRequestWrapper request)  
         {
             var json = ReadBody(request);
 
@@ -65,10 +65,10 @@ namespace FrameworklessWebApp2.Web.HttpRequest
             return segments.Select(s => s.TrimEnd('/')).ToList();
         }
         
-        private static string ReadBody(HttpListenerRequest request)
+        private static string ReadBody(IHttpListenerRequestWrapper request)
         {
             var body = request.InputStream;  //Controller
-                            
+
             var reader = new StreamReader(body, request.ContentEncoding);
 
             return reader.ReadToEnd();
