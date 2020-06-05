@@ -16,9 +16,9 @@
   {
     "username": "helpme",
     "name": "stef",
-    "location": "Germany",
+    "location": "bern",
     "id": 3,
-    "isDeleted": false
+    "isDeleted": true
   },
   {
     "username": "helpme",
@@ -102,6 +102,13 @@
     "name": "hi",
     "location": "home",
     "id": 22,
+    "isDeleted": false
+  },
+  {
+    "username": "t",
+    "name": "t",
+    "location": "t",
+    "id": 23,
     "isDeleted": false
   }
 ]

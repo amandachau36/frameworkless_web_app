@@ -34,7 +34,7 @@ namespace FrameworklessWebApp2
             {
                 var context = _server.GetContext();  
                 _logger.Debug($"{context.Request.HttpMethod} {context.Request.Url}");
-                var responseMessage = httpEngine.Process(context);
+                var responseMessage = httpEngine.Process(context.Request);
                 httpEngine.Send(responseMessage, context.Response);
                 
 

@@ -44,3 +44,28 @@
 2020-06-05 10:28:33.154 +10:00 [DBG] GET http://localhost:8080/users
 2020-06-05 10:28:33.154 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
 2020-06-05 10:28:33.157 +10:00 [DBG] Sending get response. Message: System.Collections.Generic.List`1[FrameworklessWebApp2.User]
+2020-06-05 10:42:07.518 +10:00 [INF] Start listening on 8080
+2020-06-05 10:42:12.418 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-05 10:42:12.427 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-05 10:42:12.617 +10:00 [DBG] Sending get response. Message: System.Collections.Generic.List`1[FrameworklessWebApp2.User]
+2020-06-05 10:42:16.749 +10:00 [DBG] GET http://localhost:8080/users/3000
+2020-06-05 10:42:16.750 +10:00 [DBG] uriSegments[1]: users, id: 3000, verb: Get
+2020-06-05 10:42:16.756 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users/3000, Status Code: 404 NotFound
+2020-06-05 10:43:39.424 +10:00 [DBG] GET http://localhost:8080/user
+2020-06-05 10:43:39.426 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/user, Status Code: 404 NotFound
+2020-06-05 10:46:05.423 +10:00 [INF] Start listening on 8080
+2020-06-05 10:46:20.247 +10:00 [DBG] GET http://localhost:8080/user
+2020-06-05 10:46:20.257 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/user, Status Code: 404 NotFound
+2020-06-05 10:46:39.346 +10:00 [DBG] GET http://localhost:8080/users/3
+2020-06-05 10:46:39.348 +10:00 [DBG] uriSegments[1]: users, id: 3, verb: Get
+2020-06-05 10:46:39.475 +10:00 [DBG] Sending get response. Message: FrameworklessWebApp2.User
+2020-06-05 10:46:57.240 +10:00 [DBG] PUT http://localhost:8080/users/3
+2020-06-05 10:46:57.240 +10:00 [DBG] uriSegments[1]: users, id: 3, verb: Put
+2020-06-05 10:46:57.258 +10:00 [DBG] Sending put response. Message: FrameworklessWebApp2.User
+2020-06-05 10:47:10.132 +10:00 [DBG] PUT http://localhost:8080/users/3
+2020-06-05 10:47:10.132 +10:00 [DBG] uriSegments[1]: users, id: 3, verb: Put
+2020-06-05 10:47:10.137 +10:00 [DBG] Sending put response. Message: FrameworklessWebApp2.User
+2020-06-05 10:48:06.446 +10:00 [INF] Start listening on 8080
+2020-06-05 10:48:44.480 +10:00 [DBG] POST http://localhost:8080/users
+2020-06-05 10:48:44.489 +10:00 [DBG] uriSegments[1]: users, id: , verb: Post
+2020-06-05 10:48:44.692 +10:00 [DBG] Sending post response. Message: FrameworklessWebApp2.User

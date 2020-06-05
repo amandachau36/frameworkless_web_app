@@ -20,12 +20,8 @@ namespace FrameworklessWebApp2.Web
             _logger = logger;
         }
 
-        public ResponseMessage Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
+        public ResponseMessage Process(HttpListenerRequest request) //TODO: breakdown/ be able to use a new route
         {
-            var request = context.Request; 
-            var response = context.Response;
-            ResponseMessage responseMessage;
-
             try
             {
                 var uriSegments = RequestProcessor.GetProcessedUriSegments(request.Url);
@@ -65,16 +61,15 @@ namespace FrameworklessWebApp2.Web
             {
                 _logger.Error(
                     $"Exception message: {e.Message + request.Url}, Status Code: {(int) e.StatusCode} {e.StatusCode}");
-                Response.Send(e.StatusCode, e.Message + request.Url, response);
+                return new ResponseMessage(e.StatusCode, e.Message + request.Url);
             }
             catch (Exception e)
             {
                 var statusCode = HttpStatusCode.InternalServerError;
                 _logger.Error($"Exception message: {e.Message}, Status Code: {HttpStatusCode.InternalServerError}");
-                Response.Send(HttpStatusCode.InternalServerError, e.Message, response);
+                return new ResponseMessage(statusCode, e.Message);
             }
-           
-            throw new Exception("it should never reach here");
+            
 
         }
 
