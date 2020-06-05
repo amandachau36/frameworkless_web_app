@@ -48,14 +48,14 @@ namespace FrameworklessWebApp2.Web.HttpRequest
             return null; //TODO: case users/cats Throw exception 
         }
         
-        public static IModel GetModel(string route, HttpListenerRequest request)  //TODO: how to return this IModel
+        public static IModel GetModel(string route, HttpListenerRequest request)  
         {
             var json = ReadBody(request);
 
             if(route == "users") 
                 return JsonConvert.DeserializeObject<User>(json);   
             
-            throw new HttpRequestException($"Model not found: {route}. ", HttpStatusCode.BadRequest ); //TODO: 404 
+            throw new HttpRequestException($"Model not found: {route}. ", HttpStatusCode.BadRequest ); 
         }
 
         public static List<string> GetProcessedUriSegments(Uri uri)

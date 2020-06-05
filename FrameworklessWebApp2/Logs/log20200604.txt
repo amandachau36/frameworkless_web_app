@@ -166,3 +166,8 @@
 2020-06-04 19:28:28.080 +10:00 [DBG] GET http://localhost:8080/users/2
 2020-06-04 19:28:28.081 +10:00 [DBG] uriSegments[1]: users, id: 2, verb: Get
 2020-06-04 19:28:28.082 +10:00 [DBG] Sending get response. Message: {"username":"landers","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-04 19:57:47.086 +10:00 [INF] Start listening on 8080
+2020-06-04 20:05:43.027 +10:00 [INF] Start listening on 8080
+2020-06-04 20:06:02.421 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-04 20:06:02.431 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-04 20:06:02.683 +10:00 [DBG] Sending get response. Message: [{"username":"P","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"landers","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"stef","location":"Germany","id":3,"isDeleted":false},{"username":"helpme","name":"kristina","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"mia","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false},{"username":"Cookies","name":"kate","location":"USA","id":18,"isDeleted":false},{"username":"testing","name":"test","location":"test","id":19,"isDeleted":false},{"username":"pia","name":"pia k","location":"Berlin","id":20,"isDeleted":false},{"username":"unicorn","name":"rainbow","location":"in the clouds","id":21,"isDeleted":false}]

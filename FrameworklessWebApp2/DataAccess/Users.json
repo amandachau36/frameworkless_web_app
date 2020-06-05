@@ -1,13 +1,13 @@
 [
   {
-    "username": "P",
+    "username": "paulpaul",
     "name": "Paul",
     "location": "Germany",
     "id": 1,
     "isDeleted": false
   },
   {
-    "username": "landers",
+    "username": "a",
     "name": "Ann",
     "location": "USA",
     "id": 2,
@@ -33,13 +33,6 @@
     "location": "spain",
     "id": 7,
     "isDeleted": false
-  },
-  {
-    "username": "Mon",
-    "name": "monica",
-    "location": "vancouver",
-    "id": 9,
-    "isDeleted": true
   },
   {
     "username": "mia",
@@ -102,6 +95,13 @@
     "name": "rainbow",
     "location": "in the clouds",
     "id": 21,
+    "isDeleted": true
+  },
+  {
+    "username": "Hello",
+    "name": "hi",
+    "location": "home",
+    "id": 22,
     "isDeleted": false
   }
 ]

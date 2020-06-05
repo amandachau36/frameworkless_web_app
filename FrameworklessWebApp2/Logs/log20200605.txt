@@ -1,0 +1,46 @@
+2020-06-05 07:36:43.498 +10:00 [DBG] GET http://localhost:8080/users/2
+2020-06-05 07:36:43.519 +10:00 [DBG] uriSegments[1]: users, id: 2, verb: Get
+2020-06-05 07:36:43.549 +10:00 [DBG] Sending get response. Message: {"username":"landers","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-05 07:37:11.854 +10:00 [DBG] PUT http://localhost:8080/users/2
+2020-06-05 07:37:11.855 +10:00 [DBG] uriSegments[1]: users, id: 2, verb: Put
+2020-06-05 07:37:11.887 +10:00 [DBG] Sending put response. Message: FrameworklessWebApp2.User
+2020-06-05 10:12:29.875 +10:00 [INF] Start listening on 8080
+2020-06-05 10:12:35.165 +10:00 [DBG] GET http://localhost:8080/users/2
+2020-06-05 10:12:35.176 +10:00 [DBG] uriSegments[1]: users, id: 2, verb: Get
+2020-06-05 10:12:35.384 +10:00 [DBG] Sending get response. Message: FrameworklessWebApp2.User
+2020-06-05 10:12:43.888 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-05 10:12:43.889 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-05 10:12:43.894 +10:00 [DBG] Sending get response. Message: System.Collections.Generic.List`1[FrameworklessWebApp2.User]
+2020-06-05 10:18:36.219 +10:00 [INF] Start listening on 8080
+2020-06-05 10:18:56.352 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-05 10:18:56.361 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-05 10:18:56.531 +10:00 [DBG] Sending get response. Message: System.Collections.Generic.List`1[FrameworklessWebApp2.User]
+2020-06-05 10:24:23.046 +10:00 [INF] Start listening on 8080
+2020-06-05 10:24:28.487 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-05 10:24:28.497 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-05 10:24:28.675 +10:00 [DBG] Sending get response. Message: System.Collections.Generic.List`1[FrameworklessWebApp2.User]
+2020-06-05 10:24:31.573 +10:00 [DBG] GET http://localhost:8080/users/4
+2020-06-05 10:24:31.573 +10:00 [DBG] uriSegments[1]: users, id: 4, verb: Get
+2020-06-05 10:24:31.579 +10:00 [DBG] Sending get response. Message: FrameworklessWebApp2.User
+2020-06-05 10:24:35.720 +10:00 [DBG] GET http://localhost:8080/users/6
+2020-06-05 10:24:35.721 +10:00 [DBG] uriSegments[1]: users, id: 6, verb: Get
+2020-06-05 10:24:35.725 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users/6, Status Code: 404 NotFound
+2020-06-05 10:26:36.792 +10:00 [INF] Start listening on 8080
+2020-06-05 10:26:40.877 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-05 10:26:40.886 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-05 10:26:41.058 +10:00 [DBG] Sending get response. Message: System.Collections.Generic.List`1[FrameworklessWebApp2.User]
+2020-06-05 10:26:58.729 +10:00 [DBG] DELETE http://localhost:8080/users/21
+2020-06-05 10:26:58.730 +10:00 [DBG] uriSegments[1]: users, id: 21, verb: Delete
+2020-06-05 10:26:58.750 +10:00 [DBG] Sending delete response. Message: Deleted 21
+2020-06-05 10:27:07.234 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-05 10:27:07.235 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-05 10:27:07.235 +10:00 [DBG] Sending get response. Message: System.Collections.Generic.List`1[FrameworklessWebApp2.User]
+2020-06-05 10:27:45.388 +10:00 [DBG] PUT http://localhost:8080/users/1
+2020-06-05 10:27:45.389 +10:00 [DBG] uriSegments[1]: users, id: 1, verb: Put
+2020-06-05 10:27:45.399 +10:00 [DBG] Sending put response. Message: FrameworklessWebApp2.User
+2020-06-05 10:28:28.453 +10:00 [DBG] POST http://localhost:8080/users
+2020-06-05 10:28:28.454 +10:00 [DBG] uriSegments[1]: users, id: , verb: Post
+2020-06-05 10:28:28.458 +10:00 [DBG] Sending post response. Message: FrameworklessWebApp2.User
+2020-06-05 10:28:33.154 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-05 10:28:33.154 +10:00 [DBG] uriSegments[1]: users, id: , verb: Get
+2020-06-05 10:28:33.157 +10:00 [DBG] Sending get response. Message: System.Collections.Generic.List`1[FrameworklessWebApp2.User]

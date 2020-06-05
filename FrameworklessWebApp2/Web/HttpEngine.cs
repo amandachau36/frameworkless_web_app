@@ -20,49 +20,42 @@ namespace FrameworklessWebApp2.Web
             _logger = logger;
         }
 
-        public void Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
+        public ResponseMessage Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
         {
             var request = context.Request; 
             var response = context.Response;
+            ResponseMessage responseMessage;
+
             try
             {
                 var uriSegments = RequestProcessor.GetProcessedUriSegments(request.Url);
                 dynamic controller = RequestProcessor.GetController(uriSegments[1], _dataManager);
                 var id = RequestProcessor.GetId(uriSegments);
                 var verb = RequestProcessor.GetVerb(request.HttpMethod);
-                _logger.Debug($"uriSegments[1]: {uriSegments[1]}, id: {id}, verb: {verb}"); // can't swap it out
+                _logger.Debug($"uriSegments[1]: {uriSegments[1]}, id: {id}, verb: {verb}");
 
                 switch (verb)
                 {
                     case HttpVerb.Get: //Routing // URL  
                         var getMessage = id == null
-                            ? Response.PrepareMessage(controller.Get())
-                            : Response.PrepareMessage(controller.Get(id.GetValueOrDefault()));
+                            ? controller.Get()
+                            : controller.Get(id.GetValueOrDefault());
                         _logger.Debug($"Sending get response. Message: {getMessage}");
-                        //TODO: return ResponseMessage (status code, object )
-                        //Response.Send(Response.statusCode, Serialise(responseMessage.Body) // BUT not here . .
-                        Response.Send(HttpStatusCode.OK, getMessage, response);
-                        break;
+                        return new ResponseMessage(HttpStatusCode.OK, getMessage);
                     case HttpVerb.Put: //URL and body
-                        var modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request); //TODO: getControllerAndModelForURISegment  return controller
+                        var modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request);
                         var updatedUser = controller.Put(modelToUpdate, id.GetValueOrDefault());
-                        var putMessage = Response.PrepareMessage(updatedUser);
-                        _logger.Debug($"Sending put response. Message: {putMessage}");
-                        Response.Send(HttpStatusCode.OK, putMessage, response);
-                        break;
+                        _logger.Debug($"Sending put response. Message: {updatedUser}");
+                        return new ResponseMessage(HttpStatusCode.OK, updatedUser);
                     case HttpVerb.Post: //body
-                        var modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
-                        var newUser = controller.Post(modelToCreate);
-                        var postMessage = Response.PrepareMessage(newUser);
-                        _logger.Debug($"Sending post response. Message: {postMessage}");
-                        Response.Send(HttpStatusCode.Created, postMessage,
-                            response); //View  // Must send response but sometimes if doesn't have content 204 
-                        break;
+                         var modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
+                         var newUser = controller.Post(modelToCreate);
+                         _logger.Debug($"Sending post response. Message: {newUser}");
+                         return new ResponseMessage(HttpStatusCode.Created, newUser);
                     case HttpVerb.Delete: //URL
-                        controller.Delete(id.GetValueOrDefault());
-                        _logger.Debug($"Sending delete response. Message: Deleted {id}");
-                        Response.Send(HttpStatusCode.OK, "Deleted " + id, response);
-                        break;
+                         controller.Delete(id.GetValueOrDefault());
+                         _logger.Debug($"Sending delete response. Message: Deleted {id}");
+                         return new ResponseMessage(HttpStatusCode.OK, $"Deleted {id}");
                     default:
                         throw new HttpRequestException($"Invalid http method: {verb} for ",
                             HttpStatusCode.MethodNotAllowed);
@@ -70,16 +63,25 @@ namespace FrameworklessWebApp2.Web
             }
             catch (HttpRequestException e)
             {
-                _logger.Error($"Exception message: {e.Message + request.Url}, Status Code: {(int)e.StatusCode} {e.StatusCode}");
+                _logger.Error(
+                    $"Exception message: {e.Message + request.Url}, Status Code: {(int) e.StatusCode} {e.StatusCode}");
                 Response.Send(e.StatusCode, e.Message + request.Url, response);
             }
             catch (Exception e)
             {
-                var statusCode = HttpStatusCode.InternalServerError; 
+                var statusCode = HttpStatusCode.InternalServerError;
                 _logger.Error($"Exception message: {e.Message}, Status Code: {HttpStatusCode.InternalServerError}");
                 Response.Send(HttpStatusCode.InternalServerError, e.Message, response);
             }
-         
+           
+            throw new Exception("it should never reach here");
+
+        }
+
+        public void Send(ResponseMessage responseMessage, HttpListenerResponse response)
+        {
+            var message = Response.PrepareMessage(responseMessage.Message);
+            Response.Send(responseMessage.StatusCode, message, response );
         }
     }
 }
