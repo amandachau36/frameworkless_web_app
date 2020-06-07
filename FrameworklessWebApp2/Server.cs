@@ -11,18 +11,20 @@ namespace FrameworklessWebApp2
     public class Server
     {
         private readonly ILogger _logger;
+        private readonly DataManager _dataManager;
         private readonly HttpListener _server;
-        public Server(ILogger logger)
+        public Server(ILogger logger, DataManager dataManager)
         {
             _logger = logger;
+            _dataManager = dataManager;
             _server = new HttpListener();
         }
      
 
         public void StartServer()
         {
-            var dataManager = new DataManager(_logger);
-            var httpEngine = new HttpEngine(dataManager, _logger);
+        
+            var httpEngine = new HttpEngine(_dataManager, _logger);
 
             var port = GetPortConfig();
             

@@ -20,17 +20,5 @@ namespace FrameworklessWebApp2
             _request = request;
         }
     }
-
-    // public class A
-    // {
-    //     void B()
-    //     {
-    //         var httpEngine = new HttpEngine();
-    //         
-    //         httpEngine.Process(new HttpListenerContextWrapper(theOriginalContext));
-    //         
-    //         // in the test
-    //         httpEngine.Process(new StubHttpListontext()); // constructor with mock info 
-    //     }
-    // }
+    
 }

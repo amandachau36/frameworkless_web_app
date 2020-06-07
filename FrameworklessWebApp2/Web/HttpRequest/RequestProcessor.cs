@@ -13,12 +13,6 @@ namespace FrameworklessWebApp2.Web.HttpRequest
 {
     public class RequestProcessor
     {
-        private readonly ILogger _logger;
-
-        public RequestProcessor(ILogger logger)
-        {
-            _logger = logger;
-        }
         public static HttpVerb GetVerb(string httpMethod)
         {
             if (Enum.TryParse(httpMethod, true, out HttpVerb verb))
@@ -68,12 +62,11 @@ namespace FrameworklessWebApp2.Web.HttpRequest
         private static string ReadBody(IHttpListenerRequestWrapper request)
         {
             var body = request.InputStream;  //Controller
-
+            
             var reader = new StreamReader(body, request.ContentEncoding);
 
             return reader.ReadToEnd();
         }
         
-
     }
 }

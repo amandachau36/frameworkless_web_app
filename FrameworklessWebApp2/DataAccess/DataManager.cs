@@ -9,14 +9,15 @@ using Serilog;
 
 namespace FrameworklessWebApp2.DataAccess
 {
-    public class DataManager //TODO: consider static 
+    public class DataManager
     {
-        private readonly ILogger _logger;
+        private readonly string _path;
 
-        public DataManager(ILogger logger)
+        public DataManager(string path)
         {
-            _logger = logger;
+            _path = path;
         }
+        
         public User CreateUser(User user)
         {
             var users = ReadAllUsers();
@@ -29,8 +30,8 @@ namespace FrameworklessWebApp2.DataAccess
             WriteToTextFile(users);
 
             return user;
-
         }
+        
         public List<User> ReadUsers()
         {
             var allUsers = ReadAllUsers();
@@ -107,7 +108,7 @@ namespace FrameworklessWebApp2.DataAccess
                 )
             );
 
-            var sw = new StreamWriter(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
+            var sw = new StreamWriter(_path);
             
             sw.WriteLine(usersList);
             
@@ -119,7 +120,7 @@ namespace FrameworklessWebApp2.DataAccess
 
         private List<User> ReadAllUsers()
         {
-            var sr = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
+            var sr = new StreamReader(_path);
 
             var json= sr.ReadToEnd();
             
