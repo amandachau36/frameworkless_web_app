@@ -17,7 +17,8 @@ namespace FrameworklessWebApp2
                 .WriteTo.File(Path.Combine(Directory.GetCurrentDirectory(), "Logs", "log.txt"), rollingInterval: RollingInterval.Day)
                 .CreateLogger();
 
-            var dataManager = new DataManager(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
+            var database = new TextfileDatabase(Path.Combine(Directory.GetCurrentDirectory(), "DataAccess", "Users.json"));
+            var dataManager = new DataManager(database);
             var server = new Server(logger, dataManager);
             
             server.StartServer();

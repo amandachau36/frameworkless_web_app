@@ -11,30 +11,31 @@ namespace FrameworklessWebApp2.DataAccess
 {
     public class DataManager
     {
-        private readonly string _path;
+      
+        private readonly IDatabase _database;
 
-        public DataManager(string path)
+        public DataManager( IDatabase database)
         {
-            _path = path;
+            _database = database;
         }
         
         public User CreateUser(User user)
         {
-            var users = ReadAllUsers();
+            var users = _database.Read();
             
             var id = users.Last().Id + 1;  
             user.SetId(id);
             
             users.Add(user);
             
-            WriteToTextFile(users);
+            _database.Write(users);
 
             return user;
         }
         
         public List<User> ReadUsers()
         {
-            var allUsers = ReadAllUsers();
+            var allUsers = _database.Read();
 
             return allUsers.Where(x => x.IsDeleted == false).ToList();
         }
@@ -54,7 +55,7 @@ namespace FrameworklessWebApp2.DataAccess
 
         public User UpdateUser(int id, User user)
         {
-            var users = ReadAllUsers();
+            var users = _database.Read();
 
             var index = users.FindIndex(x => x.Id == id && x.IsDeleted == false);
 
@@ -73,7 +74,7 @@ namespace FrameworklessWebApp2.DataAccess
                 
             }
             
-            WriteToTextFile(users);
+            _database.Write(users);
 
             return users[index];
 
@@ -90,47 +91,38 @@ namespace FrameworklessWebApp2.DataAccess
             
             users[index].SetIsDeletedToTrue();
             
-            WriteToTextFile(users);
+            _database.Write(users);
             
         }
 
-        private void WriteToTextFile(List<User> users)
-        {
-            
-            var usersList = new JArray(
-                from u in users
-                select new JObject(
-                    new JProperty("username", u.Username),
-                    new JProperty("name", u.Name),
-                    new JProperty("location", u.Location),
-                    new JProperty("id", u.Id),
-                    new JProperty("isDeleted", u.IsDeleted)
-                )
-            );
+        // private void WriteToTextFile(List<User> users)
+        // {
+        //     
+        //     var usersList = new JArray(
+        //         from u in users
+        //         select new JObject(
+        //             new JProperty("username", u.Username),
+        //             new JProperty("name", u.Name),
+        //             new JProperty("location", u.Location),
+        //             new JProperty("id", u.Id),
+        //             new JProperty("isDeleted", u.IsDeleted)
+        //         )
+        //     );
+        //
+        //     var sw = new StreamWriter(_path);
+        //     
+        //     sw.WriteLine(usersList);
+        //     
+        //     sw.Flush();
+        //
+        //     sw.Close();
 
-            var sw = new StreamWriter(_path);
-            
-            sw.WriteLine(usersList);
-            
-            sw.Flush();
+        //}
 
-            sw.Close();
-
-        }
-
-        private List<User> ReadAllUsers()
-        {
-            var sr = new StreamReader(_path);
-
-            var json= sr.ReadToEnd();
-            
-            sr.Close();
-
-            return JsonConvert.DeserializeObject<List<User>>(json);
-        }
-        
+   
     }
 
+  
 }
 
 
