@@ -24,8 +24,7 @@ namespace FrameworklessWebApp2.Web
         {
             try
             {
-                _logger.Debug("============STREAM" + request.InputStream);
-                _logger.Debug("============ENCODING" + request.ContentEncoding);
+              
                 var uriSegments = RequestProcessor.GetProcessedUriSegments(request.Uri);
                 dynamic controller = RequestProcessor.GetController(uriSegments[1], _dataManager);
                 var id = RequestProcessor.GetId(uriSegments);

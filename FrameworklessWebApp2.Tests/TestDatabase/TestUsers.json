@@ -1,0 +1,23 @@
+[
+  {
+    "username": "A",
+    "name": "Ann",
+    "location": "Australia",
+    "id": 1,
+    "isDeleted": false
+  },
+  {
+    "username": "B",
+    "name": "Bob",
+    "location": "Bolivia",
+    "id": 2,
+    "isDeleted": false
+  },
+  {
+    "username": "C",
+    "name": "Chris",
+    "location": "Canada",
+    "id": 3,
+    "isDeleted": false
+  }
+]
