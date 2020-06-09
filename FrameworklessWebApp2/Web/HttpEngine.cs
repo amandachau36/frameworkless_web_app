@@ -41,6 +41,8 @@ namespace FrameworklessWebApp2.Web
                         return new ResponseMessage(HttpStatusCode.OK, getMessage);
                     case HttpVerb.Put: //URL and body
                         var modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request);
+                        if(id == null)
+                            throw new HttpRequestException("Page not found for put request: ", HttpStatusCode.NotFound);
                         var updatedUser = controller.Put(modelToUpdate, id.GetValueOrDefault());
                         _logger.Information("Preparing put message");
                         return new ResponseMessage(HttpStatusCode.OK, updatedUser);

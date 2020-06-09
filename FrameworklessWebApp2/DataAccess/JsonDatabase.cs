@@ -6,11 +6,11 @@ using Newtonsoft.Json.Linq;
 
 namespace FrameworklessWebApp2.DataAccess
 {
-    public class TextfileDatabase : IDatabase
+    public class JsonDatabase : IDatabase
     {
         private readonly string _path;
 
-        public TextfileDatabase(string path)
+        public JsonDatabase(string path)
         {
             _path = path;
         }

@@ -80,3 +80,10 @@ Message: {"username":"A","name":"Ann","location":"USA","id":2,"isDeleted":false}
 2020-06-08 18:34:17.406 +10:00 [DBG] Sending response. 
 StatusCode: Created. 
 Message: {"username":"b","name":"b","location":"b","id":28,"isDeleted":false}
+2020-06-08 22:07:26.945 +10:00 [INF] Start listening on 8080
+2020-06-08 22:07:34.502 +10:00 [DBG] PUT http://localhost:8080/users
+2020-06-08 22:07:34.511 +10:00 [DBG] controller/model: users, id: , verb: Put
+2020-06-08 22:07:34.729 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users, Status Code: 404 NotFound
+2020-06-08 22:07:34.745 +10:00 [DBG] Sending response. 
+StatusCode: NotFound. 
+Message: "Page not found: http://localhost:8080/users"
