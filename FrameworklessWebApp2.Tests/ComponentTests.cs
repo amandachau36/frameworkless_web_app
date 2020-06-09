@@ -20,7 +20,7 @@ namespace FrameworklessWebApp2.Tests
         public void It_Should_Return_Correct_ResponseMessage_Given_A_Request(Uri uri, string httpMethod, string body, ResponseMessage expectedResponseMessage)
         {
             //arrange
-            var allUsers = Users.CreateAllUsers();
+            var allUsers = Users.CreateTestUsers();
 
             var loggerStub = new LoggerStub();
 
@@ -28,7 +28,6 @@ namespace FrameworklessWebApp2.Tests
 
             var httpEngine = new HttpEngine(new DataManager(mockDatabase), loggerStub);
             
-            //var body = "";
             var repo =  new MemoryStream(Encoding.UTF8.GetBytes(body));
             var contentEncoding = Encoding.UTF8;
             
@@ -50,7 +49,7 @@ namespace FrameworklessWebApp2.Tests
                 new Uri("http://localhost:8080/users"),
                 "GET",
                 "",
-                new ResponseMessage(HttpStatusCode.OK, Users.CreateAllUsers()),
+                new ResponseMessage(HttpStatusCode.OK, Users.CreateTestUsers()),
             };
             
             yield return new object[]
@@ -59,6 +58,81 @@ namespace FrameworklessWebApp2.Tests
                 "GET",
                 "",
                 new ResponseMessage(HttpStatusCode.NotFound, "Page not found: http://localhost:8080/u"),
+            };
+
+            yield return new object[]
+            {
+                new Uri("http://localhost:8080/users/1"),
+                "GET",
+                "",
+                new ResponseMessage(HttpStatusCode.OK, Users.CreateTestUsers()[0]),
+            };
+            
+            yield return new object[]
+            {
+                new Uri("http://localhost:8080/users/1000"),
+                "GET",
+                "",
+                new ResponseMessage(HttpStatusCode.NotFound, "Page not found: http://localhost:8080/users/1000"),
+            };
+            
+            yield return new object[]
+            {
+                new Uri("http://localhost:8080/users"),
+                "POST",
+                "{\"username\": \"D\", \"name\": \"Dan\", \"location\": \"Denmark\"}",
+                new ResponseMessage(HttpStatusCode.Created, Users.CreateTestUser(new User {Name = "Dan", Username = "D", Location = "Denmark"}, 4)),
+            };
+            
+            yield return new object[]
+            {
+                new Uri("http://localhost:8080/users"),
+                "POST",
+                "{\"username\": \"D\", \"name\": \"Dan\", \"location\": \"Denmark\"}",
+                new ResponseMessage(HttpStatusCode.Created, Users.CreateTestUser(new User {Name = "Dan", Username = "D", Location = "Denmark"}, 4)),
+            };
+            
+            yield return new object[]
+            {
+                new Uri("http://localhost:8080/cat"),
+                "POST",
+                "{\"username\": \"D\", \"name\": \"Dan\", \"location\": \"Denmark\"}",
+                new ResponseMessage(HttpStatusCode.NotFound, "Page not found: http://localhost:8080/cat"),
+            };
+
+
+            yield return new object[]
+            {
+                new Uri("http://localhost:8080/users"),
+                "POST",
+                "{\"id\": 100, \"username\": \"D\", \"name\": \"Dan\", \"location\": \"Denmark\"}",
+                new ResponseMessage(HttpStatusCode.Created, Users.CreateTestUser(new User {Name = "Dan", Username = "D", Location = "Denmark"}, 4)),
+            };
+            
+            
+            yield return new object[]
+            {
+                new Uri("http://localhost:8080/users"),
+                "POST",
+                "{\"isDeleted\": true, \"username\": \"D\", \"name\": \"Dan\", \"location\": \"Denmark\"}",
+                new ResponseMessage(HttpStatusCode.Created, Users.CreateTestUser(new User {Name = "Dan", Username = "D", Location = "Denmark"}, 4)),
+            };
+            //TODO: deal with null input i.e. 
+            
+            yield return new object[]
+            {
+                new Uri("http://localhost:8080/users/2"),
+                "PUT",
+                "{\"location\": \"Barbados\"}",
+                new ResponseMessage(HttpStatusCode.OK, Users.CreateTestUser(new User {Name = "Bob", Username = "B", Location = "Barbados"}, 2))
+            };
+            
+            yield return new object[]
+            {
+                new Uri("http://localhost:8080/users/700"),
+                "PUT",
+                "{\"location\": \"Barbados\"}",
+                new ResponseMessage(HttpStatusCode.NotFound, "Page not found: http://localhost:8080/users/700")
             };
             
             yield return new object[]
@@ -72,39 +146,42 @@ namespace FrameworklessWebApp2.Tests
             yield return new object[]
             {
                 new Uri("http://localhost:8080/users/1"),
-                "GET",
+                "DELETE",
                 "",
-                new ResponseMessage(HttpStatusCode.OK, Users.CreateAllUsers()[0]),
+                new ResponseMessage(HttpStatusCode.OK, "Deleted users id:1"),
             };
             
             yield return new object[]
             {
                 new Uri("http://localhost:8080/users/1000"),
-                "GET",
+                "DELETE",
                 "",
                 new ResponseMessage(HttpStatusCode.NotFound, "Page not found: http://localhost:8080/users/1000"),
             };
+
             
+          
+            
+
+
             // yield return new object[]
             // {
-            //     new Uri("http://localhost:8080/users"),
+            //     new Uri("http://localhost:8080/cat"),
             //     "POST",
-            //     "{"username": "helpme",
-            //     "name": "kristina",
-            //     "location": "calgary"}",
-            //     new ResponseMessage(HttpStatusCode.NotFound, "Page not found: http://localhost:8080/users/1000"),
+            //     "{\"username\": \"D\", \"name\": \"Dan\", \"location\": \"Denmark\"}",
+            //     new ResponseMessage(HttpStatusCode.NotFound, "Page not found: http://localhost:8080/cat"),
             // };
-            
-            
-            
-         
-        
+
+
+
+
+
         }
     }
 
     internal class Users
     {
-        public static List<User> CreateAllUsers()
+        public static List<User> CreateTestUsers()
         {
             var user1 = new User {Name = "Ann", Username = "A", Location = "Australia"};
             user1.SetId(1);
@@ -122,6 +199,14 @@ namespace FrameworklessWebApp2.Tests
                 user3
             };
 
+        }
+
+        public static User CreateTestUser(User user, int id)
+        {
+            
+            user.SetId(id);
+            
+            return user;
         }
         
     }

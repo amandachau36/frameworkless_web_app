@@ -54,7 +54,7 @@ namespace FrameworklessWebApp2.Web
                     case HttpVerb.Delete: //URL
                          controller.Delete(id.GetValueOrDefault());
                          _logger.Information("Preparing delete message");
-                         return new ResponseMessage(HttpStatusCode.OK, $"Deleted {id}");
+                         return new ResponseMessage(HttpStatusCode.OK, $"Deleted {uriSegments[1]} id:{id}");
                     default:
                         throw new HttpRequestException($"Invalid http method: {verb} for ",
                             HttpStatusCode.MethodNotAllowed);

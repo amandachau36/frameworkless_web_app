@@ -21,7 +21,8 @@ namespace FrameworklessWebApp2.DataAccess
             
             var id = users.Last().Id + 1;  
             user.SetId(id);
-            
+            user.SetIsDeleted(false);
+
             users.Add(user);
             
             _database.Write(users);
@@ -64,7 +65,7 @@ namespace FrameworklessWebApp2.DataAccess
             {
                 var value = prop.GetValue(user);
 
-                if (value is null || prop.Name == "Id") continue;  //TODO: Throw Exception when trying to change ID 
+                if (value is null || prop.Name == "Id" || prop.Name == "IsDeleted") continue;  //TODO: Throw Exception when trying to change ID 
 
                 users[index].GetType().GetProperty(prop.Name)?.SetValue(users[index], prop.GetValue(user));
                 
@@ -85,7 +86,7 @@ namespace FrameworklessWebApp2.DataAccess
             if (index < 0) 
                 throw new HttpRequestException("Page not found: ", HttpStatusCode.NotFound);
             
-            users[index].SetIsDeletedToTrue();
+            users[index].SetIsDeleted(true);
             
             _database.Write(users);
             

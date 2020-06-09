@@ -47,6 +47,7 @@ namespace FrameworklessWebApp2.Web.HttpRequest
             var json = ReadBody(request);
 
             if(route == "users") 
+                //TODO: validate fields are present 
                 return JsonConvert.DeserializeObject<User>(json);   
             
             throw new HttpRequestException($"Model not found: {route}. ", HttpStatusCode.BadRequest ); 

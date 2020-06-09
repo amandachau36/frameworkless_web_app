@@ -28,9 +28,9 @@ namespace FrameworklessWebApp2
             Id = id;
         }
         
-        public void SetIsDeletedToTrue()
+        public void SetIsDeleted(bool trueOrFalse)
         {
-            IsDeleted = true;
+            IsDeleted = trueOrFalse;
         }
 
         
