@@ -46,11 +46,13 @@ namespace FrameworklessWebApp2.Web.HttpRequest
         {
             var json = ReadBody(request);
 
-            if(route == "users") 
-                //TODO: validate fields are present 
+            if (route == "users")
+            {
                 return JsonConvert.DeserializeObject<User>(json);   
-            
-            throw new HttpRequestException($"Model not found: {route}. ", HttpStatusCode.BadRequest ); 
+            }
+                //TODO: validate fields are present 
+
+                throw new HttpRequestException($"Model not found: {route}. ", HttpStatusCode.BadRequest ); 
         }
 
         public static List<string> GetProcessedUriSegments(Uri uri)

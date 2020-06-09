@@ -24,7 +24,7 @@ namespace FrameworklessWebApp2.Web
         {
             try
             {
-              
+
                 var uriSegments = RequestProcessor.GetProcessedUriSegments(request.Uri);
                 dynamic controller = RequestProcessor.GetController(uriSegments[1], _dataManager);
                 var id = RequestProcessor.GetId(uriSegments);
@@ -41,24 +41,36 @@ namespace FrameworklessWebApp2.Web
                         return new ResponseMessage(HttpStatusCode.OK, getMessage);
                     case HttpVerb.Put: //URL and body
                         var modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request);
-                        if(id == null)
+                        if (id == null)
                             throw new HttpRequestException("Page not found for put request: ", HttpStatusCode.NotFound);
                         var updatedUser = controller.Put(modelToUpdate, id.GetValueOrDefault());
                         _logger.Information("Preparing put message");
                         return new ResponseMessage(HttpStatusCode.OK, updatedUser);
                     case HttpVerb.Post: //body
-                         var modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
-                         var newUser = controller.Post(modelToCreate);
-                         _logger.Information("Preparing post message");
-                         return new ResponseMessage(HttpStatusCode.Created, newUser);
+                        var modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
+                        var newUser = controller.Post(modelToCreate);
+                        _logger.Information("Preparing post message");
+                        return new ResponseMessage(HttpStatusCode.Created, newUser);
                     case HttpVerb.Delete: //URL
-                         controller.Delete(id.GetValueOrDefault());
-                         _logger.Information("Preparing delete message");
-                         return new ResponseMessage(HttpStatusCode.OK, $"Deleted {uriSegments[1]} id:{id}");
+                        controller.Delete(id.GetValueOrDefault());
+                        _logger.Information("Preparing delete message");
+                        return new ResponseMessage(HttpStatusCode.OK, $"Deleted {uriSegments[1]} id:{id}");
                     default:
                         throw new HttpRequestException($"Invalid http method: {verb} for ",
                             HttpStatusCode.MethodNotAllowed);
                 }
+            }
+            catch (InvalidOperationException e)
+            {
+                var statusCode = HttpStatusCode.BadRequest;
+                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
+                return new ResponseMessage(statusCode, e.Message + request.Uri);
+            }
+            catch (ObjectNotFoundException e)
+            {
+                var statusCode = HttpStatusCode.NotFound;
+                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
+                return new ResponseMessage(statusCode, "Page not found: " + request.Uri);
             }
             catch (HttpRequestException e)
             {
@@ -68,7 +80,7 @@ namespace FrameworklessWebApp2.Web
             catch (Exception e)
             {
                 var statusCode = HttpStatusCode.InternalServerError;
-                _logger.Error($"Exception message: {e.Message}, Status Code: {HttpStatusCode.InternalServerError}");
+                _logger.Error($"Exception message: {e.Message}, Status Code: {(int) statusCode } {statusCode}");
                 return new ResponseMessage(statusCode, e.Message);
             }
             
@@ -78,7 +90,7 @@ namespace FrameworklessWebApp2.Web
         public void Send(ResponseMessage responseMessage, HttpListenerResponse response)
         {
             var message = Response.PrepareMessage(responseMessage.Message);
-            _logger.Debug($"Sending response. \nStatusCode: {responseMessage.StatusCode}. \nMessage: {message}"); //TODO: does this log errors twice?
+            _logger.Debug($"Sending response. \nStatusCode: {responseMessage.StatusCode}. \nMessage: {message}");
             Response.Send(responseMessage.StatusCode, message, response );
         }
     }
@@ -91,8 +103,6 @@ namespace FrameworklessWebApp2.Web
 //GET MODEL (convert body to model)
 
 
-
-//TODO: tests
 
 //var htmlMessage = Html.Wrap("All Users", "<h1></h1>"); //VIEW //But this should probably be done in the front end?
 // class Resource {

@@ -114,10 +114,19 @@ namespace FrameworklessWebApp2.Tests
             {
                 new Uri("http://localhost:8080/users"),
                 "POST",
+                "{\"name\": \"Dan\", \"location\": \"Denmark\"}",
+                new ResponseMessage(HttpStatusCode.BadRequest, "Missing name, username or location. http://localhost:8080/users")
+            };
+            
+            
+            yield return new object[]
+            {
+                new Uri("http://localhost:8080/users"),
+                "POST",
                 "{\"isDeleted\": true, \"username\": \"D\", \"name\": \"Dan\", \"location\": \"Denmark\"}",
                 new ResponseMessage(HttpStatusCode.Created, Users.CreateTestUser(new User {Name = "Dan", Username = "D", Location = "Denmark"}, 4)),
             };
-            //TODO: deal with null input i.e. 
+         
             
             yield return new object[]
             {
@@ -294,8 +303,7 @@ namespace FrameworklessWebApp2.Tests
             
             
 //https://docs.microsoft.com/en-us/dotnet/api/system.net.httplistenercontext?view=netcore-3.1
-//httpEngine.Process(new HttpListenerContext()); //TODO: httpListenerContext needs an abstraction   
-            
+//httpEngine.Process(new HttpListenerContext()); 
 // var server = new Server();
 // server.StartServer();
             

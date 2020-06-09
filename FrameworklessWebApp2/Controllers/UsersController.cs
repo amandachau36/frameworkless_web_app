@@ -1,5 +1,8 @@
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using FrameworklessWebApp2.DataAccess;
 using FrameworklessWebApp2.Models;
 
@@ -17,14 +20,15 @@ namespace FrameworklessWebApp2.Controllers
         }
 
         public User Post(IModel model)
-        {
-              return _dataManager.CreateUser((User)model); //Controller 
+        { 
+            var user = (User) model;
+            ValidateNewUser(user);
+            return _dataManager.CreateUser(user); //Controller 
         }
 
         public List<User> Get()
         {
             return _dataManager.ReadUsers();
-            //TODO: set status code here? But would either need to send back the statuscode or send response 
         }
 
         public User Get(int id)
@@ -40,6 +44,14 @@ namespace FrameworklessWebApp2.Controllers
         public void Delete(int id)
         {
             _dataManager.DeleteUser(id);
+        }
+
+        private void ValidateNewUser(User user)
+        {
+            if(user.Name == null || user.Username == null|| user.Location == null)
+            {
+                throw new InvalidOperationException("Missing name, username or location. ");
+            }
         }
     }
 }

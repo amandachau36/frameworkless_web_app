@@ -44,7 +44,7 @@ namespace FrameworklessWebApp2.DataAccess
             var index = users.FindIndex(x => x.Id == id);
             
             if (index < 0) 
-                throw new HttpRequestException("Page not found: ", HttpStatusCode.NotFound); //TODO: probably need to throw a non HTTP  exception here then catch it in the web layer and throw a HTTP excpetion there 
+                throw new ObjectNotFoundException($"User not found: id{id}");
 
             return users[index];
 
@@ -57,7 +57,7 @@ namespace FrameworklessWebApp2.DataAccess
             var index = users.FindIndex(x => x.Id == id && x.IsDeleted == false);
 
             if (index < 0) 
-                throw new HttpRequestException("Page not found: ", HttpStatusCode.NotFound);
+                throw new ObjectNotFoundException($"User not found: id{id}");
 
             var propertiesToUpdate = user.GetType().GetProperties();
 
@@ -65,7 +65,7 @@ namespace FrameworklessWebApp2.DataAccess
             {
                 var value = prop.GetValue(user);
 
-                if (value is null || prop.Name == "Id" || prop.Name == "IsDeleted") continue;  //TODO: Throw Exception when trying to change ID 
+                if (value is null || prop.Name == "Id" || prop.Name == "IsDeleted") continue;  
 
                 users[index].GetType().GetProperty(prop.Name)?.SetValue(users[index], prop.GetValue(user));
                 
@@ -84,39 +84,14 @@ namespace FrameworklessWebApp2.DataAccess
             var index = users.FindIndex(x => x.Id == id);
 
             if (index < 0) 
-                throw new HttpRequestException("Page not found: ", HttpStatusCode.NotFound);
-            
+                throw new ObjectNotFoundException($"User not found: id{id}");
+
             users[index].SetIsDeleted(true);
             
             _database.Write(users);
             
         }
-
-        // private void WriteToTextFile(List<User> users)
-        // {
-        //     
-        //     var usersList = new JArray(
-        //         from u in users
-        //         select new JObject(
-        //             new JProperty("username", u.Username),
-        //             new JProperty("name", u.Name),
-        //             new JProperty("location", u.Location),
-        //             new JProperty("id", u.Id),
-        //             new JProperty("isDeleted", u.IsDeleted)
-        //         )
-        //     );
-        //
-        //     var sw = new StreamWriter(_path);
-        //     
-        //     sw.WriteLine(usersList);
-        //     
-        //     sw.Flush();
-        //
-        //     sw.Close();
-
-        //}
-
-   
+        
     }
 
   
