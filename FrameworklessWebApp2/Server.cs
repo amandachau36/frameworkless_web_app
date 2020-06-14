@@ -10,24 +10,34 @@ namespace FrameworklessWebApp2
 {
     public class Server
     {
-        
-        private readonly HttpListener _server = new HttpListener();
+        private readonly ILogger _logger;
+        private readonly DataManager _dataManager;
+        private readonly HttpListener _server;
+        public Server(ILogger logger, DataManager dataManager)
+        {
+            _logger = logger;
+            _dataManager = dataManager;
+            _server = new HttpListener();
+        }
+     
 
         public void StartServer()
         {
-            var dataManager = new DataManager();
-            var httpEngine = new HttpEngine(dataManager);
+        
+            var httpEngine = new HttpEngine(_dataManager, _logger);
 
             var port = GetPortConfig();
+            
             _server.Prefixes.Add($"http://localhost:{port.PortNumber}/"); //URI prefixes 
             _server.Start();
-            Console.WriteLine("Start listening");
+            _logger.Information("Start listening on " + port.PortNumber);
             
             while (true) //TODO: Instead of true. Stop server when requested. 
             {
-                var context = _server.GetContext();  
-                Log.Information($"{context.Request.HttpMethod} {context.Request.Url}");
-                httpEngine.Process(context);
+                var context = _server.GetContext();
+                _logger.Debug($"{context.Request.HttpMethod} {context.Request.Url}");
+                var responseMessage = httpEngine.Process(new HttpListenerRequestWrapper(context.Request));
+                httpEngine.Send(responseMessage, context.Response);
 
             }
             _server.Stop();  // never reached...

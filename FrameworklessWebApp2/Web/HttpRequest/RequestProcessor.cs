@@ -5,7 +5,9 @@ using System.Linq;
 using System.Net;
 using FrameworklessWebApp2.Controllers;
 using FrameworklessWebApp2.DataAccess;
+using FrameworklessWebApp2.Models;
 using Newtonsoft.Json;
+using Serilog;
 
 namespace FrameworklessWebApp2.Web.HttpRequest
 {
@@ -40,14 +42,16 @@ namespace FrameworklessWebApp2.Web.HttpRequest
             return null; //TODO: case users/cats Throw exception 
         }
         
-        public static object GetModel(string route, HttpListenerRequest request)  //TODO: how to return this IModel
+        public static IModel GetModel(string route, IHttpListenerRequestWrapper request)  
         {
             var json = ReadBody(request);
 
-            if(route == "users") 
+            if (route == "users")
+            {
                 return JsonConvert.DeserializeObject<User>(json);   
+            }
             
-            throw new HttpRequestException($"Model not found: {route}. ", HttpStatusCode.BadRequest ); //TODO: 404 
+            throw new HttpRequestException($"Model not found: {route}. ", HttpStatusCode.BadRequest ); 
         }
 
         public static List<string> GetProcessedUriSegments(Uri uri)
@@ -57,15 +61,14 @@ namespace FrameworklessWebApp2.Web.HttpRequest
             return segments.Select(s => s.TrimEnd('/')).ToList();
         }
         
-        private static string ReadBody(HttpListenerRequest request)
+        private static string ReadBody(IHttpListenerRequestWrapper request)
         {
             var body = request.InputStream;  //Controller
-                            
+            
             var reader = new StreamReader(body, request.ContentEncoding);
 
             return reader.ReadToEnd();
         }
         
-
     }
 }

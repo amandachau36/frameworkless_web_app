@@ -23,14 +23,14 @@ namespace FrameworklessWebApp2
         [JsonProperty(PropertyName = "isDeleted")]
         public bool IsDeleted { get; private set; }
         
-        public void SetId(int id)
+        public void SetId(int id) //GUIDs - use autoincrementing in databases as primary key not GUID. 
         {
             Id = id;
         }
         
-        public void SetIsDeletedToTrue()
+        public void SetIsDeleted(bool trueOrFalse)
         {
-            IsDeleted = true;
+            IsDeleted = trueOrFalse;
         }
 
         

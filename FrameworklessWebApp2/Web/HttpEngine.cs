@@ -12,74 +12,86 @@ namespace FrameworklessWebApp2.Web
     public class HttpEngine 
     {
         private readonly DataManager _dataManager;
-        //private readonly ILogger _logger;
+        private readonly ILogger _logger;
 
-        public HttpEngine(DataManager dataManager)
-            //ILogger logger)
+        public HttpEngine(DataManager dataManager, ILogger logger)
         {
-            _dataManager = dataManager;
-            //_logger = logger;
+            _dataManager = dataManager; 
+            _logger = logger;
         }
 
-        public void Process(HttpListenerContext context) //TODO: breakdown/ be able to use a new route
+        public ResponseMessage Process(IHttpListenerRequestWrapper request) //TODO: breakdown/ be able to use a new route
         {
-            var request = context.Request; 
-            var response = context.Response;
             try
             {
-                var uriSegments = RequestProcessor.GetProcessedUriSegments(request.Url);
+
+                var uriSegments = RequestProcessor.GetProcessedUriSegments(request.Uri);
                 dynamic controller = RequestProcessor.GetController(uriSegments[1], _dataManager);
                 var id = RequestProcessor.GetId(uriSegments);
                 var verb = RequestProcessor.GetVerb(request.HttpMethod);
-                Log.Debug($"uriSegments[1]: {uriSegments[1]}, id: {id}, verb: {verb}"); // can't swap it out
+                _logger.Debug($"controller/model: {uriSegments[1]}, id: {id}, verb: {verb}");
 
                 switch (verb)
                 {
                     case HttpVerb.Get: //Routing // URL  
                         var getMessage = id == null
-                            ? Response.PrepareMessage(controller.Get())
-                            : Response.PrepareMessage(controller.Get(id.GetValueOrDefault()));
-                        Log.Debug($"Sending get response. Message: {getMessage}");
-                        //TODO: return ResponseMessage (status code, object )
-                        //Response.Send(Response.statusCode, Serialise(responseMessage.Body) // BUT not here . .
-                        Response.Send(HttpStatusCode.OK, getMessage, response);
-                        break;
+                            ? controller.Get()
+                            : controller.Get(id.GetValueOrDefault());
+                        _logger.Information("Preparing get message");
+                        return new ResponseMessage(HttpStatusCode.OK, getMessage);
                     case HttpVerb.Put: //URL and body
-                        dynamic modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request); //TODO: getControllerAndModelForURISegment  return controller
+                        var modelToUpdate = RequestProcessor.GetModel(uriSegments[1], request);
+                        if (id == null)
+                            throw new HttpRequestException("Page not found for put request: ", HttpStatusCode.NotFound);
                         var updatedUser = controller.Put(modelToUpdate, id.GetValueOrDefault());
-                        var putMessage = Response.PrepareMessage(updatedUser);
-                        Log.Debug($"Sending put response. Message: {putMessage}");
-                        Response.Send(HttpStatusCode.OK, putMessage, response);
-                        break;
+                        _logger.Information("Preparing put message");
+                        return new ResponseMessage(HttpStatusCode.OK, updatedUser);
                     case HttpVerb.Post: //body
-                        dynamic modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
+                        var modelToCreate = RequestProcessor.GetModel(uriSegments[1], request);
                         var newUser = controller.Post(modelToCreate);
-                        var postMessage = Response.PrepareMessage(newUser);
-                        Log.Debug($"Sending post response. Message: {postMessage}");
-                        Response.Send(HttpStatusCode.Created, postMessage,
-                            response); //View  // Must send response but sometimes if doesn't have content 204 
-                        break;
+                        _logger.Information("Preparing post message");
+                        return new ResponseMessage(HttpStatusCode.Created, newUser);
                     case HttpVerb.Delete: //URL
                         controller.Delete(id.GetValueOrDefault());
-                        Log.Debug($"Sending delete response. Message: Deleted {id}");
-                        Response.Send(HttpStatusCode.OK, "Deleted " + id, response);
-                        break;
+                        _logger.Information("Preparing delete message");
+                        return new ResponseMessage(HttpStatusCode.OK, $"Deleted {uriSegments[1]} id:{id}");
                     default:
                         throw new HttpRequestException($"Invalid http method: {verb} for ",
                             HttpStatusCode.MethodNotAllowed);
                 }
             }
+            catch (InvalidOperationException e) //TODO: base exception 
+            {
+                var statusCode = HttpStatusCode.BadRequest;
+                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
+                return new ResponseMessage(statusCode, e.Message + request.Uri);
+            }
+            catch (ObjectNotFoundException e)
+            {
+                var statusCode = HttpStatusCode.NotFound;
+                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
+                return new ResponseMessage(statusCode, "Page not found: " + request.Uri);
+            }
             catch (HttpRequestException e)
             {
-                Log.Error($"Exception message: {e.Message + request.Url}, Status Code: {e.StatusCode}");
-                Response.Send(e.StatusCode, e.Message + request.Url, response);
+                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) e.StatusCode} {e.StatusCode}");
+                return new ResponseMessage(e.StatusCode, e.Message + request.Uri);
             }
             catch (Exception e)
             {
-                Log.Error($"Exception message: {e.Message}, Status Code: {HttpStatusCode.InternalServerError}");
-                Response.Send(HttpStatusCode.InternalServerError, e.Message, response);
+                var statusCode = HttpStatusCode.InternalServerError;
+                _logger.Error($"Exception message: {e.Message}, Status Code: {(int) statusCode } {statusCode}");
+                return new ResponseMessage(statusCode, e.Message);
             }
-         
+            
+
+        }
+
+        public void Send(ResponseMessage responseMessage, HttpListenerResponse response)
+        {
+            var message = Response.PrepareMessage(responseMessage.Message);
+            _logger.Debug($"Sending response. \nStatusCode: {responseMessage.StatusCode}. \nMessage: {message}");
+            Response.Send(responseMessage.StatusCode, message, response );
         }
     }
 }
@@ -91,8 +103,6 @@ namespace FrameworklessWebApp2.Web
 //GET MODEL (convert body to model)
 
 
-
-//TODO: tests
 
 //var htmlMessage = Html.Wrap("All Users", "<h1></h1>"); //VIEW //But this should probably be done in the front end?
 // class Resource {

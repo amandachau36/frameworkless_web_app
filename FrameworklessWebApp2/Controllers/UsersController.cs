@@ -1,6 +1,10 @@
 
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Text.Json;
 using FrameworklessWebApp2.DataAccess;
+using FrameworklessWebApp2.Models;
 
 
 namespace FrameworklessWebApp2.Controllers
@@ -10,20 +14,21 @@ namespace FrameworklessWebApp2.Controllers
     {
         private readonly DataManager _dataManager;
 
-        public UsersController(DataManager dataManager)  
+        public UsersController(DataManager dataManager)   
         {
             _dataManager = dataManager;
         }
 
-        public User Post(User model)
-        {
-              return _dataManager.CreateUser(model); //Controller 
+        public User Post(IModel model) //TODO: could be context instead of IMODel  
+        { 
+            var user = (User) model;
+            ValidateNewUser(user);
+            return _dataManager.CreateUser(user); //Controller 
         }
 
         public List<User> Get()
         {
             return _dataManager.ReadUsers();
-            //TODO: set status code here? But would either need to send back the statuscode or send response 
         }
 
         public User Get(int id)
@@ -31,15 +36,22 @@ namespace FrameworklessWebApp2.Controllers
             return _dataManager.ReadUser(id);
         }
 
-        public User Put(User model, int id)
+        public User Put(IModel model, int id)
         {
-            //TODO:
-            return _dataManager.UpdateUser(id, model);
+            return _dataManager.UpdateUser(id, (User)model);
         }
 
         public void Delete(int id)
         {
             _dataManager.DeleteUser(id);
+        }
+
+        private void ValidateNewUser(User user)
+        {
+            if(user.Name == null || user.Username == null|| user.Location == null)
+            {
+                throw new InvalidOperationException("Missing name, username or location. ");
+            }
         }
     }
 }

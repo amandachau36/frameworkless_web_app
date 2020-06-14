@@ -1,0 +1,89 @@
+2020-06-08 17:05:57.557 +10:00 [INF] Start listening on 8080
+2020-06-08 17:06:25.697 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-08 17:06:25.705 +10:00 [DBG] ============STREAMSystem.IO.Stream+NullStream
+2020-06-08 17:06:25.706 +10:00 [DBG] ============ENCODINGSystem.Text.UTF8Encoding+UTF8EncodingSealed
+2020-06-08 17:06:25.709 +10:00 [DBG] controller/model: users, id: , verb: Get
+2020-06-08 17:06:25.900 +10:00 [INF] Preparing get message
+2020-06-08 17:06:25.935 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: [{"username":"paulpaul","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"annie","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"kristina","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"mia","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false},{"username":"Cookies","name":"kate","location":"USA","id":18,"isDeleted":false},{"username":"testing","name":"test","location":"test","id":19,"isDeleted":false},{"username":"pia","name":"pia k","location":"Berlin","id":20,"isDeleted":false},{"username":"Hello","name":"hi","location":"home","id":22,"isDeleted":false},{"username":"t","name":"t","location":"t","id":23,"isDeleted":false},{"username":"a","name":"a","location":"a","id":24,"isDeleted":false},{"username":"a","name":"a","location":"a","id":25,"isDeleted":false},{"username":"c","name":"c","location":"c","id":26,"isDeleted":false}]
+2020-06-08 17:06:31.040 +10:00 [DBG] GET http://localhost:8080/users/2
+2020-06-08 17:06:31.041 +10:00 [DBG] ============STREAMSystem.IO.Stream+NullStream
+2020-06-08 17:06:31.042 +10:00 [DBG] ============ENCODINGSystem.Text.UTF8Encoding+UTF8EncodingSealed
+2020-06-08 17:06:31.043 +10:00 [DBG] controller/model: users, id: 2, verb: Get
+2020-06-08 17:06:31.052 +10:00 [INF] Preparing get message
+2020-06-08 17:06:31.054 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: {"username":"annie","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-08 17:07:11.291 +10:00 [DBG] PUT http://localhost:8080/users/2
+2020-06-08 17:07:11.291 +10:00 [DBG] ============STREAMSystem.Net.HttpRequestStream
+2020-06-08 17:07:11.291 +10:00 [DBG] ============ENCODINGSystem.Text.UTF8Encoding+UTF8EncodingSealed
+2020-06-08 17:07:11.292 +10:00 [DBG] controller/model: users, id: 2, verb: Put
+2020-06-08 17:07:11.314 +10:00 [INF] Preparing put message
+2020-06-08 17:07:11.315 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: {"username":"Anna","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-08 17:07:58.648 +10:00 [DBG] POST http://localhost:8080/users
+2020-06-08 17:07:58.649 +10:00 [DBG] ============STREAMSystem.Net.HttpRequestStream
+2020-06-08 17:07:58.649 +10:00 [DBG] ============ENCODINGSystem.Text.UTF8Encoding+UTF8EncodingSealed
+2020-06-08 17:07:58.650 +10:00 [DBG] controller/model: users, id: , verb: Post
+2020-06-08 17:07:58.658 +10:00 [INF] Preparing post message
+2020-06-08 17:07:58.660 +10:00 [DBG] Sending response. 
+StatusCode: Created. 
+Message: {"username":"r","name":"r","location":"r","id":27,"isDeleted":false}
+2020-06-08 17:08:05.224 +10:00 [DBG] PUT http://localhost:8080/users
+2020-06-08 17:08:05.224 +10:00 [DBG] ============STREAMSystem.Net.HttpRequestStream
+2020-06-08 17:08:05.225 +10:00 [DBG] ============ENCODINGSystem.Text.UTF8Encoding+UTF8EncodingSealed
+2020-06-08 17:08:05.225 +10:00 [DBG] controller/model: users, id: , verb: Put
+2020-06-08 17:08:05.227 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users, Status Code: 404 NotFound
+2020-06-08 17:08:05.228 +10:00 [DBG] Sending response. 
+StatusCode: NotFound. 
+Message: "Page not found: http://localhost:8080/users"
+2020-06-08 18:32:08.988 +10:00 [INF] Start listening on 8080
+2020-06-08 18:32:15.988 +10:00 [DBG] GET http://localhost:8080/users
+2020-06-08 18:32:15.997 +10:00 [DBG] ============STREAMSystem.Net.HttpRequestStream
+2020-06-08 18:32:15.998 +10:00 [DBG] ============ENCODINGSystem.Text.UTF8Encoding+UTF8EncodingSealed
+2020-06-08 18:32:16.001 +10:00 [DBG] controller/model: users, id: , verb: Get
+2020-06-08 18:32:16.207 +10:00 [INF] Preparing get message
+2020-06-08 18:32:16.244 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: [{"username":"paulpaul","name":"Paul","location":"Germany","id":1,"isDeleted":false},{"username":"Anna","name":"Ann","location":"USA","id":2,"isDeleted":false},{"username":"helpme","name":"kristina","location":"calgary","id":4,"isDeleted":false},{"username":"Ciao","name":"amigos","location":"spain","id":7,"isDeleted":false},{"username":"mia","name":"kia","location":"nz","id":12,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":14,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":15,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":16,"isDeleted":false},{"username":"A","name":"Amanda","location":"Home","id":17,"isDeleted":false},{"username":"Cookies","name":"kate","location":"USA","id":18,"isDeleted":false},{"username":"testing","name":"test","location":"test","id":19,"isDeleted":false},{"username":"pia","name":"pia k","location":"Berlin","id":20,"isDeleted":false},{"username":"Hello","name":"hi","location":"home","id":22,"isDeleted":false},{"username":"t","name":"t","location":"t","id":23,"isDeleted":false},{"username":"a","name":"a","location":"a","id":24,"isDeleted":false},{"username":"a","name":"a","location":"a","id":25,"isDeleted":false},{"username":"c","name":"c","location":"c","id":26,"isDeleted":false},{"username":"r","name":"r","location":"r","id":27,"isDeleted":false}]
+2020-06-08 18:32:21.261 +10:00 [DBG] GET http://localhost:8080/users/2
+2020-06-08 18:32:21.262 +10:00 [DBG] ============STREAMSystem.Net.HttpRequestStream
+2020-06-08 18:32:21.262 +10:00 [DBG] ============ENCODINGSystem.Text.UTF8Encoding+UTF8EncodingSealed
+2020-06-08 18:32:21.262 +10:00 [DBG] controller/model: users, id: 2, verb: Get
+2020-06-08 18:32:21.271 +10:00 [INF] Preparing get message
+2020-06-08 18:32:21.272 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: {"username":"Anna","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-08 18:33:43.360 +10:00 [DBG] GET http://localhost:8080/users/2
+2020-06-08 18:33:43.361 +10:00 [DBG] ============STREAMSystem.Net.HttpRequestStream
+2020-06-08 18:33:43.362 +10:00 [DBG] ============ENCODINGSystem.Text.UTF8Encoding+UTF8EncodingSealed
+2020-06-08 18:33:43.362 +10:00 [DBG] controller/model: users, id: 2, verb: Get
+2020-06-08 18:33:43.366 +10:00 [INF] Preparing get message
+2020-06-08 18:33:43.367 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: {"username":"Anna","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-08 18:33:56.927 +10:00 [DBG] PUT http://localhost:8080/users/2
+2020-06-08 18:33:56.928 +10:00 [DBG] ============STREAMSystem.Net.HttpRequestStream
+2020-06-08 18:33:56.928 +10:00 [DBG] ============ENCODINGSystem.Text.UTF8Encoding+UTF8EncodingSealed
+2020-06-08 18:33:56.928 +10:00 [DBG] controller/model: users, id: 2, verb: Put
+2020-06-08 18:33:56.946 +10:00 [INF] Preparing put message
+2020-06-08 18:33:56.946 +10:00 [DBG] Sending response. 
+StatusCode: OK. 
+Message: {"username":"A","name":"Ann","location":"USA","id":2,"isDeleted":false}
+2020-06-08 18:34:17.394 +10:00 [DBG] POST http://localhost:8080/users
+2020-06-08 18:34:17.394 +10:00 [DBG] ============STREAMSystem.Net.HttpRequestStream
+2020-06-08 18:34:17.394 +10:00 [DBG] ============ENCODINGSystem.Text.UTF8Encoding+UTF8EncodingSealed
+2020-06-08 18:34:17.395 +10:00 [DBG] controller/model: users, id: , verb: Post
+2020-06-08 18:34:17.403 +10:00 [INF] Preparing post message
+2020-06-08 18:34:17.406 +10:00 [DBG] Sending response. 
+StatusCode: Created. 
+Message: {"username":"b","name":"b","location":"b","id":28,"isDeleted":false}
+2020-06-08 22:07:26.945 +10:00 [INF] Start listening on 8080
+2020-06-08 22:07:34.502 +10:00 [DBG] PUT http://localhost:8080/users
+2020-06-08 22:07:34.511 +10:00 [DBG] controller/model: users, id: , verb: Put
+2020-06-08 22:07:34.729 +10:00 [ERR] Exception message: Page not found: http://localhost:8080/users, Status Code: 404 NotFound
+2020-06-08 22:07:34.745 +10:00 [DBG] Sending response. 
+StatusCode: NotFound. 
+Message: "Page not found: http://localhost:8080/users"
