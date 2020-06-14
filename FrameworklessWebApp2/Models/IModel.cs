@@ -1,6 +1,6 @@
 namespace FrameworklessWebApp2.Models
 {
-    public interface IModel
+    public interface IModel //Marker interface
     {
     }
 }

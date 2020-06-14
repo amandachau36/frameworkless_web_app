@@ -60,7 +60,7 @@ namespace FrameworklessWebApp2.Web
                             HttpStatusCode.MethodNotAllowed);
                 }
             }
-            catch (InvalidOperationException e)
+            catch (InvalidOperationException e) //TODO: base exception 
             {
                 var statusCode = HttpStatusCode.BadRequest;
                 _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");

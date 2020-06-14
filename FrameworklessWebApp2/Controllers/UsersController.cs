@@ -14,12 +14,12 @@ namespace FrameworklessWebApp2.Controllers
     {
         private readonly DataManager _dataManager;
 
-        public UsersController(DataManager dataManager)  
+        public UsersController(DataManager dataManager)   
         {
             _dataManager = dataManager;
         }
 
-        public User Post(IModel model)
+        public User Post(IModel model) //TODO: could be context instead of IMODel  
         { 
             var user = (User) model;
             ValidateNewUser(user);
