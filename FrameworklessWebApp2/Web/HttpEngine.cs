@@ -1,6 +1,6 @@
 using System;
 using System.Net;
-using System.Net.Http;
+using FrameworklessWebApp2.Controllers;
 using FrameworklessWebApp2.DataAccess;
 using FrameworklessWebApp2.Web.HttpRequest;
 using FrameworklessWebApp2.Web.HttpResponse;
@@ -60,22 +60,28 @@ namespace FrameworklessWebApp2.Web
                             HttpStatusCode.MethodNotAllowed);
                 }
             }
-            catch (InvalidOperationException e) //TODO: base exception 
-            {
-                var statusCode = HttpStatusCode.BadRequest;
-                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
-                return new ResponseMessage(statusCode, e.Message + request.Uri);
-            }
-            catch (ObjectNotFoundException e)
-            {
-                var statusCode = HttpStatusCode.NotFound;
-                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
-                return new ResponseMessage(statusCode, "Page not found: " + request.Uri);
-            }
             catch (HttpRequestException e)
             {
-                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) e.StatusCode} {e.StatusCode}");
-                return new ResponseMessage(e.StatusCode, e.Message + request.Uri);
+                 _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) e.StatusCode} {e.StatusCode}");
+                 return new ResponseMessage(e.StatusCode, e.Message + request.Uri);
+            }
+            catch (RequestException e)
+            {
+                switch (e)
+                {
+                    case InvalidOperationsException _:
+                    {
+                        var statusCode = HttpStatusCode.BadRequest;
+                        _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
+                        return new ResponseMessage(statusCode, e.Message + request.Uri);
+                    }
+                    case ObjectNotFoundException _:
+                    {
+                        var statusCode = HttpStatusCode.NotFound;
+                        _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
+                        return new ResponseMessage(statusCode, "Page not found: " + request.Uri);
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -84,7 +90,8 @@ namespace FrameworklessWebApp2.Web
                 return new ResponseMessage(statusCode, e.Message);
             }
             
-
+            
+            throw new Exception("hopefully I never see this "); // TODO do i need this
         }
 
         public void Send(ResponseMessage responseMessage, HttpListenerResponse response)
@@ -96,7 +103,30 @@ namespace FrameworklessWebApp2.Web
     }
 }
 
-    
+// catch (InvalidOperationException e) //TODO: base exception 
+// {
+// var statusCode = HttpStatusCode.BadRequest;
+// _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
+// return new ResponseMessage(statusCode, e.Message + request.Uri);
+// }
+// catch (ObjectNotFoundException e)
+// {
+// var statusCode = HttpStatusCode.NotFound;
+// _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
+// return new ResponseMessage(statusCode, "Page not found: " + request.Uri);
+// }
+// catch (HttpRequestException e)
+// {
+// _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) e.StatusCode} {e.StatusCode}");
+// return new ResponseMessage(e.StatusCode, e.Message + request.Uri);
+// }
+// catch (Exception e)
+// {
+// var statusCode = HttpStatusCode.InternalServerError;
+// _logger.Error($"Exception message: {e.Message}, Status Code: {(int) statusCode } {statusCode}");
+// return new ResponseMessage(statusCode, e.Message);
+// }
+
 //GET ROUTE
 //GET CONTROLLER
 //GET VERB

@@ -35,11 +35,13 @@ namespace FrameworklessWebApp2.Web.HttpRequest
         
         public static int? GetId(List<string> uriSegments)
         {
+            if (uriSegments.Count <= 2)
+                return null;
             
-            if (uriSegments.Count > 2 && int.TryParse(uriSegments[2], out var id))
+            if (int.TryParse(uriSegments[2], out var id))
                 return id;
 
-            return null; //TODO: case users/cats Throw exception 
+            throw new HttpRequestException($"Page not found: ", HttpStatusCode.NotFound );
         }
         
         public static IModel GetModel(string route, IHttpListenerRequestWrapper request)  
