@@ -50,7 +50,7 @@ namespace FrameworklessWebApp2.Controllers
         {
             if(user.Name == null || user.Username == null|| user.Location == null)
             {
-                throw new InvalidOperationException("Missing name, username or location. ");
+                throw new InvalidOperationsException("Missing name, username or location. ");
             }
         }
     }

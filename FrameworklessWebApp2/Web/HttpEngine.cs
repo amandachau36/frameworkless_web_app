@@ -1,6 +1,6 @@
 using System;
 using System.Net;
-using System.Net.Http;
+using FrameworklessWebApp2.Controllers;
 using FrameworklessWebApp2.DataAccess;
 using FrameworklessWebApp2.Web.HttpRequest;
 using FrameworklessWebApp2.Web.HttpResponse;
@@ -24,7 +24,6 @@ namespace FrameworklessWebApp2.Web
         {
             try
             {
-
                 var uriSegments = RequestProcessor.GetProcessedUriSegments(request.Uri);
                 dynamic controller = RequestProcessor.GetController(uriSegments[1], _dataManager);
                 var id = RequestProcessor.GetId(uriSegments);
@@ -60,22 +59,10 @@ namespace FrameworklessWebApp2.Web
                             HttpStatusCode.MethodNotAllowed);
                 }
             }
-            catch (InvalidOperationException e) //TODO: base exception 
+            catch (RequestException e)
             {
-                var statusCode = HttpStatusCode.BadRequest;
-                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
-                return new ResponseMessage(statusCode, e.Message + request.Uri);
-            }
-            catch (ObjectNotFoundException e)
-            {
-                var statusCode = HttpStatusCode.NotFound;
-                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
-                return new ResponseMessage(statusCode, "Page not found: " + request.Uri);
-            }
-            catch (HttpRequestException e)
-            {
-                _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) e.StatusCode} {e.StatusCode}");
-                return new ResponseMessage(e.StatusCode, e.Message + request.Uri);
+                var httpResponseMessage = e.AsHttpResponse(request.Uri);
+                return httpResponseMessage;
             }
             catch (Exception e)
             {
@@ -84,7 +71,6 @@ namespace FrameworklessWebApp2.Web
                 return new ResponseMessage(statusCode, e.Message);
             }
             
-
         }
 
         public void Send(ResponseMessage responseMessage, HttpListenerResponse response)
@@ -96,7 +82,8 @@ namespace FrameworklessWebApp2.Web
     }
 }
 
-    
+
+
 //GET ROUTE
 //GET CONTROLLER
 //GET VERB
@@ -122,3 +109,5 @@ namespace FrameworklessWebApp2.Web
 // {
 // routes.Add(...)
 // }
+
+

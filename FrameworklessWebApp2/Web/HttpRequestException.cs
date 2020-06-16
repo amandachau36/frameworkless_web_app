@@ -1,9 +1,10 @@
 using System;
 using System.Net;
+using FrameworklessWebApp2.Web;
 
 namespace FrameworklessWebApp2
 {
-    public class HttpRequestException : Exception
+    public class HttpRequestException : RequestException
     {
         public HttpStatusCode StatusCode { get; }
 
