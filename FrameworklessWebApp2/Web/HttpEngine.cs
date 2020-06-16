@@ -24,7 +24,6 @@ namespace FrameworklessWebApp2.Web
         {
             try
             {
-
                 var uriSegments = RequestProcessor.GetProcessedUriSegments(request.Uri);
                 dynamic controller = RequestProcessor.GetController(uriSegments[1], _dataManager);
                 var id = RequestProcessor.GetId(uriSegments);
@@ -60,28 +59,10 @@ namespace FrameworklessWebApp2.Web
                             HttpStatusCode.MethodNotAllowed);
                 }
             }
-            catch (HttpRequestException e)
-            {
-                 _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) e.StatusCode} {e.StatusCode}");
-                 return new ResponseMessage(e.StatusCode, e.Message + request.Uri);
-            }
             catch (RequestException e)
             {
-                switch (e)
-                {
-                    case InvalidOperationsException _:
-                    {
-                        var statusCode = HttpStatusCode.BadRequest;
-                        _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
-                        return new ResponseMessage(statusCode, e.Message + request.Uri);
-                    }
-                    case ObjectNotFoundException _:
-                    {
-                        var statusCode = HttpStatusCode.NotFound;
-                        _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
-                        return new ResponseMessage(statusCode, "Page not found: " + request.Uri);
-                    }
-                }
+                var httpResponseMessage = e.AsHttpResponse(request.Uri);
+                return httpResponseMessage;
             }
             catch (Exception e)
             {
@@ -90,8 +71,6 @@ namespace FrameworklessWebApp2.Web
                 return new ResponseMessage(statusCode, e.Message);
             }
             
-            
-            throw new Exception("hopefully I never see this "); // TODO do i need this
         }
 
         public void Send(ResponseMessage responseMessage, HttpListenerResponse response)
@@ -103,29 +82,7 @@ namespace FrameworklessWebApp2.Web
     }
 }
 
-// catch (InvalidOperationException e) //TODO: base exception 
-// {
-// var statusCode = HttpStatusCode.BadRequest;
-// _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
-// return new ResponseMessage(statusCode, e.Message + request.Uri);
-// }
-// catch (ObjectNotFoundException e)
-// {
-// var statusCode = HttpStatusCode.NotFound;
-// _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) statusCode } {statusCode}");
-// return new ResponseMessage(statusCode, "Page not found: " + request.Uri);
-// }
-// catch (HttpRequestException e)
-// {
-// _logger.Error($"Exception message: {e.Message + request.Uri}, Status Code: {(int) e.StatusCode} {e.StatusCode}");
-// return new ResponseMessage(e.StatusCode, e.Message + request.Uri);
-// }
-// catch (Exception e)
-// {
-// var statusCode = HttpStatusCode.InternalServerError;
-// _logger.Error($"Exception message: {e.Message}, Status Code: {(int) statusCode } {statusCode}");
-// return new ResponseMessage(statusCode, e.Message);
-// }
+
 
 //GET ROUTE
 //GET CONTROLLER
@@ -152,3 +109,5 @@ namespace FrameworklessWebApp2.Web
 // {
 // routes.Add(...)
 // }
+
+

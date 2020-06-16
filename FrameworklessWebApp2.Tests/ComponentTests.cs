@@ -279,7 +279,6 @@ namespace FrameworklessWebApp2.Tests
 
 }
 
-//TODO: get rid of log files 
         
 //var path = Path.Combine(Directory.GetCurrentDirectory(), "TestDatabase", "TestUsers.json");
 //var path =
